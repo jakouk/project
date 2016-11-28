@@ -77,11 +77,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="search" selectedImage="search" id="IXx-Mq-LZd"/>
+                    <tabBarItem key="tabBarItem" title="" image="search" selectedImage="user" id="IXx-Mq-LZd"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ESR-bU-jgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2950" y="1174"/>
+            <point key="canvasLocation" x="2943" y="1991"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="g7S-Cd-Xhd">
@@ -96,11 +96,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="user" selectedImage="user" id="Che-ox-NaU"/>
+                    <tabBarItem key="tabBarItem" title="" image="user" selectedImage="search" id="Che-ox-NaU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TMa-E8-6vY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2964" y="1928"/>
+            <point key="canvasLocation" x="2943" y="1162"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="7tg-d4-Vws">
