@@ -24,6 +24,7 @@
 		73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AB1DEBF94500CDF36D /* NetworkData.m */; };
 		73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AE1DEBF95700CDF36D /* UserInfo.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
+		BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,8 @@
 		73C6E9AD1DEBF95700CDF36D /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		73C6E9AE1DEBF95700CDF36D /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordNavigationController.h; sourceTree = "<group>"; };
+		BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordNavigationController.m; sourceTree = "<group>"; };
 		E2ADA6D9BE9A3F14A4D86135 /* Pods-PictureDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PictureDiary.release.xcconfig"; path = "Pods/Target Support Files/Pods-PictureDiary/Pods-PictureDiary.release.xcconfig"; sourceTree = "<group>"; };
 		EC89CDE1C20AE90D327C1B56 /* Pods-PictureDiary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PictureDiary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PictureDiary/Pods-PictureDiary.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +111,8 @@
 				73C6E97C1DEBE68400CDF36D /* AppDelegate.m */,
 				73C6E97E1DEBE68400CDF36D /* ViewController.h */,
 				73C6E97F1DEBE68400CDF36D /* ViewController.m */,
+				BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */,
+				BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */,
 				73C6E9811DEBE68400CDF36D /* Main.storyboard */,
 				73C6E9841DEBE68400CDF36D /* Assets.xcassets */,
 				73C6E9B11DEBF96700CDF36D /* UserInfo */,
@@ -320,6 +325,7 @@
 				73C6E9911DEBEF7100CDF36D /* LoginViewController.m in Sources */,
 				73C6E9971DEBEF9800CDF36D /* MainViewController.m in Sources */,
 				73C6E9A61DEBF46000CDF36D /* ModifyViewController.m in Sources */,
+				BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */,
 				73C6E9801DEBE68400CDF36D /* ViewController.m in Sources */,
 				73C6E9941DEBEF8B00CDF36D /* JoinViewController.m in Sources */,
 				73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */,
@@ -486,6 +492,7 @@
 				73C6E98E1DEBE68400CDF36D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
