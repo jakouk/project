@@ -23,6 +23,11 @@
 		73C6E9A61DEBF46000CDF36D /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */; };
 		73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AB1DEBF94500CDF36D /* NetworkData.m */; };
 		73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AE1DEBF95700CDF36D /* UserInfo.m */; };
+		73C6E9B81DEC407700CDF36D /* Word.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9B71DEC407700CDF36D /* Word.storyboard */; };
+		73C6E9BA1DEC408600CDF36D /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9B91DEC408600CDF36D /* Search.storyboard */; };
+		73C6E9BC1DEC409500CDF36D /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9BB1DEC409500CDF36D /* User.storyboard */; };
+		73C6E9BE1DEC412A00CDF36D /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9BD1DEC412A00CDF36D /* Home.storyboard */; };
+		73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9C01DEC434000CDF36D /* MainTabBarController.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
 		BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */; };
 /* End PBXBuildFile section */
@@ -58,6 +63,12 @@
 		73C6E9AB1DEBF94500CDF36D /* NetworkData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkData.m; sourceTree = "<group>"; };
 		73C6E9AD1DEBF95700CDF36D /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		73C6E9AE1DEBF95700CDF36D /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		73C6E9B71DEC407700CDF36D /* Word.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Word.storyboard; sourceTree = "<group>"; };
+		73C6E9B91DEC408600CDF36D /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		73C6E9BB1DEC409500CDF36D /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
+		73C6E9BD1DEC412A00CDF36D /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		73C6E9BF1DEC434000CDF36D /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		73C6E9C01DEC434000CDF36D /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordNavigationController.h; sourceTree = "<group>"; };
 		BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordNavigationController.m; sourceTree = "<group>"; };
@@ -109,11 +120,17 @@
 			children = (
 				73C6E97B1DEBE68400CDF36D /* AppDelegate.h */,
 				73C6E97C1DEBE68400CDF36D /* AppDelegate.m */,
+				73C6E9BF1DEC434000CDF36D /* MainTabBarController.h */,
+				73C6E9C01DEC434000CDF36D /* MainTabBarController.m */,
 				73C6E97E1DEBE68400CDF36D /* ViewController.h */,
 				73C6E97F1DEBE68400CDF36D /* ViewController.m */,
 				BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */,
 				BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */,
 				73C6E9811DEBE68400CDF36D /* Main.storyboard */,
+				73C6E9BD1DEC412A00CDF36D /* Home.storyboard */,
+				73C6E9B71DEC407700CDF36D /* Word.storyboard */,
+				73C6E9B91DEC408600CDF36D /* Search.storyboard */,
+				73C6E9BB1DEC409500CDF36D /* User.storyboard */,
 				73C6E9841DEBE68400CDF36D /* Assets.xcassets */,
 				73C6E9B11DEBF96700CDF36D /* UserInfo */,
 				73C6E9B21DEBF97B00CDF36D /* NetWork */,
@@ -149,7 +166,6 @@
 		73C6E9A81DEBF4A900CDF36D /* ETC */ = {
 			isa = PBXGroup;
 			children = (
-				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
 				73C6E99B1DEBEFDB00CDF36D /* UserViewController.h */,
 				73C6E99C1DEBEFDB00CDF36D /* UserViewController.m */,
 				73C6E99E1DEBEFE600CDF36D /* SearchViewController.h */,
@@ -162,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
+				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
 				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
 				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
 				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
@@ -259,9 +276,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73C6E9BE1DEC412A00CDF36D /* Home.storyboard in Resources */,
 				73C6E9881DEBE68400CDF36D /* LaunchScreen.storyboard in Resources */,
 				73C6E9851DEBE68400CDF36D /* Assets.xcassets in Resources */,
+				73C6E9B81DEC407700CDF36D /* Word.storyboard in Resources */,
 				73C6E9831DEBE68400CDF36D /* Main.storyboard in Resources */,
+				73C6E9BA1DEC408600CDF36D /* Search.storyboard in Resources */,
+				73C6E9BC1DEC409500CDF36D /* User.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +352,7 @@
 				73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */,
 				73C6E97D1DEBE68400CDF36D /* AppDelegate.m in Sources */,
 				73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */,
+				73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */,
 				73C6E99D1DEBEFDB00CDF36D /* UserViewController.m in Sources */,
 				73C6E99A1DEBEFAD00CDF36D /* WriteViewController.m in Sources */,
 				73C6E97A1DEBE68400CDF36D /* main.m in Sources */,
