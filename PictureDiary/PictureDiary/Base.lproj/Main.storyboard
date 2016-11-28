@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ILR-t6-bCw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -45,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="991" y="134"/>
         </scene>
-        <!--Item 2-->
+        <!--Write View Controller-->
         <scene sceneID="6at-lo-PlT">
             <objects>
                 <viewController id="lPt-D7-HF4" customClass="WriteViewController" sceneMemberID="viewController">
@@ -58,13 +58,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="MhC-hW-NWr"/>
+                    <tabBarItem key="tabBarItem" title="" image="word" selectedImage="word" id="MhC-hW-NWr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMk-hr-nF0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2944" y="445"/>
         </scene>
-        <!--Item-->
+        <!--User View Controller-->
         <scene sceneID="FuC-tx-Klc">
             <objects>
                 <viewController id="CT9-BI-sje" customClass="UserViewController" sceneMemberID="viewController">
@@ -77,13 +77,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="IXx-Mq-LZd"/>
+                    <tabBarItem key="tabBarItem" title="" image="search" selectedImage="search" id="IXx-Mq-LZd"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ESR-bU-jgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2950" y="1174"/>
         </scene>
-        <!--Item-->
+        <!--Search View Controller-->
         <scene sceneID="g7S-Cd-Xhd">
             <objects>
                 <viewController id="MHF-xF-i07" customClass="SearchViewController" sceneMemberID="viewController">
@@ -96,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Che-ox-NaU"/>
+                    <tabBarItem key="tabBarItem" title="" image="user" selectedImage="user" id="Che-ox-NaU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TMa-E8-6vY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -185,11 +185,11 @@
             </objects>
             <point key="canvasLocation" x="1989" y="119"/>
         </scene>
-        <!--Item 1-->
+        <!--Navigation Controller-->
         <scene sceneID="a9l-nJ-43O">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="r4U-Zl-1Db" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" id="u2a-YJ-yIa"/>
+                    <tabBarItem key="tabBarItem" title="" image="home" selectedImage="home" id="u2a-YJ-yIa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rSB-WA-5E8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -205,4 +205,10 @@
             <point key="canvasLocation" x="2943.1999999999998" y="-210.04497751124438"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home" width="25" height="25"/>
+        <image name="search" width="25" height="25"/>
+        <image name="user" width="25" height="25"/>
+        <image name="word" width="25" height="25"/>
+    </resources>
 </document>
