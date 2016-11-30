@@ -1,23 +1,22 @@
 //
-//  MainViewController.m
+//  MainTabBarController.m
 //  PictureDiary
 //
 //  Created by jakouk on 2016. 11. 28..
 //  Copyright © 2016년 jakouk. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "MainTabBarController.h"
 
-@interface MainViewController ()
+@interface MainTabBarController ()
 
 @end
 
-@implementation MainViewController
+@implementation MainTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
 }
 
 - (void)didReceiveMemoryWarning {
