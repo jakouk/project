@@ -12,10 +12,26 @@
 #import "ELCAssetTablePicker.h"
 #import "ELCAlbumPickerController.h"
 #import <CoreLocation/CoreLocation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @implementation ELCImagePickerController
 
 //Using auto synthesizers
+
+- (id)initImagePicker
+{
+    ELCAlbumPickerController *albumPicker = [[ELCAlbumPickerController alloc] initWithStyle:UITableViewStylePlain];
+    
+    self = [super initWithRootViewController:albumPicker];
+    if (self) {
+        self.maximumImagesCount = 4;
+        self.returnsImage = YES;
+        self.returnsOriginalImage = YES;
+        [albumPicker setParent:self];
+        self.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie];
+    }
+    return self;
+}
 
 - (id)init
 {
