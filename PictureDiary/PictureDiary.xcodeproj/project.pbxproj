@@ -33,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		73BB32EE1DEE9AB800426911 /* ELCImagePickerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerHeader.h; sourceTree = "<group>"; };
 		73C6E9751DEBE68400CDF36D /* PictureDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C6E9791DEBE68400CDF36D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		73C6E97B1DEBE68400CDF36D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				73C6E9791DEBE68400CDF36D /* main.m */,
+				73BB32EE1DEE9AB800426911 /* ELCImagePickerHeader.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -166,6 +168,8 @@
 		73C6E9A81DEBF4A900CDF36D /* ETC */ = {
 			isa = PBXGroup;
 			children = (
+				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
+				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
 				73C6E99B1DEBEFDB00CDF36D /* UserViewController.h */,
 				73C6E99C1DEBEFDB00CDF36D /* UserViewController.m */,
 				73C6E99E1DEBEFE600CDF36D /* SearchViewController.h */,
@@ -179,8 +183,6 @@
 			children = (
 				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
 				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
-				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
-				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
 				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
 				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
 				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,

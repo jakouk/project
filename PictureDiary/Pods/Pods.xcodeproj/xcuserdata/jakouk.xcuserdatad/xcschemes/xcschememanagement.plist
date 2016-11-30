@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ELCImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-PictureDiary.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>7381087AF6A7A4BDF6EA0EB2398A5105</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7DF68AF3B6BEB785886D7CF10706AA75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8AFA04D3961F93F00EC8499D49EF99F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9E033EDB5EC0819481B0546434FA577B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A3CB437297CB90FFD5FDD422CC54B2B8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EE0E1F8875BE3BB547A80F3BBAD3DA96</key>
 		<dict>
 			<key>primary</key>
 			<true/>

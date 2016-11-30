@@ -73,6 +73,20 @@ EOM
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAlbumPickerController.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAssetPicker.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAssetTablePicker.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/Overlay.png"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/Overlay@2x.png"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAlbumPickerController.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAssetPicker.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/ELCAssetTablePicker.xib"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/Overlay.png"
+  install_resource "ELCImagePickerController/Classes/ELCImagePicker/Resources/Overlay@2x.png"
+fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
