@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8AFA04D3961F93F00EC8499D49EF99F4'
-               BlueprintName = 'SDWebImage'
+               BlueprintIdentifier = '7DF68AF3B6BEB785886D7CF10706AA75'
+               BlueprintName = 'ELCImagePickerController'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSDWebImage.a'>
+               BuildableName = 'libELCImagePickerController.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
