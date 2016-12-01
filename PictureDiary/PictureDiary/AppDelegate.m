@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Word" bundle:nil];
     LoginViewController *loginViewController = [storyBoard instantiateInitialViewController];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,50 +22,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0U-6b-dyG">
-                                <rect key="frame" x="67" y="50" width="46" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Photo"/>
-                                <connections>
-                                    <action selector="launchController" destination="aMZ-gG-PK7" eventType="touchUpInside" id="uah-uf-RTU"/>
-                                </connections>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="제목" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-JW-WcT">
+                                <rect key="frame" x="16" y="20" width="343" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="3CL-2w-jw9"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="당신의 이야기를 들려주세요" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jSE-OA-5sp">
+                                <rect key="frame" x="16" y="76" width="343" height="312"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JID-xj-CcZ">
+                                <rect key="frame" x="16" y="408" width="343" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="fpa-jD-sa8"/>
+                                </constraints>
+                                <state key="normal" title="사진"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hao-cN-qDm">
-                                <rect key="frame" x="236" y="50" width="46" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUm-yi-Fvf">
+                                <rect key="frame" x="16" y="478" width="343" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Olo-vl-IhB"/>
+                                </constraints>
+                                <state key="normal" title="카메라"/>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64Y-vx-FMe">
-                                <rect key="frame" x="16" y="103" width="343" height="355"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="s7U-PR-NqY">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Vcs-sj-rQZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="olA-4b-8Cm">
+                                <rect key="frame" x="16" y="548" width="343" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anK-ym-Oov">
+                                        <rect key="frame" x="0.0" y="0.0" width="161.5" height="50"/>
+                                        <color key="backgroundColor" red="1" green="0.0187217119" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="취소">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD7-Qo-NMv">
+                                        <rect key="frame" x="181.5" y="0.0" width="161.5" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="확인">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="f4y-Iu-T3y"/>
+                                </constraints>
+                            </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kP8-g4-oKA">
+                                <rect key="frame" x="16" y="388" width="343" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="C2y-2v-X2R"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="jSE-OA-5sp" firstAttribute="trailing" secondItem="kp0-7e-nsR" secondAttribute="trailingMargin" id="2pM-ws-IFW"/>
+                            <constraint firstItem="JID-xj-CcZ" firstAttribute="trailing" secondItem="kp0-7e-nsR" secondAttribute="trailingMargin" id="9Ci-5c-vUL"/>
+                            <constraint firstItem="jSE-OA-5sp" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="AeU-QN-cea"/>
+                            <constraint firstItem="JID-xj-CcZ" firstAttribute="top" secondItem="kP8-g4-oKA" secondAttribute="bottom" constant="20" id="C3A-gl-jRI"/>
+                            <constraint firstItem="VUm-yi-Fvf" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="ELA-Ji-n56"/>
+                            <constraint firstItem="olA-4b-8Cm" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="LAn-KJ-XQW"/>
+                            <constraint firstItem="kP8-g4-oKA" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="MAJ-nA-RwH"/>
+                            <constraint firstItem="olA-4b-8Cm" firstAttribute="top" secondItem="VUm-yi-Fvf" secondAttribute="bottom" constant="20" id="O0M-cJ-9bR"/>
+                            <constraint firstItem="jSE-OA-5sp" firstAttribute="top" secondItem="1dg-JW-WcT" secondAttribute="bottom" constant="20" id="Oqw-9z-kkY"/>
+                            <constraint firstItem="zNZ-He-Tha" firstAttribute="top" secondItem="olA-4b-8Cm" secondAttribute="bottom" constant="20" id="WGp-0l-F6I"/>
+                            <constraint firstItem="1dg-JW-WcT" firstAttribute="top" secondItem="0Yb-AN-Gs0" secondAttribute="bottom" id="Yjk-CI-Hbc"/>
+                            <constraint firstItem="1dg-JW-WcT" firstAttribute="trailing" secondItem="kp0-7e-nsR" secondAttribute="trailingMargin" id="ZC9-M7-Rcx"/>
+                            <constraint firstItem="kP8-g4-oKA" firstAttribute="top" secondItem="jSE-OA-5sp" secondAttribute="bottom" id="cMa-81-JCR"/>
+                            <constraint firstItem="VUm-yi-Fvf" firstAttribute="top" secondItem="JID-xj-CcZ" secondAttribute="bottom" constant="20" id="gx9-QZ-dvi"/>
+                            <constraint firstItem="kP8-g4-oKA" firstAttribute="trailing" secondItem="kp0-7e-nsR" secondAttribute="trailingMargin" id="h53-Od-g2Y"/>
+                            <constraint firstItem="1dg-JW-WcT" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="i4Y-ho-hFL"/>
+                            <constraint firstItem="JID-xj-CcZ" firstAttribute="leading" secondItem="kp0-7e-nsR" secondAttribute="leadingMargin" id="nEQ-Mr-0CN"/>
+                            <constraint firstItem="VUm-yi-Fvf" firstAttribute="trailing" secondItem="kp0-7e-nsR" secondAttribute="trailingMargin" id="udm-Cy-os0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="olA-4b-8Cm" secondAttribute="trailing" id="xtl-Ol-8CZ"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Gk4-2A-ZGy" appends="YES" id="1zJ-g0-V46"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="word" id="JkO-U6-PZh"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="imageCollectionView" destination="64Y-vx-FMe" id="SEM-9l-3HX"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1s-g3-sMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Gk4-2A-ZGy"/>
             </objects>
             <point key="canvasLocation" x="156" y="144.3778110944528"/>
         </scene>
