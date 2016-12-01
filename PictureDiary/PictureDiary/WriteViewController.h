@@ -11,7 +11,6 @@
 
 @interface WriteViewController : UIViewController <ELCImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 //@property (nonatomic, copy) NSMutableArray *chosenImages;
 @property (nonatomic) NSMutableArray *chosenImages;
 

@@ -12,9 +12,12 @@
 
 @interface WriteViewController ()
 
-//@property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
-
-@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
+@property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
+//@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeight;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
+@property (weak, nonatomic) IBOutlet UITextField *objectTextfiled;
 
 
 //deleteImage
@@ -46,6 +49,7 @@
     elcPicker.imagePickerDelegate = self;
     
     [self presentViewController:elcPicker animated:YES completion:nil];
+    
 }
 
 - (void)displayPickerForGroup:(ALAssetsGroup *)group
@@ -84,96 +88,102 @@
 //// 선택하면 나오는 화면
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
+    
+    NSLog(@"info count : %ld ",info.count);
+    if (info.count == 0) {
+        self.scrollViewHeight.constant = 0;
+    } else {
+        self.scrollViewHeight.constant = self.view.frame.size.width/3;
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    // _scrollView subviews의 모든 요소 삭제
     for (UIView *v in [_scrollView subviews]) {
         [v removeFromSuperview];
     }
     
-    //_scrollView.frame을 workingFrame에 대입
-    CGRect workingFrame = _scrollView.frame;
+    NSLog(@"self.scrollView.frame.size.height : %lf",self.scrollView.frame.size.height);
     
-    //첫번째 사진의 x위치는 0
+    CGRect workingFrame = CGRectMake(0, 20, self.view.frame.size.width/3 - 20, self.view.frame.size.width/3 - 20);
     workingFrame.origin.x = 0;
-    
-    //info에 이미지 데이터 있음. 그 데이터 images에 넣음.
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
     
-    //dict는 NSDictionary 이다.
     for (NSDictionary *dict in info) {
         
-        //ALAssetTypePhoto의 타입이 UIImagePickerControllerMediaType이면 실행됨.
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             
-            //UIImagePickerControllerOriginalImage이면 실행
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                
-                //images라는 dictionary에 image를 넣음.
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                 [images addObject:image];
                 
-                //imageview
-                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+                UIImageView *imageview = [[UIImageView alloc] init];
+                [imageview setImage:image];
                 [imageview setContentMode:UIViewContentModeScaleAspectFit];
                 imageview.frame = workingFrame;
                 
-                //추가함. ( for 라서 계속 돌면서 추가함 )
                 [_scrollView addSubview:imageview];
                 
-                //x위치 재지정
-                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width+20;
+                
             } else {
-                //UIImagePickerControllerOriginalImage아니면 실행
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
             
-            //video 타입이면
         } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
             
-            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                
-                [images addObject:image];
-                
-                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
-                [imageview setContentMode:UIViewContentModeScaleAspectFit];
-                imageview.frame = workingFrame;
-                
-                [_scrollView addSubview:imageview];
-                
-                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
-            } else {
-                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-            }
+//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+//                
+//                [images addObject:image];
+//                
+//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+//                [imageview setContentMode:UIViewContentModeScaleToFill];
+//                imageview.frame = workingFrame;
+//                
+//                [_scrollView addSubview:imageview];
+//                
+//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+//            } else {
+//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+//            }
         } else {
             NSLog(@"Uknown asset type");
         }
     }
-    
-    //selected = images
     self.chosenImages = images;
-    
-    //paging = YES, setContentSize = workingFram.origin.x, workingFrame.size.height
-    [_scrollView setPagingEnabled:YES];
+    [_scrollView setPagingEnabled:NO];
     [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
 }
 
+//imagePicker cancel
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//cell numbers
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+//cancel Button
+- (IBAction)touchupInsideCancelButton:(UIButton *)sender {
     
-    if (self.chosenImages.count == 0) {
-        return 1;
-    } else {
-        return self.chosenImages.count + 1;
-    }
+    self.scrollViewHeight.constant = 0;
+    self.subjectTextfiled.text = @"";
+    self.objectTextfiled.text = @"";
 }
 
+//CheckButton
+- (IBAction)touchupInsideCheckButton:(UIButton *)sender {
+    
+    
+}
 
+//deleteButton
+- (void)touchupInsideImageDeleteButton:(UIButton *)sender {
+    
+}
+
+- (IBAction)touchupInsideBackground:(UITapGestureRecognizer *)sender {
+    
+    [self.objectTextfiled resignFirstResponder];
+    [self.subjectTextfiled resignFirstResponder];
+}
 
 @end

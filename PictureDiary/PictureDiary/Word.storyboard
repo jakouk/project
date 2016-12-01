@@ -43,6 +43,9 @@
                                     <constraint firstAttribute="height" constant="50" id="fpa-jD-sa8"/>
                                 </constraints>
                                 <state key="normal" title="사진"/>
+                                <connections>
+                                    <action selector="launchController" destination="aMZ-gG-PK7" eventType="touchUpInside" id="hz4-vL-MnQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUm-yi-Fvf">
                                 <rect key="frame" x="16" y="478" width="343" height="50"/>
@@ -60,6 +63,9 @@
                                         <state key="normal" title="취소">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="touchupInsideCancelButton:" destination="aMZ-gG-PK7" eventType="touchUpInside" id="X8i-zY-Yv3"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD7-Qo-NMv">
                                         <rect key="frame" x="181.5" y="0.0" width="161.5" height="50"/>
@@ -67,6 +73,9 @@
                                         <state key="normal" title="확인">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="touchupInsideCheckButton:" destination="aMZ-gG-PK7" eventType="touchUpInside" id="G5R-pd-a3h"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -109,9 +118,19 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="word" id="JkO-U6-PZh"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="objectTextfiled" destination="jSE-OA-5sp" id="kpH-2t-UEY"/>
+                        <outlet property="scrollView" destination="kP8-g4-oKA" id="fKQ-mf-C1X"/>
+                        <outlet property="scrollViewHeight" destination="C2y-2v-X2R" id="JHR-kL-aeT"/>
+                        <outlet property="subjectTextfiled" destination="1dg-JW-WcT" id="4KE-mD-FTJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1s-g3-sMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Gk4-2A-ZGy"/>
+                <tapGestureRecognizer id="Gk4-2A-ZGy">
+                    <connections>
+                        <action selector="touchupInsideBackground:" destination="aMZ-gG-PK7" id="ryb-YU-Vh1"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="156" y="144.3778110944528"/>
         </scene>
