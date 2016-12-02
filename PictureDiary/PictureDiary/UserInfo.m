@@ -10,4 +10,17 @@
 
 @implementation UserInfo
 
++ (instancetype)sharedUserInfo {
+    
+    static UserInfo *info = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        if (info == nil) {
+            info = [[UserInfo alloc] init];
+        }
+    });
+    return info;
+}
+
 @end
