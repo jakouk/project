@@ -92,4 +92,8 @@ static NSString *JSONSuccessValue = @"success";
     
 }
 
++ (void)requestJoinData {
+    
+}
+
 @end

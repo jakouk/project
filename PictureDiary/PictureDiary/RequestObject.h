@@ -11,5 +11,7 @@
 @interface RequestObject : NSObject
 
 + (void)requestUserData;
++ (void)requestJoinData;
+
 
 @end
