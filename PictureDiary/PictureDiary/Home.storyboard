@@ -23,10 +23,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="wg5-j6-05S"/>
+                    <connections>
+                        <segue destination="iez-Ea-g75" kind="push" id="wcL-6u-F8n"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJd-Hk-z9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="644" y="-167.76611694152925"/>
+        </scene>
+        <!--Read-->
+        <scene sceneID="S93-vv-kYN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Read" id="iez-Ea-g75" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="JeM-FX-SWT"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k1K-It-Io4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1493" y="-141"/>
         </scene>
         <!--Word Navigation Controller-->
         <scene sceneID="cie-KD-c9r">

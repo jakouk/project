@@ -11,7 +11,6 @@
 
 @interface WriteViewController : UIViewController <ELCImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 //@property (nonatomic, copy) NSMutableArray *chosenImages;
 @property (nonatomic) NSMutableArray *chosenImages;
 
@@ -20,7 +19,7 @@
 
 // a special picker controller that limits itself to a single album, and lets the user
 // pick just one image from that album.
-- (IBAction)launchSpecialController;
+//- (IBAction)launchSpecialController;
 
 
 @end
