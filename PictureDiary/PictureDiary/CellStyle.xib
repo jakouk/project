@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="esr-rO-aSO" customClass="CustomCell">
+            <rect key="frame" x="0.0" y="0.0" width="483" height="301"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="483" height="301"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sna-Ej-aXq">
+                        <rect key="frame" x="0.0" y="0.0" width="483" height="301"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CmV-2m-dMn">
+                        <rect key="frame" x="0.0" y="-10" width="483" height="321"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.79237607758620687" colorSpace="calibratedRGB"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nqd-zi-KbZ">
+                        <rect key="frame" x="42" y="125" width="398" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="KXq-Ed-ABu"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="45"/>
+                        <color key="textColor" white="1" alpha="0.80616918100000001" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Git-7t-EGF">
+                        <rect key="frame" x="53" y="171" width="377" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="jSz-FF-uwA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="26"/>
+                        <color key="textColor" white="1" alpha="0.80616918100000001" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Git-7t-EGF" secondAttribute="trailing" constant="53" id="24C-ih-rYs"/>
+                <constraint firstAttribute="bottom" secondItem="Sna-Ej-aXq" secondAttribute="bottom" id="3kk-J5-YOD"/>
+                <constraint firstItem="Git-7t-EGF" firstAttribute="leading" secondItem="esr-rO-aSO" secondAttribute="leading" constant="53" id="5ha-hb-8qe"/>
+                <constraint firstItem="Nqd-zi-KbZ" firstAttribute="leading" secondItem="esr-rO-aSO" secondAttribute="leading" constant="42" id="9rq-6W-SIG"/>
+                <constraint firstItem="Sna-Ej-aXq" firstAttribute="leading" secondItem="esr-rO-aSO" secondAttribute="leading" id="FYQ-VE-AZa"/>
+                <constraint firstItem="CmV-2m-dMn" firstAttribute="top" secondItem="esr-rO-aSO" secondAttribute="top" constant="-10" id="QHR-SV-1MQ"/>
+                <constraint firstItem="Git-7t-EGF" firstAttribute="centerY" secondItem="esr-rO-aSO" secondAttribute="centerY" constant="42.5" id="QeB-En-mRx"/>
+                <constraint firstAttribute="trailing" secondItem="Sna-Ej-aXq" secondAttribute="trailing" id="WIx-Df-stF"/>
+                <constraint firstAttribute="trailing" secondItem="CmV-2m-dMn" secondAttribute="trailing" id="a1C-ws-Qmr"/>
+                <constraint firstAttribute="bottom" secondItem="CmV-2m-dMn" secondAttribute="bottom" constant="-10" id="bmA-wG-A48"/>
+                <constraint firstAttribute="trailing" secondItem="Nqd-zi-KbZ" secondAttribute="trailing" constant="43" id="lVG-zX-Sai"/>
+                <constraint firstItem="CmV-2m-dMn" firstAttribute="leading" secondItem="esr-rO-aSO" secondAttribute="leading" id="t9U-V9-xlm"/>
+                <constraint firstItem="Sna-Ej-aXq" firstAttribute="top" secondItem="esr-rO-aSO" secondAttribute="top" id="wfe-1J-lXs"/>
+                <constraint firstItem="Nqd-zi-KbZ" firstAttribute="centerY" secondItem="esr-rO-aSO" secondAttribute="centerY" id="zhc-M5-gOa"/>
+            </constraints>
+            <connections>
+                <outlet property="detailLabel" destination="Git-7t-EGF" id="80l-vs-f54"/>
+                <outlet property="imageView" destination="Sna-Ej-aXq" id="TFp-oe-fFa"/>
+                <outlet property="nameLabel" destination="Nqd-zi-KbZ" id="0zl-Zo-cdO"/>
+                <outlet property="overView" destination="CmV-2m-dMn" id="e06-F9-ab4"/>
+            </connections>
+            <point key="canvasLocation" x="43.5" y="84.5"/>
+        </collectionViewCell>
+    </objects>
+</document>
