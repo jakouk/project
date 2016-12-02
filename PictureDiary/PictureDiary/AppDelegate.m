@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 #import "MainTabBarController.h"
 
 @interface AppDelegate ()
@@ -17,11 +18,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Word" bundle:nil];
+    LoginViewController *loginViewController = [storyBoard instantiateInitialViewController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.rootViewController = navigationController;
     
-    
-    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

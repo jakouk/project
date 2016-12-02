@@ -9,6 +9,7 @@
 #import "SearchViewController.h"
 
 @interface SearchViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 
 @end
 

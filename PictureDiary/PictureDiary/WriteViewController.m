@@ -10,13 +10,15 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/PHPhotoLibrary.h>
 
-@interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface WriteViewController ()
 
 @property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
+//@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeight;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
+@property (weak, nonatomic) IBOutlet UITextField *objectTextfiled;
 
-@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *imageCollectionView;
 
 //deleteImage
 @property UIButton *deleteButton;
@@ -28,9 +30,8 @@
 //Using generated synthesizers
 
 - (void)viewDidLoad {
-    self.imageCollectionView.delegate = self;
-    self.imageCollectionView.dataSource = self;
     self.chosenImages = [[NSMutableArray alloc] init];
+    NSLog(@"%lf",self.view.frame.size.height);
 }
 
 
@@ -48,29 +49,7 @@
     elcPicker.imagePickerDelegate = self;
     
     [self presentViewController:elcPicker animated:YES completion:nil];
-}
-
-- (IBAction)launchSpecialController
-{
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    self.specialLibrary = library;
-    NSMutableArray *groups = [NSMutableArray array];
-    [_specialLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        if (group) {
-            [groups addObject:group];
-        } else {
-            // this is the end
-            [self displayPickerForGroup:[groups objectAtIndex:0]];
-        }
-    } failureBlock:^(NSError *error) {
-        self.chosenImages = nil;
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Album Error: %@ - %@", [error localizedDescription], [error localizedRecoverySuggestion]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        
-        NSLog(@"A problem occured %@", [error description]);
-        // an error here means that the asset groups were inaccessable.
-        // Maybe the user or system preferences refused access.
-    }];
+    
 }
 
 - (void)displayPickerForGroup:(ALAssetsGroup *)group
@@ -106,137 +85,105 @@
 #pragma mark ELCImagePickerControllerDelegate Methods
 
 
-// 선택하면 나오는 화면
+//// 선택하면 나오는 화면
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
+    
+    NSLog(@"info count : %ld ",info.count);
+    if (info.count == 0) {
+        self.scrollViewHeight.constant = 0;
+    } else {
+        self.scrollViewHeight.constant = self.view.frame.size.width/3;
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    // _scrollView subviews의 모든 요소 삭제
     for (UIView *v in [_scrollView subviews]) {
         [v removeFromSuperview];
     }
     
-    //_scrollView.frame을 workingFrame에 대입
-    CGRect workingFrame = _scrollView.frame;
+    NSLog(@"self.scrollView.frame.size.height : %lf",self.scrollView.frame.size.height);
     
-    //첫번째 사진의 x위치는 0
+    CGRect workingFrame = CGRectMake(0, 20, self.view.frame.size.width/3 - 20, self.view.frame.size.width/3 - 20);
     workingFrame.origin.x = 0;
-    
-    //info에 이미지 데이터 있음. 그 데이터 images에 넣음.
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
     
-    //dict는 NSDictionary 이다.
     for (NSDictionary *dict in info) {
         
-        //ALAssetTypePhoto의 타입이 UIImagePickerControllerMediaType이면 실행됨.
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             
-            //UIImagePickerControllerOriginalImage이면 실행
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                
-                //images라는 dictionary에 image를 넣음.
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                 [images addObject:image];
                 
-                //imageview
-                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+                UIImageView *imageview = [[UIImageView alloc] init];
+                [imageview setImage:image];
                 [imageview setContentMode:UIViewContentModeScaleAspectFit];
                 imageview.frame = workingFrame;
                 
-                //추가함. ( for 라서 계속 돌면서 추가함 )
                 [_scrollView addSubview:imageview];
                 
-                //x위치 재지정
-                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width+20;
+                
             } else {
-                //UIImagePickerControllerOriginalImage아니면 실행
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
             
-            //video 타입이면
         } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
             
-            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                
-                [images addObject:image];
-                
-                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
-                [imageview setContentMode:UIViewContentModeScaleAspectFit];
-                imageview.frame = workingFrame;
-                
-                [_scrollView addSubview:imageview];
-                
-                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
-            } else {
-                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-            }
+//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+//                
+//                [images addObject:image];
+//                
+//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+//                [imageview setContentMode:UIViewContentModeScaleToFill];
+//                imageview.frame = workingFrame;
+//                
+//                [_scrollView addSubview:imageview];
+//                
+//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+//            } else {
+//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+//            }
         } else {
             NSLog(@"Uknown asset type");
         }
     }
-    
-    //선택된 사진 = images
     self.chosenImages = images;
-    [self.imageCollectionView reloadData];
-    
-    //paging = YES, setContentSize = workingFram.origin.x, workingFrame.size.height
-    [_scrollView setPagingEnabled:YES];
+    [_scrollView setPagingEnabled:NO];
     [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
 }
 
+//imagePicker cancel
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//cell 개수
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.chosenImages.count;
+//cancel Button
+- (IBAction)touchupInsideCancelButton:(UIButton *)sender {
+    
+    self.scrollViewHeight.constant = 0;
+    self.subjectTextfiled.text = @"";
+    self.objectTextfiled.text = @"";
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//CheckButton
+- (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
-    UICollectionViewCell *cell = [self.imageCollectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.backgroundColor = [UIColor colorWithWhite:1.000 alpha:0.500];
-    [imageView setFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    imageView.image = [self.chosenImages objectAtIndex:indexPath.row];
-    [cell.contentView addSubview:imageView];
-    
-    //삭제 버튼 위치, 크기 지정
-    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deleteButton setImage:[UIImage imageNamed:@"photo_delete"] forState:UIControlStateNormal];
-    deleteButton.frame = CGRectMake(cell.frame.size.width-36, 0, 36, 36);
-    deleteButton.imageEdgeInsets = UIEdgeInsetsMake(-10, 0, 0, -10);
-    deleteButton.alpha = 0.6;
-    deleteButton.tag = indexPath.row;
-    [cell.contentView addSubview:deleteButton];
-    
-    [deleteButton addTarget:self action:@selector(touchUpinsideDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
 }
 
-//셀 크기 기정
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.view.frame.size.width/3- 30, self.view.frame.size.width/3- 30);
+//deleteButton
+- (void)touchupInsideImageDeleteButton:(UIButton *)sender {
+    
 }
 
-//내부 여백
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
-}
-
-//셀간의 최소간격
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
-}
-
-- (void)touchUpinsideDeleteButton:(UIButton *)sender {
-    [self.chosenImages removeObjectAtIndex:sender.tag];
-    [self.imageCollectionView reloadData];
+- (IBAction)touchupInsideBackground:(UITapGestureRecognizer *)sender {
+    
+    [self.objectTextfiled resignFirstResponder];
+    [self.subjectTextfiled resignFirstResponder];
 }
 
 @end
