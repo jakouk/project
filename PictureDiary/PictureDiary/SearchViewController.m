@@ -7,6 +7,7 @@
 //
 
 #import "SearchViewController.h"
+#import "RequestObject.h";
 
 @interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
@@ -74,6 +75,12 @@
     
     
 }
+
+- (IBAction)networkTest:(UIButton *)sender {
+    
+    [RequestObject requestUserData];
+}
+
 
 /*
 #pragma mark - Navigation
