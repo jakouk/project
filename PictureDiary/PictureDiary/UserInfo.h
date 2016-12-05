@@ -10,4 +10,15 @@
 
 @interface UserInfo : NSObject
 
+@property NSString *userEmail;
+@property NSString *userPassword;
+@property NSString *userId;
+@property NSString *userPass;
+
+@property NSString *userToken;
+
+@property NSDictionary *userData;
+
++ (instancetype)sharedUserInfo;
+
 @end

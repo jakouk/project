@@ -28,6 +28,8 @@
 		73C6E9BC1DEC409500CDF36D /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9BB1DEC409500CDF36D /* User.storyboard */; };
 		73C6E9BE1DEC412A00CDF36D /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9BD1DEC412A00CDF36D /* Home.storyboard */; };
 		73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9C01DEC434000CDF36D /* MainTabBarController.m */; };
+		73D621F41DF1BA51005AAF2A /* Read.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D621F31DF1BA51005AAF2A /* Read.storyboard */; };
+		73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D621F61DF1C474005AAF2A /* RequestObject.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
 		BB2520861DEFF55300AE2B70 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2520851DEFF55300AE2B70 /* CustomCell.m */; };
 		BB2520891DEFF57F00AE2B70 /* CollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2520881DEFF57F00AE2B70 /* CollectionLayout.m */; };
@@ -73,6 +75,9 @@
 		73C6E9BD1DEC412A00CDF36D /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		73C6E9BF1DEC434000CDF36D /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		73C6E9C01DEC434000CDF36D /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		73D621F31DF1BA51005AAF2A /* Read.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Read.storyboard; sourceTree = "<group>"; };
+		73D621F51DF1C474005AAF2A /* RequestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestObject.h; sourceTree = "<group>"; };
+		73D621F61DF1C474005AAF2A /* RequestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestObject.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2520841DEFF55300AE2B70 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		BB2520851DEFF55300AE2B70 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 				73C6E97F1DEBE68400CDF36D /* ViewController.m */,
 				BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */,
 				BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */,
+				73D621F31DF1BA51005AAF2A /* Read.storyboard */,
 				73C6E9811DEBE68400CDF36D /* Main.storyboard */,
 				73C6E9BD1DEC412A00CDF36D /* Home.storyboard */,
 				73C6E9B71DEC407700CDF36D /* Word.storyboard */,
@@ -212,6 +218,8 @@
 			children = (
 				73C6E9AA1DEBF94500CDF36D /* NetworkData.h */,
 				73C6E9AB1DEBF94500CDF36D /* NetworkData.m */,
+				73D621F51DF1C474005AAF2A /* RequestObject.h */,
+				73D621F61DF1C474005AAF2A /* RequestObject.m */,
 			);
 			name = NetWork;
 			sourceTree = "<group>";
@@ -301,6 +309,7 @@
 			files = (
 				73C6E9BE1DEC412A00CDF36D /* Home.storyboard in Resources */,
 				73C6E9881DEBE68400CDF36D /* LaunchScreen.storyboard in Resources */,
+				73D621F41DF1BA51005AAF2A /* Read.storyboard in Resources */,
 				73C6E9851DEBE68400CDF36D /* Assets.xcassets in Resources */,
 				73C6E9B81DEC407700CDF36D /* Word.storyboard in Resources */,
 				73C6E9831DEBE68400CDF36D /* Main.storyboard in Resources */,
@@ -376,6 +385,7 @@
 				73C6E9941DEBEF8B00CDF36D /* JoinViewController.m in Sources */,
 				73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */,
 				73C6E97D1DEBE68400CDF36D /* AppDelegate.m in Sources */,
+				73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */,
 				73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */,
 				BB2520891DEFF57F00AE2B70 /* CollectionLayout.m in Sources */,
 				73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */,

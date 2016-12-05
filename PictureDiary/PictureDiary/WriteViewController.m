@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeight;
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
 @property (weak, nonatomic) IBOutlet UITextField *objectTextfiled;
+//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
 
 //deleteImage
@@ -30,10 +31,19 @@
 //Using generated synthesizers
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+//    NSLog(@"viewDidLoad");
+//    self.backgroundImage.image = [UIImage imageNamed:@"christmas"];
+//    [self.view addSubview:self.backgroundImage];
+    
     self.chosenImages = [[NSMutableArray alloc] init];
     NSLog(@"%lf",self.view.frame.size.height);
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    NSLog(@"awakeFromNib");
+}
 
 - (IBAction)launchController
 {
