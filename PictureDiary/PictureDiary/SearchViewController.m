@@ -7,11 +7,17 @@
 //
 
 #import "SearchViewController.h"
-#import "RequestObject.h";
+#import "RequestObject.h"
 
 @interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
+
+
+@property (weak, nonatomic) IBOutlet UITextField *email;
+@property (weak, nonatomic) IBOutlet UITextField *pass;
+
+@property (weak, nonatomic) IBOutlet UITextField *username;
 
 
 
@@ -82,6 +88,15 @@
 - (IBAction)networkTest:(UIButton *)sender {
     
     [RequestObject requestUserData];
+}
+
+//join Test
+- (IBAction)joinTest:(UIButton *)sender {
+    
+    NSString *userId = self.email.text;
+    NSString *userName = self.username.text;
+    NSString *pass = self.pass.text;
+    [RequestObject requestJoinData:userId userPass:pass userName:userName];
 }
 
 

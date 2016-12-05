@@ -29,6 +29,7 @@ static NSString *JSONSuccessValue = @"success";
 
 @implementation RequestObject
 
+//POSTtype make method
 + (NSURL *)requestURL:(RequestType)type param:(NSDictionary *)paramDic {
     
     NSMutableString *urlString = [baseURLString mutableCopy];
@@ -40,7 +41,6 @@ static NSString *JSONSuccessValue = @"success";
             return nil;
             break;
     }
-    
     if ([paramDic count]) {
         NSMutableString *paramString = [NSMutableString stringWithFormat:@"?"];
         
@@ -58,18 +58,18 @@ static NSString *JSONSuccessValue = @"success";
             }
             [paramString appendString:@"&"];
         }
-        
         [urlString appendString:paramString];
     }
-    
     return [NSURL URLWithString:urlString];
 }
 
+//ServerCheck
 + (void)requestUserData {
     
     NSURL *requestURL = [NSURL URLWithString:baseURLString];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     NSURL *URL = requestURL;
@@ -89,10 +89,48 @@ static NSString *JSONSuccessValue = @"success";
     }];
     
     [dataTask resume];
+}
+
+//requestJoin (POST)
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
+    
+    NSString *requestURL = [[self requestURL:RequestTypeJoin param:nil] absoluteString];
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] init];
+    
+    [bodyParams setObject:userName forKey:ParamNameUserNameKey];
+    [bodyParams setObject:userId forKey:ParamNameUserIDKey];
+    [bodyParams setObject:userPass forKey:ParamNameUserPassWordKey];
+    
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
+                                                                 URLString:requestURL
+                                                                 parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) { } error:nil];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [manager
+                  uploadTaskWithStreamedRequest:request
+                  progress:^(NSProgress * _Nonnull uploadProgress) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          NSLog(@"uploading... %lf %% completed",uploadProgress.fractionCompleted);
+                      });
+                  }
+                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                      
+                      NSDictionary *dic = responseObject;
+                      NSLog(@"%@",dic);
+                  }];
+    
+    [uploadTask resume];
+    
+    
     
 }
 
-+ (void)requestJoinData {
+//requestLogin
++(void)requestLoginData:(NSString *)userEmail userPass:(NSString *)userPass {
     
 }
 
