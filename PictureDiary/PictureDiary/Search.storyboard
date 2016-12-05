@@ -81,11 +81,22 @@
                     <connections>
                         <outlet property="mainCollection" destination="yDN-uh-To4" id="I2A-vS-0ji"/>
                         <outlet property="searchData" destination="ema-FS-5s6" id="6LA-dp-omz"/>
+                        <segue destination="Eyr-VR-L83" kind="push" id="pYH-GK-Wgq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zmu-Cr-xaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="160.80000000000001" y="173.16341829085459"/>
+        </scene>
+        <!--Read-->
+        <scene sceneID="KgI-AH-Ll4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Read" id="Eyr-VR-L83" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Nlc-9a-iIt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="63Y-4T-x3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="851" y="169"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="l1Y-kG-mob">
@@ -136,18 +147,42 @@
                                     <action selector="joinTest:" destination="glp-r7-EbA" eventType="touchUpInside" id="Z6n-3d-90z"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cCD-Zo-FYj">
+                                <rect key="frame" x="123" y="91" width="185" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P5V-c5-FrH">
+                                <rect key="frame" x="123" y="155" width="185" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fIN-d7-UOa">
+                                <rect key="frame" x="137" y="220" width="69" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="로그인 확인"/>
+                                <connections>
+                                    <action selector="loginTest:" destination="glp-r7-EbA" eventType="touchUpInside" id="2fa-cv-zMb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="email" destination="wqn-6k-KzO" id="VSP-Ja-j3d"/>
+                        <outlet property="loginEmail" destination="cCD-Zo-FYj" id="cU6-rz-6xZ"/>
+                        <outlet property="loginPass" destination="P5V-c5-FrH" id="Hhj-A7-gbZ"/>
                         <outlet property="pass" destination="fZ0-NV-P9d" id="MNh-NF-ZFc"/>
                         <outlet property="username" destination="8gM-7U-sfP" id="Gsl-bO-Vwo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vkj-Bm-Hzd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125.5999999999999" y="172.26386806596702"/>
+            <point key="canvasLocation" x="1908" y="173"/>
         </scene>
     </scenes>
     <resources>

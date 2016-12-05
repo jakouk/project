@@ -12,6 +12,6 @@
 
 + (void)requestUserData;
 + (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
-
++(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
 
 @end

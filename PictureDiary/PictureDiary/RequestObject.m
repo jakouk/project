@@ -130,7 +130,37 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestLogin
-+(void)requestLoginData:(NSString *)userEmail userPass:(NSString *)userPass {
++(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
+    
+    
+    NSString *requestURL = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/member/auth/login/";
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] init];
+    
+    [bodyParams setObject:userId forKey:ParamNameUserIDKey];
+    [bodyParams setObject:userPass forKey:ParamNameUserPassWordKey];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
+                                                                                              URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                                    } error:nil];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        NSLog(@"error : %@",error);
+        
+        if (responseObject) {
+            NSDictionary *dict = responseObject;
+            NSLog(@"dict %@",dict);
+        }
+        
+    }];
+    
+    [dataTask resume];
+    
+
     
 }
 

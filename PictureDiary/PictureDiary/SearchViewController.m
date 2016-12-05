@@ -13,12 +13,15 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
 
-
+//join Test
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *pass;
-
 @property (weak, nonatomic) IBOutlet UITextField *username;
 
+
+//login test
+@property (weak, nonatomic) IBOutlet UITextField *loginEmail;
+@property (weak, nonatomic) IBOutlet UITextField *loginPass;
 
 
 @end
@@ -99,7 +102,14 @@
     [RequestObject requestJoinData:userId userPass:pass userName:userName];
 }
 
-
+//login Test
+- (IBAction)loginTest:(UIButton *)sender {
+    
+    NSString *userId = self.loginEmail.text;
+    NSString *pass = self.loginPass.text;
+    [RequestObject requestLoginData:userId userPass:pass];
+    
+}
 
 
 /*
