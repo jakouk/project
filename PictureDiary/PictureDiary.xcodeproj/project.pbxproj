@@ -196,10 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				BB2520831DEFF50800AE2B70 /* Main */,
-				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
-				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
-				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
-				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
+				BBB1A6C11DF55144003F1E28 /* Read */,
+				BBB1A6C21DF55150003F1E28 /* Modified */,
 			);
 			name = Diary;
 			sourceTree = "<group>";
@@ -236,6 +234,24 @@
 				BB25208A1DEFF5A500AE2B70 /* CellStyle.xib */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		BBB1A6C11DF55144003F1E28 /* Read */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
+				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
+			);
+			name = Read;
+			sourceTree = "<group>";
+		};
+		BBB1A6C21DF55150003F1E28 /* Modified */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
+				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
+			);
+			name = Modified;
 			sourceTree = "<group>";
 		};
 		D83FF282BD27D2370D0FDB4F /* Frameworks */ = {
