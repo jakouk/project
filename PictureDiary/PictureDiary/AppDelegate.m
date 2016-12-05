@@ -16,17 +16,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-<<<<<<< HEAD
-=======
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Search" bundle:nil];
-    LoginViewController *loginViewController = [storyBoard instantiateInitialViewController];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = navigationController;
-    
-    [self.window makeKeyAndVisible];
->>>>>>> 416f96d4022b441d0141ceadbf72a6523d8fe8a5
     return YES;
 }
 
