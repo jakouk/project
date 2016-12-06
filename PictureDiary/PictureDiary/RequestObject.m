@@ -159,9 +159,32 @@ static NSString *JSONSuccessValue = @"success";
     }];
     
     [dataTask resume];
-    
+}
 
+//requestMain
++ (void)requestMainData {
     
 }
+
+//requestRead
++ (void)requestReadData {
+    
+}
+
+//reuqestModify
++ (void)requestModifyData {
+    
+}
+
+//requestWrite
++ (void)requestWriteData {
+    
+}
+
+//requestSearch
++ (void)requestSearch {
+    
+}
+
 
 @end
