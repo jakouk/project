@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate ()
 
@@ -19,9 +20,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateInitialViewController];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.rootViewController = loginViewController;
+    [self.window makeKeyAndVisible];
+    
+    // 페이스북 로그인 사용 위해 추가
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     return YES;
 }
 
+// 페이스북 로그인 사용 위해 추가
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    
+    BOOL handled =
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                   openURL:url
+                                         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+     ];
+    // Add any custom logic here.
+    return handled;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -41,7 +65,10 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // 페이스북 로그인 사용 위해 추가
+    [FBSDKAppEvents activateApp];
+
 }
 
 

@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp" translatesAutoresizingMaskIntoConstraints="NO" id="REt-Ge-J5u">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="w-7986" translatesAutoresizingMaskIntoConstraints="NO" id="REt-Ge-J5u">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
@@ -33,9 +33,6 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="REt-Ge-J5u" secondAttribute="bottom" id="yAw-td-kyT"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="backgroundImage" destination="REt-Ge-J5u" id="bVr-TX-iaS"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -53,13 +50,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pg0-Xv-hPy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="47930002" translatesAutoresizingMaskIntoConstraints="NO" id="Pg0-Xv-hPy">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JtQ-bZ-mpl">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -136,10 +129,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="47930002" width="512" height="772"/>
         <image name="home" width="25" height="25"/>
         <image name="search" width="25" height="25"/>
-        <image name="temp" width="501" height="756"/>
         <image name="user" width="25" height="25"/>
+        <image name="w-7986" width="375" height="667"/>
         <image name="word" width="25" height="25"/>
     </resources>
 </document>
