@@ -30,7 +30,11 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Search</string>
+<<<<<<< HEAD
+	<string>Home</string>
+=======
+	<string>Word</string>
+>>>>>>> 8cf240a832eb9455bc2fec21ab48b0aa0838d767
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
