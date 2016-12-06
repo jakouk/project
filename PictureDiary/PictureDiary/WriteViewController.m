@@ -10,7 +10,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/PHPhotoLibrary.h>
 
-@interface WriteViewController ()
+@interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
 //@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
@@ -23,6 +23,16 @@
 
 //deleteImage
 @property UIButton *deleteButton;
+
+
+
+
+//collectionView Image
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
+
+
+
 
 @end
 
@@ -195,5 +205,21 @@
     [self.objectTextfiled resignFirstResponder];
     [self.subjectTextfiled resignFirstResponder];
 }
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return 100;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    return cell;
+    
+}
+
+
+
 
 @end
