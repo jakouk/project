@@ -181,8 +181,6 @@
     
     NSString *emailString = [NSString stringWithFormat:@"%@",self.emailTextField.text];
     NSString *passwordString = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
-    
-
 }
 
 - (void)showErrorAlert {

@@ -11,6 +11,7 @@
 #import <Photos/PHPhotoLibrary.h>
 #import <Photos/PHAssetChangeRequest.h>
 #import <Photos/PHCollection.h>
+#import <Photos/PHImageManager.h>
 
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -68,6 +69,10 @@
     
     // 카메라 롤에 있는 사진을 가져온다.
     PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
+    
+    PHImageRequestOptions *options =[[PHImageRequestOptions alloc]init];
+    
+    options.synchronous = YES;
     
     for (NSInteger i = 0; i< assets.count; i++ ) {
     
