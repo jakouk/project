@@ -92,7 +92,9 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestJoin (POST)
-+ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
++ (BOOL)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
+    
+    __block BOOL isSuccesed = YES;
     
     NSString *requestURL = [[self requestURL:RequestTypeJoin param:nil] absoluteString];
     
@@ -118,20 +120,27 @@ static NSString *JSONSuccessValue = @"success";
                       });
                   }
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                      
+                    
                       NSDictionary *dic = responseObject;
-                      NSLog(@"%@",dic);
+                      NSString *password = [dic objectForKey:@"password"];
+                      
+                      NSLog(@"dic : %@",dic);
+                      
+                      if ( password == nil ) {
+                          isSuccesed = NO;
+                      }
+                      
                   }];
     
     [uploadTask resume];
     
-    
-    
+    return isSuccesed;
 }
 
 //requestLogin
-+(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
++(BOOL)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
     
+    __block BOOL isSuccessed = NO;
     
     NSString *requestURL = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/member/auth/login/";
     
@@ -148,20 +157,49 @@ static NSString *JSONSuccessValue = @"success";
                                                                     } error:nil];
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        
-        NSLog(@"error : %@",error);
-        
+    
         if (responseObject) {
-            NSDictionary *dict = responseObject;
-            NSLog(@"dict %@",dict);
+            
+            if ( error == NULL) {
+                isSuccessed = YES;
+                NSDictionary *dic = responseObject;
+                [[UserInfo sharedUserInfo] setUserToken:[dic objectForKey:@"key"]];
+                
+                
+            }
         }
         
     }];
     
     [dataTask resume];
     
+    return isSuccessed;
+}
 
+//requestMain
++ (void)requestMainData {
     
 }
+
+//requestRead
++ (void)requestReadData {
+    
+}
+
+//reuqestModify
++ (void)requestModifyData {
+    
+}
+
+//requestWrite
++ (void)requestWriteData {
+    
+}
+
+//requestSearch
++ (void)requestSearch {
+    
+}
+
 
 @end

@@ -9,11 +9,20 @@
 #import "WriteViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/PHPhotoLibrary.h>
+#import <Photos/PHAssetChangeRequest.h>
+#import <Photos/PHCollection.h>
+#import <Photos/PHImageManager.h>
 
-@interface WriteViewController ()
+@interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
-//@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
+
+//PHPhoto
+@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
+@property (nonatomic, strong)PHAssetChangeRequest *chageRequest;
+@property (nonatomic,strong)PHObjectPlaceholder *assetPlaceholder;
+
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeight;
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
@@ -24,6 +33,14 @@
 //deleteImage
 @property UIButton *deleteButton;
 
+
+//collectionView Image
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
+
+//photoArray
+@property (weak, nonatomic) NSMutableArray *photoArray;
+
+
 @end
 
 @implementation WriteViewController
@@ -32,12 +49,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSLog(@"viewDidLoad");
-//    self.backgroundImage.image = [UIImage imageNamed:@"christmas"];
-//    [self.view addSubview:self.backgroundImage];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    
+    self.collectionViewImage.dataSource = self;
+    self.collectionViewImage.delegate = self;
     
     self.chosenImages = [[NSMutableArray alloc] init];
     NSLog(@"%lf",self.view.frame.size.height);
+    
+    // 카메라 롤 앨범을 읽어온다.
+    PHFetchResult *smartFolderLists = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+                                                                               options:nil];
+    
+    PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[smartFolderLists firstObject];
+ //
+    
+    // 카메라 롤에 있는 사진을 가져온다.
+    PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
+    
+    PHImageRequestOptions *options =[[PHImageRequestOptions alloc]init];
+    
+    options.synchronous = YES;
+    
+    for (NSInteger i = 0; i< assets.count; i++ ) {
+    
+        UIImage *image = [assets objectAtIndex:i];
+        
+        
+        [self.photoArray addObject:image];
+        NSLog(@"image %@",image);
+        
+        NSLog(@"imageSave %ld",i);
+    }
+    
 }
 
 - (void)awakeFromNib {
@@ -141,21 +188,6 @@
             
         } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
             
-//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-//                
-//                [images addObject:image];
-//                
-//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
-//                [imageview setContentMode:UIViewContentModeScaleToFill];
-//                imageview.frame = workingFrame;
-//                
-//                [_scrollView addSubview:imageview];
-//                
-//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
-//            } else {
-//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-//            }
         } else {
             NSLog(@"Uknown asset type");
         }
@@ -190,10 +222,47 @@
     
 }
 
+//keyboard down
 - (IBAction)touchupInsideBackground:(UITapGestureRecognizer *)sender {
     
     [self.objectTextfiled resignFirstResponder];
     [self.subjectTextfiled resignFirstResponder];
+}
+
+//make cell number
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return self.photoArray.count;
+}
+
+//make cell
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    imageView.image = [self.photoArray objectAtIndex:indexPath.row];
+    [cell.contentView addSubview:imageView];
+    
+    NSLog(@"collectionView");
+    
+    return cell;
+    
+}
+
+//cell size
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake((self.view.frame.size.width - 35) /4, (self.view.frame.size.width - 35 )/4);
+}
+
+//in Spacing
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
+}
+
+//cell Spacing
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 5;
 }
 
 @end

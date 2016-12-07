@@ -197,26 +197,26 @@
     
     
     // 유저 정보가 유효할 경우
-//    if () {
-//        
-//        [RequestObject requestLoginData:email userPass:password];
-//        
-//        // MainViewController로 이동
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//            MainViewController *mainViewController = [[MainViewController alloc] init];
-//            delegate.window.rootViewController = mainViewController;
-//
-//        });
-//        
-//
-//    
-//    } else {
-//    
-//        [self showErrorAlert];
-//    }
-//    
+    //    if () {
+    //
+    //        [RequestObject requestLoginData:email userPass:password];
+    //
+    //        // MainViewController로 이동
+    //        dispatch_async(dispatch_get_main_queue(), ^{
+    //
+    //            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //            MainViewController *mainViewController = [[MainViewController alloc] init];
+    //            delegate.window.rootViewController = mainViewController;
+    //
+    //        });
+    //
+    //
+    //
+    //    } else {
+    //
+    //        [self showErrorAlert];
+    //    }
+    //
 }
 
 // 텍스트 필드 입력 내용 체크
@@ -239,14 +239,9 @@
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
     } else if () {
-        // 등록되지 않은 이메일
+        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"등록되지 않은 이메일입니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if () {
-        // 비밀번호 틀린 경우
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"비밀번호를 잘못 입력하셨습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
     }
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];

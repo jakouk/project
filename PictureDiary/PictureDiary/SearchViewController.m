@@ -99,7 +99,14 @@
     NSString *userId = self.email.text;
     NSString *userName = self.username.text;
     NSString *pass = self.pass.text;
-    [RequestObject requestJoinData:userId userPass:pass userName:userName];
+    BOOL succuess = [RequestObject requestJoinData:userId userPass:pass userName:userName];
+    
+    if (!succuess) {
+        NSLog(@" 생성  성공 ");
+    } else {
+        NSLog(@" 생성 실패 ");
+    }
+    
 }
 
 //login Test
@@ -107,8 +114,13 @@
     
     NSString *userId = self.loginEmail.text;
     NSString *pass = self.loginPass.text;
-    [RequestObject requestLoginData:userId userPass:pass];
+    BOOL succusee = [RequestObject requestLoginData:userId userPass:pass];
     
+    if (succusee) {
+        NSLog(@"로그인 성공");
+    } else {
+        NSLog(@"로그인 실패");
+    }
 }
 
 

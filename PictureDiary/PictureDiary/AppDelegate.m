@@ -62,7 +62,7 @@
     
     // 페이스북 로그인 사용 위해 추가
     [FBSDKAppEvents activateApp];
-
+    
 }
 
 
