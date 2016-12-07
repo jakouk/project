@@ -31,6 +31,9 @@
 		73D621F41DF1BA51005AAF2A /* Read.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D621F31DF1BA51005AAF2A /* Read.storyboard */; };
 		73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D621F61DF1C474005AAF2A /* RequestObject.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
+		BB7310681DF5DA9800B4BF0C /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7310671DF5DA9800B4BF0C /* CustomCell.m */; };
+		BB73106B1DF5DAC700B4BF0C /* CollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BB73106A1DF5DAC700B4BF0C /* CollectionLayout.m */; };
+		BB73106D1DF5DAE100B4BF0C /* CellStyle.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */; };
 		BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +79,11 @@
 		73D621F51DF1C474005AAF2A /* RequestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestObject.h; sourceTree = "<group>"; };
 		73D621F61DF1C474005AAF2A /* RequestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestObject.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB7310661DF5DA9800B4BF0C /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		BB7310671DF5DA9800B4BF0C /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		BB7310691DF5DAC700B4BF0C /* CollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayout.h; sourceTree = "<group>"; };
+		BB73106A1DF5DAC700B4BF0C /* CollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayout.m; sourceTree = "<group>"; };
+		BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellStyle.xib; sourceTree = "<group>"; };
 		BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordNavigationController.h; sourceTree = "<group>"; };
 		BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordNavigationController.m; sourceTree = "<group>"; };
 		E2ADA6D9BE9A3F14A4D86135 /* Pods-PictureDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PictureDiary.release.xcconfig"; path = "Pods/Target Support Files/Pods-PictureDiary/Pods-PictureDiary.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,12 +195,9 @@
 		73C6E9A91DEBF4CE00CDF36D /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
-				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
-				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
-				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
-				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
-				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
+				BB7310631DF5DA4900B4BF0C /* main */,
+				BB7310641DF5DA5300B4BF0C /* read */,
+				BB7310651DF5DA5A00B4BF0C /* modified */,
 			);
 			name = Diary;
 			sourceTree = "<group>";
@@ -215,6 +220,38 @@
 				73D621F61DF1C474005AAF2A /* RequestObject.m */,
 			);
 			name = NetWork;
+			sourceTree = "<group>";
+		};
+		BB7310631DF5DA4900B4BF0C /* main */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
+				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
+				BB7310661DF5DA9800B4BF0C /* CustomCell.h */,
+				BB7310671DF5DA9800B4BF0C /* CustomCell.m */,
+				BB7310691DF5DAC700B4BF0C /* CollectionLayout.h */,
+				BB73106A1DF5DAC700B4BF0C /* CollectionLayout.m */,
+				BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		BB7310641DF5DA5300B4BF0C /* read */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
+				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
+			);
+			name = read;
+			sourceTree = "<group>";
+		};
+		BB7310651DF5DA5A00B4BF0C /* modified */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
+				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
+			);
+			name = modified;
 			sourceTree = "<group>";
 		};
 		D83FF282BD27D2370D0FDB4F /* Frameworks */ = {
@@ -294,6 +331,7 @@
 				73C6E9831DEBE68400CDF36D /* Main.storyboard in Resources */,
 				73C6E9BA1DEC408600CDF36D /* Search.storyboard in Resources */,
 				73C6E9BC1DEC409500CDF36D /* User.storyboard in Resources */,
+				BB73106D1DF5DAE100B4BF0C /* CellStyle.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */,
+				BB73106B1DF5DAC700B4BF0C /* CollectionLayout.m in Sources */,
 				73C6E9A31DEBF39100CDF36D /* ReadViewController.m in Sources */,
 				73C6E9911DEBEF7100CDF36D /* LoginViewController.m in Sources */,
 				73C6E9971DEBEF9800CDF36D /* MainViewController.m in Sources */,
@@ -368,6 +407,7 @@
 				73C6E99D1DEBEFDB00CDF36D /* UserViewController.m in Sources */,
 				73C6E99A1DEBEFAD00CDF36D /* WriteViewController.m in Sources */,
 				73C6E97A1DEBE68400CDF36D /* main.m in Sources */,
+				BB7310681DF5DA9800B4BF0C /* CustomCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
