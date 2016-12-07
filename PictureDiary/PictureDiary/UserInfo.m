@@ -8,6 +8,7 @@
 
 #import "UserInfo.h"
 
+
 @implementation UserInfo
 
 + (instancetype)sharedUserInfo {
@@ -22,5 +23,6 @@
     });
     return info;
 }
+
 
 @end

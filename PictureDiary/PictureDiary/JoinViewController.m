@@ -7,6 +7,8 @@
 //
 
 #import "JoinViewController.h"
+#import "RequestObject.h"
+#import "UserInfo.h"
 
 @interface JoinViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -28,12 +30,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForKeyboardNotifications];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     [self createLayoutSubview];
     self.emailField.delegate = self;
     self.userNameField.delegate = self;
     self.passwordField.delegate = self;
     self.rePasswordField.delegate = self;
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    [self unregisterForKeyboardNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,14 +60,11 @@
 
 - (void)createLayoutSubview {
     
-    const CGFloat viewWidth = self.view.frame.size.width;
-    const CGFloat viewHeight = self.view.frame.size.height;
-    
     // scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight*0.9)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height*0.9)];
     
     // scrollView content size
-    [self.scrollView setContentSize:CGSizeMake(viewWidth, viewHeight)];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     
     // scrollView delegate
     self.scrollView.delegate = self;
@@ -70,48 +79,45 @@
 
 - (void)createTitle {
     
-    UIImageView *titleLogo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-45, self.view.frame.size.height*0.225, 90, 90)];
-    [titleLogo setImage:[UIImage imageNamed:@"templogo"]];
+    UIImageView *titleLogo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-30, self.view.frame.size.height*0.25, 60, 60)];
+    [titleLogo setImage:[UIImage imageNamed:@"ladder-128"]];
     [self.scrollView addSubview:titleLogo];
     
 }
 
 - (void)createInputTextFields {
     
-    const CGFloat viewWidth = self.view.frame.size.width;
-    const CGFloat viewHeight = self.view.frame.size.height;
+    CGFloat viewWidth = self.view.frame.size.width;
+    CGFloat viewHeight = self.view.frame.size.height;
     
     self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.475, viewWidth*0.76, viewHeight*0.06)];
     self.userNameField.borderStyle = UITextBorderStyleNone;
     self.userNameField.textColor = [UIColor whiteColor];
-    self.userNameField.tag = 0;
     
     self.emailField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.555, viewWidth*0.76, viewHeight*0.06)];
     self.emailField.borderStyle = UITextBorderStyleNone;
     self.emailField.textColor = [UIColor whiteColor];
-    self.emailField.tag = 1;
+    self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     
     self.passwordField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.635, viewWidth*0.76, viewHeight*0.06)];
     self.passwordField.secureTextEntry = YES;
     self.passwordField.borderStyle = UITextBorderStyleNone;
     self.passwordField.textColor = [UIColor whiteColor];
-    self.passwordField.tag = 2;
     
     self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.715, viewWidth*0.76, viewHeight*0.06)];
     self.rePasswordField.secureTextEntry = YES;
     self.rePasswordField.borderStyle = UITextBorderStyleNone;
     self.rePasswordField.textColor = [UIColor whiteColor];
-    self.rePasswordField.tag = 3;
     
     // placeholder custom
-    self.emailField.attributedPlaceholder =
+    self.userNameField.attributedPlaceholder =
     [[NSAttributedString alloc] initWithString:@" 이름"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
-    self.userNameField.attributedPlaceholder =
+    self.emailField.attributedPlaceholder =
     [[NSAttributedString alloc] initWithString:@" 이메일(example@gmail.com)"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
@@ -132,7 +138,7 @@
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
-
+    
     
     // textfield bottom line
     const CGFloat borderWidth = 2;
@@ -172,50 +178,135 @@
 
 - (void)createJoinButton {
     
-    const CGFloat viewWidth = self.view.frame.size.width;
-    const CGFloat viewHeight = self.view.frame.size.height;
-    
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.joinButton setFrame:CGRectMake(viewWidth*0.12, viewHeight*0.81, viewWidth*0.76, viewHeight*0.06)];
+    [self.joinButton setFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.81, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     [self.joinButton setTitle:@"회원가입" forState:UIControlStateNormal];
     [self.joinButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.joinButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self.joinButton setBackgroundColor: [UIColor orangeColor]];
-//    self.joinButton.layer.borderWidth = 2.0f;
-//    self.joinButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.joinButton.layer.borderWidth = 2.0f;
+    self.joinButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.joinButton.layer.cornerRadius = 10.0f;
     [self.joinButton addTarget:self
-                              action:@selector(onTouchupInsideJoinButton:)
-                    forControlEvents:UIControlEventTouchUpInside];
+                        action:@selector(onTouchupInsideJoinButton:)
+              forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.joinButton];
 }
 
 - (void)createCancelButton {
     
-    self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
-    [self.cancelButton setTitle:@"이미 계정이 있으신가요? 로그인" forState:UIControlStateNormal];
+    self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height*0.93, self.view.frame.size.width, self.view.frame.size.height*0.07)];
+    [self.cancelButton setTitle:@"계정이 있으신가요?  로그인" forState:UIControlStateNormal];
     [self.cancelButton setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.2]];
     [self.cancelButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.cancelButton addTarget:self
-                        action:@selector(onTouchupInsideCancelButton:)
-              forControlEvents:UIControlEventTouchUpInside];
+                          action:@selector(onTouchupInsideCancelButton:)
+                forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cancelButton];
     
 }
 
 
+
 #pragma mark -
 #pragma mark Actions
 
+// 회원가입 버튼 클릭시
 - (void)onTouchupInsideJoinButton:(UIButton *)sender {
     
-    [self showErrorAlert];
+    NSString *userName = [NSString stringWithFormat:@"%@",self.userNameField.text];
+    NSString *email = [NSString stringWithFormat:@"%@",self.emailField.text];
+    NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
+    NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
     
+    if (!(userName.length == 0) &&
+        [self checkEmail:email] == YES &&
+        [password isEqualToString:rePassword]) {
+        
+        // 회원 정보 서버 저장 메소드
+        [RequestObject requestJoinData:email userPass:password userName:userName];
+        
+        UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"알림"
+                                            message:@"회원가입이 완료되었습니다. 로그인 하세요."
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action =
+        [UIAlertAction actionWithTitle:@"확인"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * _Nonnull action) {
+                                   [self onTouchupInsideJoinButton:self.joinButton];
+                               }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else {
+        
+        [self showErrorAlert];
+    }
 }
 
+// 텍스트 필드 입력 내용 체크
 - (void)showErrorAlert {
+    
+    NSString *userName = [NSString stringWithFormat:@"%@",self.userNameField.text];
+    NSString *email = [NSString stringWithFormat:@"%@",self.emailField.text];
+    NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
+    NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
+    
+    UIAlertController *alert;
+    UIAlertAction *action;
+    
+    if (userName.length == 0 || [userName containsString:@" "]) {
+        // 이름 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이름을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 가입된 이름인지 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이미 등록된 이름입니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if (email.length == 0 || [email containsString:@" "]) {
+        // 이메일 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if ([self checkEmail:email] == NO) {
+        // 이메일 형식 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"올바른 이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 가입된 이메일인지 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이미 등록된 이메일입니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if (password.length == 0 || [password containsString:@" "]) {
+        // 비밀번호 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if (rePassword.length == 0 || [rePassword containsString:@" "]) {
+        // 비밀번호 확인 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 다시 한 번 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if (![password isEqualToString:rePassword]) {
+        // 비밀번호 미일치
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"입력한 비밀번호가 서로 일치하지 않습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else {
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"모든 항목을 정확하게 입력해 주세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    }
+    
+    action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+    [self textFieldDidBeginEditing:self.userNameField];
     
 }
 
@@ -228,20 +319,106 @@
 
 
 #pragma mark -
-#pragma mark TextField Delegate
+#pragma mark Validation
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+// 이메일 유효성 확인
+- (BOOL)checkEmail:(NSString *)email {
     
-    [self.scrollView setContentOffset:CGPointMake(0, 175) animated:YES];
-    UITapGestureRecognizer *tapScroll = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(blankTapped:)];
-    tapScroll.cancelsTouchesInView = NO;
-    [self.scrollView addGestureRecognizer:tapScroll];
+    const char *temp = [email cStringUsingEncoding:NSUTF8StringEncoding];
+    if (email.length != strlen(temp)) {
+        return NO;
+    }
+    NSString *check = @"([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}";
+    NSRange match = [email rangeOfString:check options:NSRegularExpressionSearch];
+    if (NSNotFound == match.location) {
+        return NO;
+    }
     return YES;
 }
 
+// 글자 수 제한
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//
+//    NSInteger minLength = 6;
+//    if (string && [string length] && textField.text.length <= minLength) {
+//        return NO;
+//    }
+//    return YES;
+//}
+
+
+
+#pragma mark -
+#pragma mark Keyboard Notification
+
+- (void)registerForKeyboardNotifications {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveKeyboardChangeNotification:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveKeyboardChangeNotification:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+- (void)unregisterForKeyboardNotifications {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
+- (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
+    NSLog(@"%@", notification);
+    
+    if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
+        [self.scrollView setContentOffset:CGPointMake(0, 175) animated:YES];
+        
+    } else if ([[notification name] isEqualToString:UIKeyboardDidHideNotification]) {
+        [self.scrollView setContentOffset:CGPointZero animated:YES];
+    }
+    [UIView commitAnimations];
+    
+}
+
+
+
+#pragma mark -
+#pragma mark TextField Delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    textField.clearButtonMode = UITextFieldViewModeAlways;
+    
+    UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                               action:@selector(blankTapped:)];
+    blankTap.cancelsTouchesInView = NO;
+    [self.scrollView addGestureRecognizer:blankTap];
+    
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  
+    
+    if (textField == self.userNameField) {
+        [textField endEditing:YES];
+        [self.emailField becomeFirstResponder];
+    } else if (textField == self.emailField) {
+        [textField endEditing:YES];
+        [self.passwordField becomeFirstResponder];
+    } else if (textField == self.passwordField) {
+        [textField endEditing:YES];
+        [self.rePasswordField becomeFirstResponder];
+    } else if (textField == self.rePasswordField) {
+        [textField endEditing:YES];
+        [self onTouchupInsideJoinButton:self.joinButton];
+        [self.scrollView setContentOffset:CGPointZero animated:YES];
+    }
     return YES;
 }
 
@@ -252,6 +429,7 @@
     [self.passwordField endEditing:YES];
     [self.rePasswordField endEditing:YES];
 }
+
 
 
 @end
