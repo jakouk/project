@@ -12,8 +12,8 @@
 //#import <AssetsLibrary/AssetsLibrary.h>
 
 //셀 비율
-#define defaultMinRatio 11   //사진갯수와 동일하거나 위아래로 3차이 확실히 비율이 맞음
-#define defaultMaxRatio 1.6 //사진갯수가 적어지면 아래로 많아지면 높게 설정
+//#define defaultMinRatio 11   //사진갯수와 동일하거나 위아래로 3차이 확실히 비율이 맞음
+//#define defaultMaxRatio 1.6 //사진갯수가 적어지면 아래로 많아지면 높게 설정
 
 @interface MainViewController ()
 
@@ -42,6 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"view did load");
+    
     //xib 지정
     [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     
@@ -52,23 +54,92 @@
     [self performSelector:@selector(quickFix) withObject:nil afterDelay:0.01];
     
     //사진이름, 사진 배열
-    self.photoName = @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
-    self.photoDetail = @[@"sandiego baseballpark",@"good bye here",@"kim geon hui",@"snow picture",@"california usa",@"drink drink",@"jot e na gga",@"japan airline",@"sandiego vs sanfransico",@"sanfransico picter",@"i love you"];
-    self.photo = @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
+    self.photoName =
+    @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
     
+    self.photoDetail =
+    @[@"sandiego baseballpark",@"good bye here",@"kim geon hui",@"snow picture",@"california usa",@"drink drink",@"jot e na gga",@"japan airline",@"sandiego vs sanfransico",@"sanfransico picter",@"i love you"];
+    
+    self.photo =
+    @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
+    NSLog(@"array count : %ld", self.photo.count);
+    
+    switch (self.photo.count) {
+        case 1:
+            self.maxRatio = 0.7;
+            self.minRatio = 2;
+            break;
+            
+        case 2:
+            self.maxRatio = 0.7;
+            self.minRatio = 2;
+            break;
+            
+        case 3:
+            self.maxRatio = 1;
+            self.minRatio = 3;
+            break;
+            
+        case 4:
+            self.maxRatio = 1.1;
+            self.minRatio = 4;
+            break;
+            
+        case 5:
+            self.maxRatio = 1.2;
+            self.minRatio = 5;
+            break;
+            
+        case 6:
+            self.maxRatio = 1.3;
+            self.minRatio = 6;
+            break;
+            
+        case 7:
+            self.maxRatio = 1.4;
+            self.minRatio = 7;
+            break;
+            
+        case 8:
+            self.maxRatio = 1.5;
+            self.minRatio = 8;
+            break;
+            
+        case 9:
+            self.maxRatio = 1.5;
+            self.minRatio = 9;
+            break;
+            
+        case 10:
+            self.maxRatio = 1.5;
+            self.minRatio = 10;
+            break;
+            
+        case 11:
+            self.maxRatio = 1.6;
+            self.minRatio = 11;
+            break;
+            
+        case 12:
+            self.maxRatio = 1.7;
+            self.minRatio = 12;
+            break;
+    }
 }
 
 - (void)viewDidLayoutSubviews
 {
+    NSLog(@"view did layout sub view");
+    
     //layout
-    self.slidingLayout = [[CollectionLayout alloc] initWithMaxRatio:defaultMaxRatio andMinRatio:defaultMinRatio];
+    self.slidingLayout = [[CollectionLayout alloc] initWithMaxRatio:self.maxRatio andMinRatio:self.minRatio];
     [self.collectionView setCollectionViewLayout:self.slidingLayout];
     [self.collectionView.collectionViewLayout invalidateLayout];
     [self.collectionView setBackgroundColor:[UIColor blackColor]];
     
     //셀크기
-    self.maxRatio = defaultMaxRatio;
-    self.minRatio = defaultMinRatio;
+//    self.maxRatio = defaultMaxRatio;
+//    self.minRatio = defaultMinRatio;
 }
 
 #pragma mark - qick fix
@@ -76,14 +147,13 @@
 -(void)quickFix
 {
     [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.contentOffset.y + 1)];
-    
 }
 
 //이 View Controller에 대한 상태 표시 줄 변경에 사용해야하는 애니메이션 유형을 반환하도록 재정의합니다.
 //현재는 prefersStatusBarHidden에 대한 변경 사항에만 영향을 미칩니다.
 -(BOOL)prefersStatusBarHidden
 {
-    return YES;//defult = no
+    return YES; //defult = no
 }
 
 #pragma mark - cell layout
