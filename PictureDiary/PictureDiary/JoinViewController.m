@@ -227,12 +227,6 @@
         // 회원 정보 서버 저장 메소드
         [RequestObject requestJoinData:email userPass:password userName:userName];
         
-        // 회원 정보 UserInfo 클래스 저장 메소드
-        [[UserInfo sharedUserInfo] saveUserEmail:email userPassword:password];
-        
-        // 로그인 상태 저장
-        [[UserInfo sharedUserInfo] saveLoginState:YES];
-        
         UIAlertController *alert =
         [UIAlertController alertControllerWithTitle:@"알림"
                                             message:@"회원가입이 완료되었습니다. 로그인 하세요."
@@ -265,24 +259,48 @@
     
     if (userName.length == 0 || [userName containsString:@" "]) {
         // 이름 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"이름을 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이름을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 가입된 이름인지 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이미 등록된 이름입니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if (email.length == 0 || [email containsString:@" "]) {
         // 이메일 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"이메일을 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if ([self checkEmail:email] == NO) {
         // 이메일 형식 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"올바른 이메일을 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"올바른 이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 가입된 이메일인지 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이미 등록된 이메일입니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if (password.length == 0 || [password containsString:@" "]) {
         // 비밀번호 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"비밀번호를 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if (rePassword.length == 0 || [rePassword containsString:@" "]) {
         // 비밀번호 확인 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"비밀번호를 다시 한 번 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 다시 한 번 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if (![password isEqualToString:rePassword]) {
         // 비밀번호 미일치
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"입력한 비밀번호가 서로 일치하지 않습니다." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"입력한 비밀번호가 서로 일치하지 않습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else {
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"모든 항목을 정확하게 입력해 주세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"모든 항목을 정확하게 입력해 주세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     }
     
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
@@ -376,7 +394,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
     
     UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                action:@selector(blankTapped:)];

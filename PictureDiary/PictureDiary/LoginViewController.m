@@ -11,6 +11,7 @@
 #import "MainViewController.h"
 #import "UserInfo.h"
 #import "RequestObject.h"
+#import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
@@ -38,7 +39,7 @@
     
     // 페이스북 로그인 버튼 클릭시 액션
     [self.fbLoginButton addTarget:self
-                           action:@selector(fbLoginButtonClicked)
+                           action:@selector(onTouchupInsideFbLoginButton:)
                  forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -54,7 +55,6 @@
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -95,12 +95,14 @@
 
 - (void)createInputTextFields {
     
-    self.emailTextField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.525, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.emailTextField =
+    [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.525, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.emailTextField.borderStyle = UITextBorderStyleNone;
     self.emailTextField.textColor = [UIColor whiteColor];
     self.emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     
-    self.passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.615, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.passwordTextField =
+    [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.615, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.passwordTextField.secureTextEntry = YES;
     self.passwordTextField.borderStyle = UITextBorderStyleNone;
     self.passwordTextField.textColor = [UIColor whiteColor];
@@ -192,16 +194,21 @@
     
     NSString *email = [NSString stringWithFormat:@"%@",self.emailTextField.text];
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
-    NSLog(@"login button");
+    
     
     // 유저 정보가 유효할 경우
 //    if () {
 //        
-//        [[UserInfo sharedUserInfo] setUserId:email];
-//        [[UserInfo sharedUserInfo] setUserPass:password];
 //        [RequestObject requestLoginData:email userPass:password];
 //        
-//        // 메인뷰컨트롤러로 이동
+//        // MainViewController로 이동
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//            MainViewController *mainViewController = [[MainViewController alloc] init];
+//            delegate.window.rootViewController = mainViewController;
+//
+//        });
 //        
 //
 //    
@@ -209,7 +216,7 @@
 //    
 //        [self showErrorAlert];
 //    }
-    
+//    
 }
 
 // 텍스트 필드 입력 내용 체크
@@ -223,13 +230,24 @@
     
     if (email.length == 0 || [email containsString:@" "]) {
         // 이메일 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"이메일을 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     } else if (password.length == 0 || [password containsString:@" "]) {
         // 비밀번호 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"비밀번호를 입력하세요." preferredStyle:UIAlertControllerStyleAlert];
-//    } else if () {
-//
-//        alert = [UIAlertController alertControllerWithTitle:@"알림" message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 등록되지 않은 이메일
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"등록되지 않은 이메일입니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if () {
+        // 비밀번호 틀린 경우
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 잘못 입력하셨습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     }
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
@@ -245,7 +263,7 @@
     
 }
 
-- (void)fbLoginButtonClicked {
+- (void)onTouchupInsideFbLoginButton:(UIButton *)sender {
     
     // 현재 페이스북 로그인 상태 확인
     if ([FBSDKAccessToken currentAccessToken]) {
@@ -317,7 +335,6 @@
     
 }
 
-
 - (void)unregisterForKeyboardNotifications {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -337,6 +354,7 @@
         [self.scrollView setContentOffset:CGPointZero animated:YES];
     }
 }
+
 
 
 #pragma mark -

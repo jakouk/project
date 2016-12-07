@@ -25,7 +25,7 @@ static NSString *saveUserLoginKey = @"saveUserLogin";
     return instance;
 }
 
-//아이디, 패스워드 저장
+// 아이디, 패스워드 저장
 - (void)saveUserEmail:(NSString *)email userPassword:(NSString *)password {
 
     [[NSUserDefaults standardUserDefaults] setObject:email forKey:userEmailKey];

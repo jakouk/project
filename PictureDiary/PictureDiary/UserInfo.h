@@ -16,6 +16,7 @@
 @property NSDictionary *userData;
 
 + (instancetype)sharedUserInfo;
+
 - (void)saveUserEmail:(NSString *)email userPassword:(NSString *)password;
 - (void)saveLoginState:(BOOL)loginState;
 
