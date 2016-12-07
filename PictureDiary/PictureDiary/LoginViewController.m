@@ -13,7 +13,9 @@
 #import "RequestObject.h"
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 
 
 @interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate>
@@ -238,12 +240,13 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-    } else if () {
-        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"등록되지 않은 이메일입니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
     }
+//    else if () {
+//        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
+//        alert = [UIAlertController alertControllerWithTitle:@"알림"
+//                                                    message:@"등록되지 않은 이메일입니다."
+//                                             preferredStyle:UIAlertControllerStyleAlert];
+//    }
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
