@@ -7,6 +7,7 @@
 //
 
 #import "CollectionLayout.h"
+#import "MainViewController.h"
 
 @interface CollectionLayout ()
 
@@ -22,7 +23,7 @@
 }
 
 //
--(id)initWithMaxRatio: (CGFloat)maxR andMinRatio: (CGFloat)minR
+-(id)initWithMaxRatio:(CGFloat)maxR andMinRatio:(CGFloat)minR
 {
     if ((self = [super init]) != NULL)
     {
