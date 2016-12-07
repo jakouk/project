@@ -13,6 +13,6 @@
 @property IBOutlet UIView *overView;
 @property IBOutlet UIImageView *imageView;
 @property IBOutlet UILabel *nameLabel;
-@property IBOutlet UILabel *detailLabel;
+//@property IBOutlet UILabel *detailLabel;
 
 @end

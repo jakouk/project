@@ -178,14 +178,16 @@
         
         cell.overView.alpha = 1 - alpha;
         cell.nameLabel.alpha = alpha;
-        cell.detailLabel.alpha = alpha;
+//        cell.detailLabel.alpha = alpha;
+        
+//        NSLog(@"cell height : %lf", cell.bounds.size.height);
         
         if(i > currentIndex){
             cell.nameLabel.transform = CGAffineTransformMakeScale(1 - (1 - alpha) * 0.3, 1 - (1 - alpha) * 0.3);
-            cell.detailLabel.transform = CGAffineTransformMakeTranslation(0, (1 - alpha) * 30);
+//            cell.detailLabel.transform = CGAffineTransformMakeTranslation(0, (1 - alpha) * 30);
         }else{
             cell.nameLabel.transform = CGAffineTransformIdentity;
-            cell.detailLabel.transform = CGAffineTransformIdentity;
+//            cell.detailLabel.transform = CGAffineTransformIdentity;
         }
     }
 }
@@ -209,7 +211,7 @@
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     cell.nameLabel.text = self.photoName[indexPath.row];
-    cell.detailLabel.text = self.photoDetail[indexPath.row];
+//    cell.detailLabel.text = self.photoDetail[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:[self.photo objectAtIndex:indexPath.row]];
     
     return cell;
@@ -219,18 +221,64 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@" cell number : %ld", indexPath.row);
+
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.layer.borderColor = [UIColor whiteColor].CGColor;
-    cell.layer.borderWidth = 3.0f;
-    
-    //해당 셀에 대한 데이터를 글읽기화면으로 옮기고 글읽기화면 전환
-    //셀 크기가 일정크기로 넘었을경우 선택되도록 일정크기에 못미칠경우 선택안되도록
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-    UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-    [self.navigationController pushViewController:readScreen animated:YES];
-    
+    NSLog(@"cell height : %lf", cell.bounds.size.height);
+
+    //사진갯수 1 ~ 3
+    if (self.photo.count == 1 || self.photo.count == 2 || self.photo.count == 3) {
+        if (cell.bounds.size.height >= 400) {
+            NSLog(@"cell height : %lf", cell.bounds.size.height);
+            
+            cell.layer.borderColor = [UIColor whiteColor].CGColor;
+            cell.layer.borderWidth = 3.0f;
+        
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+            [self.navigationController pushViewController:readScreen animated:YES];
+        };
+        
+    //사진갯수 4 ~ 6
+    }else if (self.photo.count == 4 || self.photo.count == 5 || self.photo.count == 6){
+        if (cell.bounds.size.height >= 300) {
+            NSLog(@"cell height : %lf", cell.bounds.size.height);
+            
+            cell.layer.borderColor = [UIColor whiteColor].CGColor;
+            cell.layer.borderWidth = 3.0f;
+
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+            [self.navigationController pushViewController:readScreen animated:YES];
+        };
+        
+    //사진갯수 7 ~ 9
+    }else if (self.photo.count == 7 || self.photo.count == 8 || self.photo.count == 9){
+        if (cell.bounds.size.height >= 250) {
+            NSLog(@"cell height : %lf", cell.bounds.size.height);
+            
+            cell.layer.borderColor = [UIColor whiteColor].CGColor;
+            cell.layer.borderWidth = 3.0f;
+
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+            [self.navigationController pushViewController:readScreen animated:YES];
+        };
+        
+    //사진객수 10 ~ 11
+    }else if (self.photo.count == 10 || self.photo.count == 11){
+        if (cell.bounds.size.height >= 240) {
+            NSLog(@"cell height : %lf", cell.bounds.size.height);
+            
+            cell.layer.borderColor = [UIColor whiteColor].CGColor;
+            cell.layer.borderWidth = 3.0f;
+
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+            [self.navigationController pushViewController:readScreen animated:YES];
+        };
+    };
 }
 
 //셀을 다시 선택했을 경우
