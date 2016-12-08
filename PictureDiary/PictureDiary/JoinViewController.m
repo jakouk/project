@@ -30,7 +30,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 키보드의 움직임 확인하는 노티피케이션
     [self registerForKeyboardNotifications];
+    
+    // 회원가입시 네트워크와의 통신 가능 여부 확인하는 노티피케이션
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userJoinIn:)
+                                                 name:JoinNotification
+                                               object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -41,6 +49,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:JoinNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +77,7 @@
     [self createInputTextFields];
 }
 
+
 - (void)createTitle {
     
     UIImageView *titleLogo =
@@ -76,6 +86,7 @@
     [self.scrollView addSubview:titleLogo];
     
 }
+
 
 - (void)createInputTextFields {
     
@@ -170,6 +181,7 @@
     self.rePasswordField.delegate = self;
 }
 
+
 - (void)createJoinButton {
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -186,6 +198,7 @@
               forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.joinButton];
 }
+
 
 - (void)createCancelButton {
     
@@ -206,6 +219,7 @@
 #pragma mark -
 #pragma mark Actions
 
+
 // 회원가입 버튼 클릭시
 - (void)onTouchupInsideJoinButton:(UIButton *)sender {
     
@@ -214,10 +228,121 @@
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
     NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
     
-    if (!(userName.length == 0) &&
-        ![userName containsString:@" "] &&
-        [self checkEmail:email] == YES &&
-        [password isEqualToString:rePassword]) {
+    UIAlertController *alert;
+    UIAlertAction *action;
+    
+    // 텍스트필드 입력 내용 체크
+    if (userName.length == 0 || [userName containsString:@" "]) {
+        
+        // 이름 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이름을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if (email.length == 0 || [email containsString:@" "]) {
+        
+        // 이메일 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if ([self checkEmail:email] == NO) {
+        
+        // 이메일 형식 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"올바른 이메일을 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if (password.length == 0 || [password containsString:@" "]) {
+        
+        // 비밀번호 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if (rePassword.length == 0 || [rePassword containsString:@" "]) {
+        
+        // 비밀번호 확인 미입력
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"비밀번호를 다시 한 번 입력하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if (![password isEqualToString:rePassword]) {
+        
+        // 비밀번호 미일치
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"입력한 비밀번호가 서로 일치하지 않습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else {
+       
+        [RequestObject requestJoinData:email userPass:password userName:userName];
+        
+    }
+    
+    
+    
+}
+
+
+// 회원가입시 네트워크 구현
+- (void)userJoinIn:(NSNotification *)noti {
+    
+    NSString *userName = [NSString stringWithFormat:@"%@",self.userNameField.text];
+    NSString *email = [NSString stringWithFormat:@"%@",self.emailField.text];
+    NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
+    
+    UIAlertController *alert;
+    UIAlertAction *action;
+    
+    NSDictionary *dic = noti.userInfo;
+    
+    NSLog(@"%@",dic);
+    
+    if ( [dic objectForKey:@"username"] == nil  && [dic objectForKey:@"password"] == nil) {
+        
+        // 이름 가입 여부 체크
+        NSLog(@" 가입 실패 이미 존재하는 이름");
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이름이 이미 등록되어 있습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if ( [dic objectForKey:@"email"] == nil && [dic objectForKey:@"password"] == nil) {
+        
+        // 이메일 가입 여부 체크
+        NSLog(@" 가입 실패 이미 존재하는 이메일 ");
+        
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일이 이미 등록되어 있습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else {
+        
+        NSLog(@"가입 완료");
         
         // 회원 정보 서버 저장 메소드
         [RequestObject requestJoinData:email userPass:password userName:userName];
@@ -229,82 +354,21 @@
         UIAlertAction *action =
         [UIAlertAction actionWithTitle:@"확인"
                                  style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * _Nonnull action) {
-                                   [self onTouchupInsideJoinButton:self.joinButton];
-                               }];
+                               handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-        
-    } else {
-        
-        [self showErrorAlert];
-    }
-}
 
-// 텍스트 필드 입력 내용 체크
-- (void)showErrorAlert {
-    
-    NSString *userName = [NSString stringWithFormat:@"%@",self.userNameField.text];
-    NSString *email = [NSString stringWithFormat:@"%@",self.emailField.text];
-    NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
-    NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
-    
-    UIAlertController *alert;
-    UIAlertAction *action;
-    
-    if (userName.length == 0 || [userName containsString:@" "]) {
-        // 이름 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이름을 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if (email.length == 0 || [email containsString:@" "]) {
-        // 이메일 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이메일을 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if ([self checkEmail:email] == NO) {
-        // 이메일 형식 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"올바른 이메일을 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-
-    } else if ([RequestObject requestJoinData:email userPass:password userName:userName] == YES) {
-        // 이름 또는 이메일 가입 여부 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이름 또는 이메일이 이미 등록되어 있습니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if (password.length == 0 || [password containsString:@" "]) {
-        // 비밀번호 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"비밀번호를 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if (rePassword.length == 0 || [rePassword containsString:@" "]) {
-        // 비밀번호 확인 미입력
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"비밀번호를 다시 한 번 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else if (![password isEqualToString:rePassword]) {
-        // 비밀번호 미일치
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"입력한 비밀번호가 서로 일치하지 않습니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-    } else {
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"모든 항목을 정확히 입력하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
     }
     
-    action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
-    
 }
+
 
 - (void)onTouchupInsideCancelButton:(UIButton *)sender {
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
+
 
 - (void)blankTapped:(UIControl *)sender {
     
@@ -313,6 +377,7 @@
     [self.passwordField endEditing:YES];
     [self.rePasswordField endEditing:YES];
 }
+
 
 
 #pragma mark -

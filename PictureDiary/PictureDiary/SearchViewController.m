@@ -34,20 +34,20 @@
     self.mainCollection.delegate = self;
     self.mainCollection.dataSource = self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(joinMethod:)
-                                                 name:JoinNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loginMethod:)
-                                                 name:LoginNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(mainMehtod:)
-                                                 name:MainNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(joinMethod:)
+//                                                 name:JoinNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loginMethod:)
+//                                                 name:LoginNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(mainMehtod:)
+//                                                 name:MainNotification
+//                                               object:nil];
     
 }
 

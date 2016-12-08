@@ -178,7 +178,7 @@ static NSString *JSONSuccessValue = @"success";
 //requestMain ( get )
 + (void)requestMainData {
     
-    NSString *urlStr = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/post/";
+    NSString *urlStr = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/";
     
     NSURL * url = [NSURL URLWithString:urlStr];
     
