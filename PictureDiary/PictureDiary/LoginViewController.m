@@ -8,15 +8,13 @@
 
 #import "LoginViewController.h"
 #import "JoinViewController.h"
-#import "MainViewController.h"
+#import "MainTabBarController.h"
 #import "UserInfo.h"
 #import "RequestObject.h"
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-
-
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 @interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -48,9 +46,6 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self createLayoutSubview];
-    self.emailTextField.delegate = self;
-    self.passwordTextField.delegate = self;
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -70,13 +65,8 @@
 
 - (void)createLayoutSubview {
     
-    // scrollView
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height*0.9)];
-    
-    // scrollView content size
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
-    
-    // scrollView delegate
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     [self.view addSubview:self.scrollView];
@@ -109,6 +99,7 @@
     self.passwordTextField.borderStyle = UITextBorderStyleNone;
     self.passwordTextField.textColor = [UIColor whiteColor];
     
+    
     // placeholder custom
     self.emailTextField.attributedPlaceholder =
     [[NSAttributedString alloc] initWithString:@" 이메일"
@@ -124,6 +115,7 @@
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
+    
     
     // textfield bottom line
     const CGFloat borderWidth = 2;
@@ -143,6 +135,8 @@
     [self.passwordTextField.layer addSublayer:passwordBottomBorder];
     [self.scrollView addSubview:self.passwordTextField];
     
+    self.emailTextField.delegate = self;
+    self.passwordTextField.delegate = self;
 }
 
 - (void)createLoginButtons {
@@ -177,7 +171,7 @@
     
     self.joinButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height*0.93, self.view.frame.size.width, self.view.frame.size.height*0.07)];
     [self.joinButton setTitle:@"계정이 없으신가요?  회원가입" forState:UIControlStateNormal];
-    [self.joinButton setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.2]];
+    [self.joinButton setBackgroundColor:[UIColor colorWithWhite:1.f alpha:0.2f]];
     [self.joinButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.joinButton addTarget:self
@@ -197,28 +191,24 @@
     NSString *email = [NSString stringWithFormat:@"%@",self.emailTextField.text];
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
     
-    
     // 유저 정보가 유효할 경우
-    //    if () {
-    //
-    //        [RequestObject requestLoginData:email userPass:password];
-    //
-    //        // MainViewController로 이동
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    //
-    //            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    //            MainViewController *mainViewController = [[MainViewController alloc] init];
-    //            delegate.window.rootViewController = mainViewController;
-    //
-    //        });
-    //
-    //
-    //
-    //    } else {
-    //
-    //        [self showErrorAlert];
-    //    }
-    //
+    if ([RequestObject requestLoginData:email userPass:password] == YES) {
+
+        // MainTabBarController로 이동
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [RequestObject requestLoginData:email userPass:password];
+
+            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            MainTabBarController *mainTabBarController = [[MainTabBarController alloc] init];
+            delegate.window.rootViewController = mainTabBarController;
+                        
+        });
+
+    } else {
+        [self showErrorAlert];
+    }
+
 }
 
 // 텍스트 필드 입력 내용 체크
@@ -240,13 +230,12 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
+    } else if ([RequestObject requestLoginData:email userPass:password] == NO) {
+        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
     }
-//    else if () {
-//        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
-//        alert = [UIAlertController alertControllerWithTitle:@"알림"
-//                                                    message:@"등록되지 않은 이메일입니다."
-//                                             preferredStyle:UIAlertControllerStyleAlert];
-//    }
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
@@ -316,6 +305,12 @@
     [connection start];
 }
 
+- (void)blankTapped:(UIControl *)sender {
+    [self.emailTextField endEditing:YES];
+    [self.passwordTextField endEditing:YES];
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
+}
+
 
 
 #pragma mark -
@@ -360,7 +355,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
     
     UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                action:@selector(blankTapped:)];
@@ -380,12 +375,6 @@
         [self.scrollView setContentOffset:CGPointZero animated:YES];
     }
     return YES;
-}
-
-- (void)blankTapped:(UIControl *)sender {
-    [self.emailTextField endEditing:YES];
-    [self.passwordTextField endEditing:YES];
-    [self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 @end

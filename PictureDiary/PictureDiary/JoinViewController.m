@@ -36,11 +36,6 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self createLayoutSubview];
-    self.emailField.delegate = self;
-    self.userNameField.delegate = self;
-    self.passwordField.delegate = self;
-    self.rePasswordField.delegate = self;
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -60,13 +55,9 @@
 
 - (void)createLayoutSubview {
     
-    // scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height*0.9)];
-    
-    // scrollView content size
+    self.scrollView =
+    [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height*0.9)];
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
-    
-    // scrollView delegate
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     [self.view addSubview:self.scrollView];
@@ -79,7 +70,8 @@
 
 - (void)createTitle {
     
-    UIImageView *titleLogo = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-30, self.view.frame.size.height*0.25, 60, 60)];
+    UIImageView *titleLogo =
+    [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-30, self.view.frame.size.height*0.25, 60, 60)];
     [titleLogo setImage:[UIImage imageNamed:@"ladder-128"]];
     [self.scrollView addSubview:titleLogo];
     
@@ -87,27 +79,25 @@
 
 - (void)createInputTextFields {
     
-    CGFloat viewWidth = self.view.frame.size.width;
-    CGFloat viewHeight = self.view.frame.size.height;
-    
-    self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.475, viewWidth*0.76, viewHeight*0.06)];
+    self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.475, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.userNameField.borderStyle = UITextBorderStyleNone;
     self.userNameField.textColor = [UIColor whiteColor];
     
-    self.emailField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.555, viewWidth*0.76, viewHeight*0.06)];
+    self.emailField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.555, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.emailField.borderStyle = UITextBorderStyleNone;
     self.emailField.textColor = [UIColor whiteColor];
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     
-    self.passwordField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.635, viewWidth*0.76, viewHeight*0.06)];
+    self.passwordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.635, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.passwordField.secureTextEntry = YES;
     self.passwordField.borderStyle = UITextBorderStyleNone;
     self.passwordField.textColor = [UIColor whiteColor];
     
-    self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(viewWidth*0.12, viewHeight*0.715, viewWidth*0.76, viewHeight*0.06)];
+    self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.715, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
     self.rePasswordField.secureTextEntry = YES;
     self.rePasswordField.borderStyle = UITextBorderStyleNone;
     self.rePasswordField.textColor = [UIColor whiteColor];
+ 
     
     // placeholder custom
     self.userNameField.attributedPlaceholder =
@@ -174,6 +164,10 @@
     [self.rePasswordField.layer addSublayer:rePasswordBottomBorder];
     [self.scrollView addSubview:self.rePasswordField];
     
+    self.emailField.delegate = self;
+    self.userNameField.delegate = self;
+    self.passwordField.delegate = self;
+    self.rePasswordField.delegate = self;
 }
 
 - (void)createJoinButton {
@@ -221,6 +215,7 @@
     NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
     
     if (!(userName.length == 0) &&
+        ![userName containsString:@" "] &&
         [self checkEmail:email] == YES &&
         [password isEqualToString:rePassword]) {
         
@@ -262,14 +257,7 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-    }
-//    else if () {
-//        // 가입된 이름인지 여부 체크
-//        alert = [UIAlertController alertControllerWithTitle:@"알림"
-//                                                    message:@"이미 등록된 이름입니다."
-//                                             preferredStyle:UIAlertControllerStyleAlert];
-//    }
-    else if (email.length == 0 || [email containsString:@" "]) {
+    } else if (email.length == 0 || [email containsString:@" "]) {
         // 이메일 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이메일을 입력하세요."
@@ -279,14 +267,13 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"올바른 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-    }
-//    else if () {
-//        // 가입된 이메일인지 여부 체크
-//        alert = [UIAlertController alertControllerWithTitle:@"알림"
-//                                                    message:@"이미 등록된 이메일입니다."
-//                                             preferredStyle:UIAlertControllerStyleAlert];
-//    }
-    else if (password.length == 0 || [password containsString:@" "]) {
+
+    } else if ([RequestObject requestJoinData:email userPass:password userName:userName] == YES) {
+        // 이름 또는 이메일 가입 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이름 또는 이메일이 이미 등록되어 있습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+    } else if (password.length == 0 || [password containsString:@" "]) {
         // 비밀번호 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
@@ -303,14 +290,13 @@
                                              preferredStyle:UIAlertControllerStyleAlert];
     } else {
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"모든 항목을 정확하게 입력해 주세요."
+                                                    message:@"모든 항목을 정확히 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
     }
     
     action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
-    [self textFieldDidBeginEditing:self.userNameField];
     
 }
 
@@ -320,6 +306,13 @@
     
 }
 
+- (void)blankTapped:(UIControl *)sender {
+    
+    [self.userNameField endEditing:YES];
+    [self.emailField endEditing:YES];
+    [self.passwordField endEditing:YES];
+    [self.rePasswordField endEditing:YES];
+}
 
 
 #pragma mark -
@@ -379,7 +372,6 @@
 }
 
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
-    NSLog(@"%@", notification);
     
     if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
         [self.scrollView setContentOffset:CGPointMake(0, 175) animated:YES];
@@ -387,7 +379,6 @@
     } else if ([[notification name] isEqualToString:UIKeyboardDidHideNotification]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
     }
-    [UIView commitAnimations];
     
 }
 
@@ -425,15 +416,5 @@
     }
     return YES;
 }
-
-- (void)blankTapped:(UIControl *)sender {
-    
-    [self.userNameField endEditing:YES];
-    [self.emailField endEditing:YES];
-    [self.passwordField endEditing:YES];
-    [self.rePasswordField endEditing:YES];
-}
-
-
 
 @end

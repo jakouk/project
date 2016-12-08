@@ -20,7 +20,18 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="w-7986" translatesAutoresizingMaskIntoConstraints="NO" id="Hgg-9c-Bia">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hgg-9c-Bia" secondAttribute="bottom" id="H6Y-hX-beg"/>
+                            <constraint firstAttribute="trailing" secondItem="Hgg-9c-Bia" secondAttribute="trailing" id="NMU-gd-1to"/>
+                            <constraint firstItem="Hgg-9c-Bia" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UMY-MO-mtp"/>
+                            <constraint firstItem="Hgg-9c-Bia" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="eY4-Ss-iwt"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -38,7 +49,18 @@
                     <view key="view" contentMode="scaleToFill" id="mfr-q8-XcR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="w-7986" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-r0-Q6g">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qeh-r0-Q6g" firstAttribute="top" secondItem="VFp-2P-7wm" secondAttribute="bottom" constant="-20" id="D1Q-Ck-bmz"/>
+                            <constraint firstItem="Tln-iK-Z89" firstAttribute="top" secondItem="qeh-r0-Q6g" secondAttribute="bottom" id="UfS-fY-fII"/>
+                            <constraint firstAttribute="trailing" secondItem="qeh-r0-Q6g" secondAttribute="trailing" id="g79-Xx-sKR"/>
+                            <constraint firstItem="qeh-r0-Q6g" firstAttribute="leading" secondItem="mfr-q8-XcR" secondAttribute="leading" id="p3o-0H-eh8"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M8m-xg-04d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -110,6 +132,7 @@
         <image name="home" width="25" height="25"/>
         <image name="search" width="25" height="25"/>
         <image name="user" width="25" height="25"/>
+        <image name="w-7986" width="375" height="667"/>
         <image name="word" width="25" height="25"/>
     </resources>
 </document>
