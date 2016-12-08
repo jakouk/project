@@ -14,6 +14,10 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 
+//제목라벨, 내용
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UITextView *contentText;
+
 @property NSArray *imageList;
 @end
 

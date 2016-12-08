@@ -257,7 +257,18 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
+<<<<<<< HEAD
     } else if (email.length == 0 || [email containsString:@" "]) {
+=======
+    }
+//    else if () {
+//        // 가입된 이름인지 여부 체크
+//        alert = [UIAlertController alertControllerWithTitle:@"알림"
+//                                                    message:@"이미 등록된 이름입니다."
+//                                             preferredStyle:UIAlertControllerStyleAlert];
+//    }
+    else if (email.length == 0 || [email containsString:@" "]) {
+>>>>>>> dev
         // 이메일 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이메일을 입력하세요."
@@ -267,12 +278,23 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"올바른 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
+<<<<<<< HEAD
     } else if ([RequestObject requestJoinData:email userPass:password userName:userName] == YES) {
         // 이름 또는 이메일 가입 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름 또는 이메일이 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
     } else if (password.length == 0 || [password containsString:@" "]) {
+=======
+    }
+//    else if () {
+//        // 가입된 이메일인지 여부 체크
+//        alert = [UIAlertController alertControllerWithTitle:@"알림"
+//                                                    message:@"이미 등록된 이메일입니다."
+//                                             preferredStyle:UIAlertControllerStyleAlert];
+//    }
+    else if (password.length == 0 || [password containsString:@" "]) {
+>>>>>>> dev
         // 비밀번호 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."

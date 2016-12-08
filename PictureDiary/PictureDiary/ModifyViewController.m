@@ -95,6 +95,7 @@
     
     cell.layer.borderColor = [UIColor orangeColor].CGColor;
     cell.layer.borderWidth = 3.0f;
+    NSLog(@"select");
 }
 
 //셀을 다시 선택했을 경우
@@ -104,6 +105,7 @@
     
     cell.layer.borderColor = nil;
     cell.layer.borderWidth = 0.0f;
+    NSLog(@"deselect");
 }
 
 #pragma mark - text field

@@ -70,8 +70,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Kuz-Iy-nuw"/>
                     <connections>
+                        <outlet property="contentText" destination="QeZ-Q3-92h" id="REX-rc-fsr"/>
                         <outlet property="imageScrollView" destination="gWg-ve-Nfr" id="6jU-6R-U7Q"/>
                         <outlet property="pageControl" destination="aQA-Cz-brW" id="dme-0u-zrD"/>
+                        <outlet property="titleLabel" destination="Oca-xE-Om0" id="Rek-lJ-xdu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lAb-OU-TJH" userLabel="First Responder" sceneMemberID="firstResponder"/>

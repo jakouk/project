@@ -90,7 +90,13 @@
 //network Test
 - (IBAction)networkTest:(UIButton *)sender {
     
-    [RequestObject requestUserData];
+    BOOL isSuccesed = [RequestObject requestMainData];
+    
+    if (isSuccesed) {
+        NSLog(@"YES");
+    } else {
+        NSLog(@"NO");
+    }
 }
 
 //join Test
@@ -116,7 +122,7 @@
     NSString *pass = self.loginPass.text;
     BOOL succusee = [RequestObject requestLoginData:userId userPass:pass];
     
-    if (succusee) {
+    if (!succusee) {
         NSLog(@"로그인 성공");
     } else {
         NSLog(@"로그인 실패");

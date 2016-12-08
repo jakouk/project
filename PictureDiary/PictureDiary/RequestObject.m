@@ -24,6 +24,7 @@ static NSString *ParamNameUserNameKey = @"username";
 static NSString *ParamNameUserPassWordKey = @"password";
 static NSString *ParamNameUserJoinDate = @"date_joined";
 static NSString *ParamNameUserPrimaryKey = @"pk";
+static NSString *ParamNameUserKeyKey = @"key";
 
 static NSString *JSONSuccessValue = @"success";
 
@@ -63,7 +64,7 @@ static NSString *JSONSuccessValue = @"success";
     return [NSURL URLWithString:urlString];
 }
 
-//ServerCheck
+//ServerCheck (get)
 + (void)requestUserData {
     
     NSURL *requestURL = [NSURL URLWithString:baseURLString];
@@ -137,7 +138,7 @@ static NSString *JSONSuccessValue = @"success";
     return isSuccesed;
 }
 
-//requestLogin
+//requestLogin ( POST )
 +(BOOL)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
     
     __block BOOL isSuccessed = NO;
@@ -158,15 +159,13 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
     
-        if (responseObject) {
-            
+        NSLog(@"responseObject : %@",responseObject);
+        NSLog(@"error : %@",error);
+        
             if ( error == NULL) {
                 isSuccessed = YES;
                 NSDictionary *dic = responseObject;
                 [[UserInfo sharedUserInfo] setUserToken:[dic objectForKey:@"key"]];
-                
-                
-            }
         }
         
     }];
@@ -176,9 +175,40 @@ static NSString *JSONSuccessValue = @"success";
     return isSuccessed;
 }
 
-//requestMain
-+ (void)requestMainData {
+//requestMain ( get )
++ (BOOL)requestMainData {
     
+    BOOL isSuccesed = NO;
+    
+    NSString *imageData = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/post/?key=";
+    NSLog(@"%@",[UserInfo sharedUserInfo].userToken);
+    
+    NSMutableString *url = [imageData stringByAppendingString:[UserInfo sharedUserInfo].userToken];
+    
+    NSLog(@"%@",url);
+    
+    NSURL *requestURL = [NSURL URLWithString:url];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURL *URL = requestURL;
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        
+        NSDictionary *dic = responseObject;
+        
+        NSLog(@"error : %@",error);
+        NSLog(@"%@",dic);
+        
+    }];
+    
+    [dataTask resume];
+    
+    return isSuccesed;
 }
 
 //requestRead
