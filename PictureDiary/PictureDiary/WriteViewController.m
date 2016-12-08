@@ -245,9 +245,6 @@
     
     imageView.image = [self.photoArray objectAtIndex:indexPath.row];
     [cell.contentView addSubview:imageView];
-    
-    NSLog(@"collectionView");
-    
     return cell;
     
 }

@@ -8,7 +8,6 @@
 
 #import "RequestObject.h"
 #import <AFNetworking.h>
-#import "UserInfo.h"
 
 typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeLogin,
@@ -122,17 +121,15 @@ static NSString *JSONSuccessValue = @"success";
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     
                       NSDictionary *dic = responseObject;
-                      NSString *password = [dic objectForKey:@"password"];
+                      NSString *notificationName = JoinNotification;
                       
-                      NSLog(@"dic : %@",dic);
-                      
-                      if ( password == nil ) {
-                          
-                          //Noti
-                          
-                          
-                      }
-                      
+                      //main deque
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                                  object:nil userInfo:dic];
+                              
+                          });
                   }];
     
     [uploadTask resume];
@@ -159,13 +156,18 @@ static NSString *JSONSuccessValue = @"success";
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         NSDictionary *dic = responseObject;
-        NSLog(@"key : %@",[dic objectForKey:@"key"]);
         
-        if ([dic objectForKey:@"key"]) {
-            [[UserInfo sharedUserInfo] setUserToken:[dic objectForKey:@"key"]];
+        NSString *notificationName = LoginNotification;
+        
+        
+        //main deque
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:nil userInfo:dic];
             
-            //Noti
-        }
+        });
+    
     }];
     
     
@@ -176,32 +178,30 @@ static NSString *JSONSuccessValue = @"success";
 //requestMain ( get )
 + (void)requestMainData {
     
+    NSString *urlStr = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/post/";
     
-    NSMutableString *imageData = [NSMutableString stringWithFormat: @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/post/?key="];
+    NSURL * url = [NSURL URLWithString:urlStr];
     
-    NSString *key = [UserInfo sharedUserInfo].userToken;
-    NSString *url = [imageData stringByAppendingString:key];
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
     
-    NSURL *requestURL = [NSURL URLWithString:url];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
-    NSURL *URL = requestURL;
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
-    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        
-        NSDictionary *dic = responseObject;
-        
-        //Noti
+        NSLog(@"response == %@", response);
+        NSLog(@"error == %@", error);
+        NSLog(@"responseObject == %@ ",responseObject);
         
     }];
     
     [dataTask resume];
-    
 }
 
 //requestRead
