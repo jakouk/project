@@ -41,6 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setHidden:YES];
     
     NSLog(@"view did load");
     
@@ -53,8 +54,15 @@
      */
     [self performSelector:@selector(quickFix) withObject:nil afterDelay:0.01];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(homeviewCollectionReload:)
+                                                      name:MainNotification
+                                                    object:nil];
+    
     //사진이름, 사진 배열
     self.photoName =
+    
     @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
     
     self.photoDetail =
@@ -64,67 +72,8 @@
     @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
     NSLog(@"array count : %ld", self.photo.count);
     
-    switch (self.photo.count) {
-        case 1:
-            self.maxRatio = 0.7;
-            self.minRatio = 2;
-            break;
-            
-        case 2:
-            self.maxRatio = 0.7;
-            self.minRatio = 2;
-            break;
-            
-        case 3:
-            self.maxRatio = 1;
-            self.minRatio = 3;
-            break;
-            
-        case 4:
-            self.maxRatio = 1.1;
-            self.minRatio = 4;
-            break;
-            
-        case 5:
-            self.maxRatio = 1.2;
-            self.minRatio = 5;
-            break;
-            
-        case 6:
-            self.maxRatio = 1.3;
-            self.minRatio = 6;
-            break;
-            
-        case 7:
-            self.maxRatio = 1.4;
-            self.minRatio = 7;
-            break;
-            
-        case 8:
-            self.maxRatio = 1.5;
-            self.minRatio = 8;
-            break;
-            
-        case 9:
-            self.maxRatio = 1.5;
-            self.minRatio = 9;
-            break;
-            
-        case 10:
-            self.maxRatio = 1.5;
-            self.minRatio = 10;
-            break;
-            
-        case 11:
-            self.maxRatio = 1.6;
-            self.minRatio = 11;
-            break;
-            
-        case 12:
-            self.maxRatio = 1.7;
-            self.minRatio = 12;
-            break;
-    }
+    [self collectionSizeFix];
+    
 }
 
 - (void)viewDidLayoutSubviews
@@ -288,6 +237,79 @@
     
     cell.layer.borderColor = nil;
     cell.layer.borderWidth = 0.0f;
+}
+
+//collection size fix
+- (void)collectionSizeFix {
+    
+    switch (self.photo.count) {
+        case 1:
+            self.maxRatio = 0.7;
+            self.minRatio = 2;
+            break;
+            
+        case 2:
+            self.maxRatio = 0.7;
+            self.minRatio = 2;
+            break;
+            
+        case 3:
+            self.maxRatio = 1;
+            self.minRatio = 3;
+            break;
+            
+        case 4:
+            self.maxRatio = 1.1;
+            self.minRatio = 4;
+            break;
+            
+        case 5:
+            self.maxRatio = 1.2;
+            self.minRatio = 5;
+            break;
+            
+        case 6:
+            self.maxRatio = 1.3;
+            self.minRatio = 6;
+            break;
+            
+        case 7:
+            self.maxRatio = 1.4;
+            self.minRatio = 7;
+            break;
+            
+        case 8:
+            self.maxRatio = 1.5;
+            self.minRatio = 8;
+            break;
+            
+        case 9:
+            self.maxRatio = 1.5;
+            self.minRatio = 9;
+            break;
+            
+        case 10:
+            self.maxRatio = 1.5;
+            self.minRatio = 10;
+            break;
+            
+        case 11:
+            self.maxRatio = 1.6;
+            self.minRatio = 11;
+            break;
+            
+        case 12:
+            self.maxRatio = 1.7;
+            self.minRatio = 12;
+            break;
+    }
+    
+}
+
+//homeviewCollectionReload
+- (void)homeviewCollectionReload:(NSNotification *)noti {
+    NSDictionary *userWord = noti.userInfo;
+    
 }
 
 #pragma mark - memory

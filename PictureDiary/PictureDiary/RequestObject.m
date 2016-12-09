@@ -175,6 +175,7 @@ static NSString *JSONSuccessValue = @"success";
     
 }
 
+#pragma mark - requestMain
 //requestMain ( get )
 + (void)requestMainData {
     
