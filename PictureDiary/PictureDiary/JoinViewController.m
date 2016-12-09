@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createLayoutSubview];
     
     // 키보드의 움직임 확인하는 노티피케이션
     [self registerForKeyboardNotifications];
@@ -39,11 +40,6 @@
                                              selector:@selector(userJoinIn:)
                                                  name:JoinNotification
                                                object:nil];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self createLayoutSubview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -112,7 +108,7 @@
     
     // placeholder custom
     self.userNameField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 이름"
+    [[NSAttributedString alloc] initWithString:@" 닉네임"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
@@ -204,7 +200,7 @@
     
     self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height*0.93, self.view.frame.size.width, self.view.frame.size.height*0.07)];
     [self.cancelButton setTitle:@"계정이 있으신가요?  로그인" forState:UIControlStateNormal];
-    [self.cancelButton setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.2]];
+    [self.cancelButton setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
     [self.cancelButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.cancelButton addTarget:self
@@ -264,7 +260,7 @@
         
         // 이메일 형식 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"올바른 이메일을 입력하세요."
+                                                    message:@"정확한 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
 
     } else if (nil) {
@@ -313,18 +309,11 @@
         [RequestObject requestJoinData:email userPass:password userName:userName];
         
     }
-    
-    
-    
 }
 
 
 // 회원가입시 네트워크 구현
 - (void)userJoinIn:(NSNotification *)noti {
-    
-    NSString *userName = [NSString stringWithFormat:@"%@",self.userNameField.text];
-    NSString *email = [NSString stringWithFormat:@"%@",self.emailField.text];
-    NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
     
     UIAlertController *alert;
     UIAlertAction *action;
@@ -333,7 +322,7 @@
     
     NSLog(@"%@",dic);
     
-    if ( [dic objectForKey:@"username"] == nil  && [dic objectForKey:@"password"] == nil) {
+    if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
         
         // 이름 가입 여부 체크
         NSLog(@" 가입 실패 이미 존재하는 이름");
@@ -344,7 +333,7 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
-    } else if ( [dic objectForKey:@"email"] == nil && [dic objectForKey:@"password"] == nil) {
+    } else if ([dic objectForKey:@"email"] != nil && [dic objectForKey:@"password"] == nil) {
         
         // 이메일 가입 여부 체크
         NSLog(@" 가입 실패 이미 존재하는 이메일 ");
@@ -356,7 +345,7 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
-    } else {
+    } else if ([dic objectForKey:@"password"] != nil) {
         
         NSLog(@"가입 완료");
         
@@ -377,7 +366,7 @@
 
 - (void)onTouchupInsideCancelButton:(UIButton *)sender {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
@@ -451,7 +440,7 @@
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
     
     if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
-        [self.scrollView setContentOffset:CGPointMake(0, 175) animated:YES];
+        [self.scrollView setContentOffset:CGPointMake(0, 140) animated:YES];
         
     } else if ([[notification name] isEqualToString:UIKeyboardDidHideNotification]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
@@ -466,14 +455,17 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.clearsOnBeginEditing = YES;
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                               action:@selector(blankTapped:)];
+    UITapGestureRecognizer *blankTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blankTapped:)];
     blankTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:blankTap];
     
 }
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
