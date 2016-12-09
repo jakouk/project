@@ -11,7 +11,6 @@
 #import "MainTabBarController.h"
 #import "UserInfo.h"
 #import "RequestObject.h"
-#import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
@@ -52,7 +51,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self createLayoutSubview];
-    self.navigationController.navigationBar.hidden = YES;
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -196,6 +195,8 @@
 
 - (void)onTouchupInsideLoginButton:(UIButton *)sender {
     
+    NSLog(@"click login button");
+    
     NSString *email = [NSString stringWithFormat:@"%@",self.emailTextField.text];
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
     
@@ -235,12 +236,6 @@
 // 로그인시 네트워크 구현
 - (void)userLogin:(NSNotification *)noti {
     
-    NSString *email = [NSString stringWithFormat:@"%@",self.emailTextField.text];
-    NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
-    
-    UIAlertController *alert;
-    UIAlertAction *action;
-    
     NSDictionary *dic = noti.userInfo;
     NSLog(@"%@",dic);
     
@@ -248,10 +243,10 @@
         
         // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
         NSLog(@"로그인 실패");
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
 
@@ -261,11 +256,9 @@
         NSLog(@"로그인 성공");
         [UserInfo sharedUserInfo].userToken = [dic objectForKey:@"key"];
         
+        // MainTabBarController로 이동
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-        
-        // MainTabBarController로 이동
-        
         UIApplication *application = [UIApplication sharedApplication];
         UIWindow *window = [application.delegate window];
         window.rootViewController = mainTabBarController;
@@ -290,6 +283,15 @@
         
         // 로그인 후 액션 지정
         [self fetchUserInfo];
+        NSLog(@"로그인 성공");
+        
+        // MainTabBarController로 이동
+//        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+//        UIApplication *application = [UIApplication sharedApplication];
+//        UIWindow *window = [application.delegate window];
+//        window.rootViewController = mainTabBarController;
+//        [window makeKeyAndVisible];
         
     } else {
         
@@ -376,7 +378,7 @@
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
     
     if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
-        [self.scrollView setContentOffset:CGPointMake(0, 125) animated:YES];
+        [self.scrollView setContentOffset:CGPointMake(0, 80) animated:YES];
         
     } else if ([[notification name] isEqualToString:UIKeyboardDidHideNotification]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
@@ -390,7 +392,11 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    textField.clearButtonMode = UITextFieldViewModeAlways;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.attributedPlaceholder = nil;
+    textField.placeholder = nil;
+    textField.clearsOnBeginEditing = YES;
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                action:@selector(blankTapped:)];
