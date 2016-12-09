@@ -11,7 +11,7 @@
 @interface RequestObject : NSObject
 
 + (void)requestUserData;
-+ (BOOL)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
-+(BOOL)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
-
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
++(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
++ (void)requestMainData;
 @end

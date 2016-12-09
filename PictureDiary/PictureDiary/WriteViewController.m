@@ -38,8 +38,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
 
 //photoArray
-@property (weak, nonatomic) NSMutableArray *photoArray;
-
+@property (strong, nonatomic) NSMutableArray *photoArray;
+@property (weak, nonatomic) UIImage *photoImage;
 
 @end
 
@@ -50,14 +50,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    
     self.collectionViewImage.dataSource = self;
     self.collectionViewImage.delegate = self;
     
     self.chosenImages = [[NSMutableArray alloc] init];
+    self.photoArray = [[NSMutableArray alloc] init];
+    
     NSLog(@"%lf",self.view.frame.size.height);
+    
+    //PHAsset
     
     // 카메라 롤 앨범을 읽어온다.
     PHFetchResult *smartFolderLists = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
@@ -65,26 +66,26 @@
                                                                                options:nil];
     
     PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[smartFolderLists firstObject];
- //
+    //
     
     // 카메라 롤에 있는 사진을 가져온다.
     PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
     
-    PHImageRequestOptions *options =[[PHImageRequestOptions alloc]init];
-    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.networkAccessAllowed = YES;
     options.synchronous = YES;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    PHImageManager *photoManager = [PHImageManager defaultManager];
     
-    for (NSInteger i = 0; i< assets.count; i++ ) {
-    
-        UIImage *image = [assets objectAtIndex:i];
-        
-        
-        [self.photoArray addObject:image];
-        NSLog(@"image %@",image);
-        
-        NSLog(@"imageSave %ld",i);
+    for (NSInteger i = 0; i < assets.count; i++) {
+        [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            self.photoImage = result;
+            
+        }];
+        [self.photoArray addObject:self.photoImage];
     }
-    
+ 
 }
 
 - (void)awakeFromNib {
@@ -241,18 +242,16 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
     imageView.image = [self.photoArray objectAtIndex:indexPath.row];
     [cell.contentView addSubview:imageView];
-    
-    NSLog(@"collectionView");
-    
     return cell;
     
 }
 
 //cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((self.view.frame.size.width - 35) /4, (self.view.frame.size.width - 35 )/4);
+    return CGSizeMake((self.view.frame.size.width - 55) /4, (self.view.frame.size.width - 55 )/4);
 }
 
 //in Spacing

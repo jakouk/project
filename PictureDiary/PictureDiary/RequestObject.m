@@ -8,7 +8,6 @@
 
 #import "RequestObject.h"
 #import <AFNetworking.h>
-#import "UserInfo.h"
 
 typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeLogin,
@@ -24,6 +23,7 @@ static NSString *ParamNameUserNameKey = @"username";
 static NSString *ParamNameUserPassWordKey = @"password";
 static NSString *ParamNameUserJoinDate = @"date_joined";
 static NSString *ParamNameUserPrimaryKey = @"pk";
+static NSString *ParamNameUserKeyKey = @"key";
 
 static NSString *JSONSuccessValue = @"success";
 
@@ -63,7 +63,7 @@ static NSString *JSONSuccessValue = @"success";
     return [NSURL URLWithString:urlString];
 }
 
-//ServerCheck
+//ServerCheck (get)
 + (void)requestUserData {
     
     NSURL *requestURL = [NSURL URLWithString:baseURLString];
@@ -92,9 +92,8 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestJoin (POST)
-+ (BOOL)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
     
-    __block BOOL isSuccesed = YES;
     
     NSString *requestURL = [[self requestURL:RequestTypeJoin param:nil] absoluteString];
     
@@ -122,25 +121,23 @@ static NSString *JSONSuccessValue = @"success";
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     
                       NSDictionary *dic = responseObject;
-                      NSString *password = [dic objectForKey:@"password"];
+                      NSString *notificationName = JoinNotification;
                       
-                      NSLog(@"dic : %@",dic);
-                      
-                      if ( password == nil ) {
-                          isSuccesed = NO;
-                      }
-                      
+                      //main deque
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                                  object:nil userInfo:dic];
+                              
+                          });
                   }];
     
     [uploadTask resume];
     
-    return isSuccesed;
 }
 
-//requestLogin
-+(BOOL)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
-    
-    __block BOOL isSuccessed = NO;
+//requestLogin ( POST )
++(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
     
     NSString *requestURL = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/member/auth/login/";
     
@@ -157,28 +154,54 @@ static NSString *JSONSuccessValue = @"success";
                                                                     } error:nil];
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-    
-        if (responseObject) {
+        
+        NSDictionary *dic = responseObject;
+        
+        NSString *notificationName = LoginNotification;
+        
+        
+        //main deque
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:nil userInfo:dic];
             
-            if ( error == NULL) {
-                isSuccessed = YES;
-                NSDictionary *dic = responseObject;
-                [[UserInfo sharedUserInfo] setUserToken:[dic objectForKey:@"key"]];
-                
-                
-            }
-        }
+        });
+    
+    }];
+    
+    
+    [dataTask resume];
+    
+}
+
+//requestMain ( get )
++ (void)requestMainData {
+    
+    NSString *urlStr = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/";
+    
+    NSURL * url = [NSURL URLWithString:urlStr];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        NSLog(@"response == %@", response);
+        NSLog(@"error == %@", error);
+        NSLog(@"responseObject == %@ ",responseObject);
         
     }];
     
     [dataTask resume];
-    
-    return isSuccessed;
-}
-
-//requestMain
-+ (void)requestMainData {
-    
 }
 
 //requestRead
