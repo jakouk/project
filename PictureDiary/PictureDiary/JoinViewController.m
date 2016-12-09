@@ -238,18 +238,18 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-<<<<<<< HEAD
+
     } else if (nil) {
         // 가입된 이름인지 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이미 등록된 이름입니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-=======
+
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
->>>>>>> 23c82a0990a321771cd3f6ad87b7a75e4c4437bc
+
     } else if (email.length == 0 || [email containsString:@" "]) {
         
         // 이메일 미입력
@@ -266,18 +266,18 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"올바른 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-<<<<<<< HEAD
+
     } else if (nil) {
         // 가입된 이메일인지 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이미 등록된 이메일입니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-=======
+
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
->>>>>>> 23c82a0990a321771cd3f6ad87b7a75e4c4437bc
+
     } else if (password.length == 0 || [password containsString:@" "]) {
         
         // 비밀번호 미입력

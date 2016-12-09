@@ -220,9 +220,9 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-<<<<<<< HEAD
+
     } else if (nil) {
-=======
+
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
@@ -249,7 +249,7 @@
     
     if ( [dic objectForKey:@"key"] == NULL ) {
         
->>>>>>> 23c82a0990a321771cd3f6ad87b7a75e4c4437bc
+
         // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
         NSLog(@"로그인 실패");
         alert = [UIAlertController alertControllerWithTitle:@"알림"
