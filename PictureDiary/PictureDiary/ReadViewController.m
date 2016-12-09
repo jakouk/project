@@ -82,7 +82,6 @@
 //스크롤이 변경될때 page의 currentPage 설정
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
-    
     self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
 }
 

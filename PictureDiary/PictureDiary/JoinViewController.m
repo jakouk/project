@@ -361,11 +361,6 @@
         NSLog(@"가입 완료");
         
         // 회원 정보 서버 저장 메소드
-<<<<<<< HEAD
-
-        
-=======
->>>>>>> 22b0b16cda3a4680c15120f5e2c77954dbaac68b
         UIAlertController *alert =
         [UIAlertController alertControllerWithTitle:@"알림"
                                             message:@"회원가입이 완료되었습니다. 로그인 하세요."
@@ -376,9 +371,7 @@
                                handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
     }
-    
 }
 
 

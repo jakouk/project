@@ -6,9 +6,14 @@
 //  Copyright © 2016년 jakouk. All rights reserved.
 //
 
+//ui
 #import "MainViewController.h"
 #import "CustomCell.h"
 #import "CollectionLayout.h"
+
+//network
+#import "RequestObject.h"
+#import "NetworkData.h"
 //#import <AssetsLibrary/AssetsLibrary.h>
 
 //셀 비율
@@ -41,9 +46,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setHidden:YES];
     
-    NSLog(@"view did load");
+//    [self.navigationController.navigationBar setHidden:YES];
+    
+//    NSLog(@"view did load");
     
     //xib 지정
     [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
@@ -70,16 +76,12 @@
     
     self.photo =
     @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
-    NSLog(@"array count : %ld", self.photo.count);
     
     [self collectionSizeFix];
-    
 }
 
 - (void)viewDidLayoutSubviews
 {
-    NSLog(@"view did layout sub view");
-    
     //layout
     self.slidingLayout = [[CollectionLayout alloc] initWithMaxRatio:self.maxRatio andMinRatio:self.minRatio];
     [self.collectionView setCollectionViewLayout:self.slidingLayout];
@@ -173,8 +175,6 @@
 
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    
-    NSLog(@"cell height : %lf", cell.bounds.size.height);
 
     //사진갯수 1 ~ 3
     if (self.photo.count == 1 || self.photo.count == 2 || self.photo.count == 3) {
@@ -217,7 +217,7 @@
         
     //사진객수 10 ~ 11
     }else if (self.photo.count == 10 || self.photo.count == 11){
-        if (cell.bounds.size.height >= 240) {
+        if (cell.bounds.size.height >= 220) {
             NSLog(@"cell height : %lf", cell.bounds.size.height);
             
             cell.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -228,6 +228,11 @@
             [self.navigationController pushViewController:readScreen animated:YES];
         };
     };
+    
+//    UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+//    UIViewController *readScreen = [stotyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+//    [self.navigationController pushViewController:readScreen animated:YES];
+    
 }
 
 //셀을 다시 선택했을 경우
@@ -307,8 +312,12 @@
 }
 
 //homeviewCollectionReload
-- (void)homeviewCollectionReload:(NSNotification *)noti {
+//네트워크에서 사진 불러오기
+- (void)homeviewCollectionReload:(NSNotification *)noti
+{
     NSDictionary *userWord = noti.userInfo;
+    NSLog(@"userwork dic : %@", userWord);
+    
     
 }
 
