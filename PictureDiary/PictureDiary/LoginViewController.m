@@ -33,7 +33,9 @@
 #pragma mark View Controller Life Cycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    [self createLayoutSubview];
     [self registerForKeyboardNotifications];
     
     // 로그인시 네트워크와의 통신 가능 여부 확인하는 노티피케이션
@@ -43,22 +45,18 @@
                                                object:nil];
     
     // 페이스북 로그인 버튼 클릭시 액션
-    [self.fbLoginButton addTarget:self
-                           action:@selector(onTouchupInsideFbLoginButton:)
-                 forControlEvents:UIControlEventTouchUpInside];
+//    [self.fbLoginButton addTarget:self
+//                           action:@selector(onTouchupInsideFbLoginButton:)
+//                 forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self createLayoutSubview];
-    [self.navigationController.navigationBar setHidden:YES];
-}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LoginNotification object:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -146,6 +144,7 @@
     self.passwordTextField.delegate = self;
 }
 
+
 - (void)createLoginButtons {
     
     self.emailLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -178,7 +177,7 @@
     
     self.joinButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height*0.93, self.view.frame.size.width, self.view.frame.size.height*0.07)];
     [self.joinButton setTitle:@"계정이 없으신가요?  회원가입" forState:UIControlStateNormal];
-    [self.joinButton setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.2f]];
+    [self.joinButton setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
     [self.joinButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.joinButton addTarget:self
@@ -264,6 +263,7 @@
         window.rootViewController = mainTabBarController;
         [window makeKeyAndVisible];
     }
+    
 }
 
 
@@ -271,7 +271,7 @@
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     JoinViewController *joinViewController = [storyBoard instantiateViewControllerWithIdentifier:@"JoinViewController"];
-    [self.navigationController pushViewController:joinViewController animated:YES];
+    [self presentViewController:joinViewController animated:YES completion:nil];
     
 }
 
@@ -286,12 +286,12 @@
         NSLog(@"로그인 성공");
         
         // MainTabBarController로 이동
-//        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-//        UIApplication *application = [UIApplication sharedApplication];
-//        UIWindow *window = [application.delegate window];
-//        window.rootViewController = mainTabBarController;
-//        [window makeKeyAndVisible];
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+        UIApplication *application = [UIApplication sharedApplication];
+        UIWindow *window = [application.delegate window];
+        window.rootViewController = mainTabBarController;
+        [window makeKeyAndVisible];
         
     } else {
         
@@ -339,13 +339,16 @@
         }
     }];
     [connection start];
+    
 }
 
 
 - (void)blankTapped:(UIControl *)sender {
+    
     [self.emailTextField endEditing:YES];
     [self.passwordTextField endEditing:YES];
     [self.scrollView setContentOffset:CGPointZero animated:YES];
+
 }
 
 
@@ -365,6 +368,7 @@
     
 }
 
+
 - (void)unregisterForKeyboardNotifications {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -374,6 +378,7 @@
                                                     name:UIKeyboardWillHideNotification
                                                   object:nil];
 }
+
 
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
     
@@ -393,13 +398,11 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
-    textField.attributedPlaceholder = nil;
-    textField.placeholder = nil;
     textField.clearsOnBeginEditing = YES;
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    UITapGestureRecognizer *blankTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                               action:@selector(blankTapped:)];
+    UITapGestureRecognizer *blankTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blankTapped:)];
     blankTap.cancelsTouchesInView = NO;
     [self.scrollView addGestureRecognizer:blankTap];
     
