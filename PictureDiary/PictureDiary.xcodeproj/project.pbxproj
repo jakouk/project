@@ -545,14 +545,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-<<<<<<< HEAD
 				FRAMEWORK_SEARCH_PATHS = "\"/Users/geonhuikim/Documents/FacebookSDK\"";
-=======
 				FRAMEWORK_SEARCH_PATHS = "\"/Users/jakouk/Documents/FacebookSDK\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
->>>>>>> 23c82a0990a321771cd3f6ad87b7a75e4c4437bc
 				INFOPLIST_FILE = PictureDiary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.PictureDiary;
@@ -565,15 +562,12 @@
 			baseConfigurationReference = E2ADA6D9BE9A3F14A4D86135 /* Pods-PictureDiary.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-<<<<<<< HEAD
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "\"/Users/geonhuikim/Documents/FacebookSDK\"";
-=======
 				DEVELOPMENT_TEAM = "";				FRAMEWORK_SEARCH_PATHS = "\"/Users/jakouk/Documents/FacebookSDK\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
->>>>>>> 23c82a0990a321771cd3f6ad87b7a75e4c4437bc
 				INFOPLIST_FILE = PictureDiary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.PictureDiary;
