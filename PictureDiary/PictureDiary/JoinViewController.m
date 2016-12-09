@@ -262,7 +262,7 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-    } else if () {
+    } else if (nil) {
         // 가입된 이름인지 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이미 등록된 이름입니다."
@@ -277,7 +277,7 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"올바른 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-    } else if () {
+    } else if (nil) {
         // 가입된 이메일인지 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이미 등록된 이메일입니다."
