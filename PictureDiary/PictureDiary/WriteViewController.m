@@ -90,7 +90,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    NSLog(@"awakeFromNib");
 }
 
 - (IBAction)launchController
