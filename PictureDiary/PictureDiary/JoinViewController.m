@@ -361,7 +361,7 @@
         NSLog(@"가입 완료");
         
         // 회원 정보 서버 저장 메소드
-        [RequestObject requestJoinData:email userPass:password userName:userName];
+
         
         UIAlertController *alert =
         [UIAlertController alertControllerWithTitle:@"알림"
