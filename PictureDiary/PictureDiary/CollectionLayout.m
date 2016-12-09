@@ -138,15 +138,15 @@
         
         translationT = CGAffineTransformMakeTranslation(0, endTranslateOffset + self.collectionView.contentOffset.y + self.cellHeight * factorY);
         
-        //====================================================================================================================================
+    //====================================================================================================================================
     }else if(indexPath.item >= floor(currentIndex) + 1){
         
         translationT = CGAffineTransformMakeTranslation(0 , endTranslateOffset+ self.collectionView.contentOffset.y +self.cellHeight +  (self.minHeight * fmax(0, ((float)indexPath.item-currentIndex-1))) );
         
         theAttributes.size = CGSizeMake(self.collectionView.bounds.size.width, self.minHeight);
         
-        //내릴때
-        //====================================================================================================================================
+    //내릴때
+    //====================================================================================================================================
     }else if (indexPath.item <= floor(currentIndex) && indexPath.item > floor(currentIndex) - 1){
         
         CGFloat factorY = 1 - (floor(currentIndex) + 1 - currentIndex);
@@ -156,7 +156,7 @@
         
         translationT = CGAffineTransformMakeTranslation(0 , endTranslateOffset + self.collectionView.contentOffset.y - self.cellHeight * factorY);
         
-        //====================================================================================================================================
+    //====================================================================================================================================
     }else if(indexPath.item <= floor(currentIndex) - 1){
         
         theAttributes.size = CGSizeMake(self.collectionView.bounds.size.width, self.minHeight);

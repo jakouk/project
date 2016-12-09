@@ -68,7 +68,6 @@
     
     //사진이름, 사진 배열
     self.photoName =
-    
     @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
     
     self.photoDetail =
