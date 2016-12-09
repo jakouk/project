@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "CustomCell.h"
 #import "CollectionLayout.h"
+#import <UIImageView+WebCache.h>
 
 //network
 #import "RequestObject.h"
@@ -22,15 +23,6 @@
 
 @interface MainViewController ()
 
-//사진제목
-@property NSArray *photoName;
-
-//사진내용
-@property NSArray *photoDetail;
-
-//사진
-@property NSArray *photo;
-
 //레이아웃
 @property CollectionLayout *slidingLayout;
 
@@ -38,11 +30,21 @@
 @property CGFloat minRatio;
 @property CGFloat maxRatio;
 
+@property NSArray *userWord;
+
 @end
 
 @implementation MainViewController
 
 @synthesize collectionView, item;
+
+- (void)awakeFromNib {
+    
+    [super awakeFromNib];
+    self.userWord = [[NSArray alloc] init];
+    [RequestObject requestMainData];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,17 +68,7 @@
                                                       name:MainNotification
                                                     object:nil];
     
-    //사진이름, 사진 배열
-    self.photoName =
-    
-    @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
-    
-    self.photoDetail =
-    @[@"sandiego baseballpark",@"good bye here",@"kim geon hui",@"snow picture",@"california usa",@"drink drink",@"jot e na gga",@"japan airline",@"sandiego vs sanfransico",@"sanfransico picter",@"i love you"];
-    
-    self.photo =
-    @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
-    
+
     [self collectionSizeFix];
 }
 
@@ -153,7 +145,8 @@
 //로우 갯수
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.photo.count;
+    NSLog(@"self.userWord.count %ld",self.userWord.count);
+    return self.userWord.count;
 }
 
 //셀 셋팅
@@ -161,9 +154,17 @@
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    cell.nameLabel.text = self.photoName[indexPath.row];
-//    cell.detailLabel.text = self.photoDetail[indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:[self.photo objectAtIndex:indexPath.row]];
+    NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
+    NSString *title = [wordDic objectForKey:@"title"];
+    
+    NSArray *imageArray = [wordDic objectForKey:@"photos"];
+    
+    NSDictionary *imageURL = imageArray[0];
+    
+    NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"image"]];
+    
+    [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+    cell.nameLabel.text = title;
     
     return cell;
 }
@@ -177,7 +178,7 @@
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
 
     //사진갯수 1 ~ 3
-    if (self.photo.count == 1 || self.photo.count == 2 || self.photo.count == 3) {
+    if ( self.userWord.count < 4) {
         if (cell.bounds.size.height >= 400) {
             NSLog(@"cell height : %lf", cell.bounds.size.height);
             
@@ -190,7 +191,7 @@
         };
         
     //사진갯수 4 ~ 6
-    }else if (self.photo.count == 4 || self.photo.count == 5 || self.photo.count == 6){
+    }else if ( self.userWord.count < 7 ){
         if (cell.bounds.size.height >= 300) {
             NSLog(@"cell height : %lf", cell.bounds.size.height);
             
@@ -203,7 +204,7 @@
         };
         
     //사진갯수 7 ~ 9
-    }else if (self.photo.count == 7 || self.photo.count == 8 || self.photo.count == 9){
+    }else if ( self.userWord.count < 10 ){
         if (cell.bounds.size.height >= 250) {
             NSLog(@"cell height : %lf", cell.bounds.size.height);
             
@@ -216,7 +217,7 @@
         };
         
     //사진객수 10 ~ 11
-    }else if (self.photo.count == 10 || self.photo.count == 11){
+    }else {
         if (cell.bounds.size.height >= 220) {
             NSLog(@"cell height : %lf", cell.bounds.size.height);
             
@@ -247,7 +248,7 @@
 //collection size fix
 - (void)collectionSizeFix {
     
-    switch (self.photo.count) {
+    switch ( self.userWord.count ) {
         case 1:
             self.maxRatio = 0.7;
             self.minRatio = 2;
@@ -315,10 +316,27 @@
 //네트워크에서 사진 불러오기
 - (void)homeviewCollectionReload:(NSNotification *)noti
 {
-    NSDictionary *userWord = noti.userInfo;
-    NSLog(@"userwork dic : %@", userWord);
-    
-    
+//    NSDictionary *wordDic = noti.userInfo;
+//    self.userWord = [wordDic objectForKey:@"word"];
+//    
+//    NSLog(@"homeviewCollectionReload");
+//    
+//    for ( NSDictionary *dic in self.userWord ) {
+//        
+//        NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
+//        NSString *title = [wordDic objectForKey:@"title"];
+//        
+//        NSArray *imageArray = [wordDic objectForKey:@"photos"];
+//        
+//        NSDictionary *imageURL = imageArray[0];
+//        
+//        NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"image"]];
+//        
+//        [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+//        cell.nameLabel.text = title;
+//    }
+//    
+//    [self.collectionView reloadData];
 }
 
 #pragma mark - memory
