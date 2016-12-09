@@ -21,25 +21,25 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // 페이스북 로그인 사용 위해 추가
-    [[FBSDKApplicationDelegate sharedInstance] application:application
-                             didFinishLaunchingWithOptions:launchOptions];
+//    [[FBSDKApplicationDelegate sharedInstance] application:application
+//                             didFinishLaunchingWithOptions:launchOptions];
     return YES;
 }
 
 // 페이스북 로그인 사용 위해 추가
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    
-    BOOL handled =
-    [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                   openURL:url
-                                         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-     ];
-    // Add any custom logic here.
-    return handled;
-}
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+//    
+//    BOOL handled =
+//    [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                                   openURL:url
+//                                         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+//                                                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+//     ];
+//    // Add any custom logic here.
+//    return handled;
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -58,12 +58,12 @@
 }
 
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    
-    // 페이스북 로그인 사용 위해 추가
-    [FBSDKAppEvents activateApp];
-    
-}
+//- (void)applicationDidBecomeActive:(UIApplication *)application {
+//    
+//    // 페이스북 로그인 사용 위해 추가
+//    [FBSDKAppEvents activateApp];
+//    
+//}
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
