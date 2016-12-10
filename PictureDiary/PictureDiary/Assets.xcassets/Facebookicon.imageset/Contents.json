@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "facebook-5-16.png",
+      "filename" : "Facebookicon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "facebook-5-17.png",
+      "filename" : "Facebookicon-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "facebook-5-18.png",
+      "filename" : "Facebookicon-2.png",
       "scale" : "3x"
     }
   ],

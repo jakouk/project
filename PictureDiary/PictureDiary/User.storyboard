@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PXB-ii-mDk">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PXB-ii-mDk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,17 +20,28 @@
                     <view key="view" contentMode="scaleToFill" id="y2B-4E-00j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HDp-76-XP4">
+                                <rect key="frame" x="0.0" y="42" width="375" height="576"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6bJ-Hr-y9l" firstAttribute="top" secondItem="HDp-76-XP4" secondAttribute="bottom" id="RMA-P8-u1E"/>
+                            <constraint firstItem="HDp-76-XP4" firstAttribute="top" secondItem="y2B-4E-00j" secondAttribute="top" constant="42" id="jRF-aU-YsK"/>
+                            <constraint firstItem="HDp-76-XP4" firstAttribute="leading" secondItem="y2B-4E-00j" secondAttribute="leading" id="qwy-Rg-GfI"/>
+                            <constraint firstAttribute="trailing" secondItem="HDp-76-XP4" secondAttribute="trailing" id="tz2-M0-Xla"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="user" id="Brj-2d-ruI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="userTableView" destination="HDp-76-XP4" id="mhT-BP-MGT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p8J-U6-Xuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="158"/>
+            <point key="canvasLocation" x="1064.8" y="157.87106446776613"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="user" width="25" height="25"/>
-    </resources>
 </document>
