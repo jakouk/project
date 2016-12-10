@@ -12,24 +12,7 @@
 
 #import <UIImageView+WebCache.h>
 
-//network
-#import "RequestObject.h"
-#import "NetworkData.h"
-
 @interface MainViewController ()
-
-//사진제목
-@property NSArray *photoName;
-
-//사진내용
-@property NSArray *photoDetail;
-
-//사진
-@property NSArray *photo;
-
-//셀의 크기
-@property CGFloat minRatio;
-@property CGFloat maxRatio;
 
 @property NSArray *userWord;
 
@@ -43,38 +26,25 @@
     
     [super awakeFromNib];
     self.userWord = [[NSArray alloc] init];
-    [RequestObject requestMainData];
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    NSLog(@"view did load");
-    
     //xib 지정
     [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
+    [RequestObject requestMainData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(homeviewCollectionReload:)
                                                       name:MainNotification
                                                     object:nil];
-    
-    //사진이름, 사진 배열
-    self.photoName =
-    @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
-    
-    self.photoDetail =
-    @[@"sandiego baseballpark",@"good bye here",@"kim geon hui",@"snow picture",@"california usa",@"drink drink",@"jot e na gga",@"japan airline",@"sandiego vs sanfransico",@"sanfransico picter",@"i love you"];
-    
-    self.photo =
-    @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     [self.navigationController.navigationBar setHidden:YES];
 }
 
@@ -97,18 +67,25 @@
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    //title
     NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-    NSString *title = [wordDic objectForKey:@"title"];
-    
-    NSArray *imageArray = [wordDic objectForKey:@"photos"];
-    
-    NSDictionary *imageURL = imageArray[0];
-    
-    NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"image"]];
-    
-    [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+    NSString *title =  [wordDic objectForKey:@"title"];
     cell.nameLabel.text = title;
     
+    //image
+    NSArray *imageArray = [wordDic objectForKey:@"photos"];
+    
+    if (imageArray.count != 0) {
+        
+        NSDictionary *imageSize = [imageArray objectAtIndex:0];
+        NSDictionary *imageURL = [imageSize objectForKey:@"image"];
+        NSString *urlStr = [imageURL objectForKey:@"full_size"];
+        NSLog(@"urlStr === %@",urlStr);
+        
+        NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
+        [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        
+    }
     return cell;
 }
 
@@ -162,27 +139,11 @@
 //네트워크에서 사진 불러오기
 - (void)homeviewCollectionReload:(NSNotification *)noti
 {
-//    NSDictionary *wordDic = noti.userInfo;
-//    self.userWord = [wordDic objectForKey:@"word"];
-//    
-//    NSLog(@"homeviewCollectionReload");
-//    
-//    for ( NSDictionary *dic in self.userWord ) {
-//        
-//        NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-//        NSString *title = [wordDic objectForKey:@"title"];
-//        
-//        NSArray *imageArray = [wordDic objectForKey:@"photos"];
-//        
-//        NSDictionary *imageURL = imageArray[0];
-//        
-//        NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"image"]];
-//        
-//        [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-//        cell.nameLabel.text = title;
-//    }
-//    
-//    [self.collectionView reloadData];
+    NSDictionary *wordDic = noti.userInfo;
+    self.userWord = [wordDic objectForKey:@"word"];
+    
+    NSLog(@"homeviewCollectionReload");
+    [self.collectionView reloadData];
 }
 
 #pragma mark - memory
