@@ -196,9 +196,18 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSLog(@"response == %@", response);
-        NSLog(@"error == %@", error);
-        NSLog(@"responseObject == %@ ",responseObject);
+        NSString *notificationName = MainNotification;
+        
+        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
+        [wordDic setObject:responseObject forKey:@"word"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:nil userInfo:wordDic];
+            
+        });
         
     }];
     

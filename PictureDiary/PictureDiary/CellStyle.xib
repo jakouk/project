@@ -23,7 +23,6 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jrn-8A-m6c">
                         <rect key="frame" x="0.0" y="-10" width="483" height="321"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.79237607759999995" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ch0-vc-Nrl">
                         <rect key="frame" x="8" y="125" width="467" height="50"/>

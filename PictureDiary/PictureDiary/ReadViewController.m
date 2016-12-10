@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setHidden:NO];
+    
     UIBarButtonItem *modifiedButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                                                                     target:self action:@selector(touchinsideModifiedButton)];
     
@@ -82,7 +84,6 @@
 //스크롤이 변경될때 page의 currentPage 설정
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
-    
     self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
 }
 

@@ -344,9 +344,7 @@
                                         handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
     }
-    
 }
 
 
