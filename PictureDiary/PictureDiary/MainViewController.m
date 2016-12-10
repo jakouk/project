@@ -9,11 +9,8 @@
 //ui
 #import "MainViewController.h"
 #import "CustomCell.h"
-<<<<<<< HEAD
-=======
-#import "CollectionLayout.h"
+
 #import <UIImageView+WebCache.h>
->>>>>>> ddd464469f3d478dcc76ab845946a08a73844d74
 
 //network
 #import "RequestObject.h"
@@ -21,7 +18,6 @@
 
 @interface MainViewController ()
 
-<<<<<<< HEAD
 //사진제목
 @property NSArray *photoName;
 
@@ -30,10 +26,6 @@
 
 //사진
 @property NSArray *photo;
-=======
-//레이아웃
-@property CollectionLayout *slidingLayout;
->>>>>>> ddd464469f3d478dcc76ab845946a08a73844d74
 
 //셀의 크기
 @property CGFloat minRatio;
@@ -68,7 +60,6 @@
                                                       name:MainNotification
                                                     object:nil];
     
-<<<<<<< HEAD
     //사진이름, 사진 배열
     self.photoName =
     @[@"Petco Park",@"bye bye",@"ME",@"HUT",@"IN N OUT",@"Yeah ~",@"Fuck",@"Sky View",@"BaseBall",@"Bumgarner",@"Sana"];
@@ -78,11 +69,6 @@
     
     self.photo =
     @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
-    
-=======
-
-    [self collectionSizeFix];
->>>>>>> ddd464469f3d478dcc76ab845946a08a73844d74
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,13 +119,15 @@
 }
 
 //컬렉션과 컬렉션 width 간격, 내부여백
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
     return 0;
 }
 
 //셀간의 최소간격
 //위아래 간격 hight
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
     return 5;
 }
 
@@ -152,67 +140,9 @@
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
 
-<<<<<<< HEAD
+
     cell.layer.borderColor = [UIColor whiteColor].CGColor;
     cell.layer.borderWidth = 3.0f;
-=======
-    //사진갯수 1 ~ 3
-    if ( self.userWord.count < 4) {
-        if (cell.bounds.size.height >= 400) {
-            NSLog(@"cell height : %lf", cell.bounds.size.height);
-            
-            cell.layer.borderColor = [UIColor whiteColor].CGColor;
-            cell.layer.borderWidth = 3.0f;
-        
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-            [self.navigationController pushViewController:readScreen animated:YES];
-        };
-        
-    //사진갯수 4 ~ 6
-    }else if ( self.userWord.count < 7 ){
-        if (cell.bounds.size.height >= 300) {
-            NSLog(@"cell height : %lf", cell.bounds.size.height);
-            
-            cell.layer.borderColor = [UIColor whiteColor].CGColor;
-            cell.layer.borderWidth = 3.0f;
-
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-            [self.navigationController pushViewController:readScreen animated:YES];
-        };
-        
-    //사진갯수 7 ~ 9
-    }else if ( self.userWord.count < 10 ){
-        if (cell.bounds.size.height >= 250) {
-            NSLog(@"cell height : %lf", cell.bounds.size.height);
-            
-            cell.layer.borderColor = [UIColor whiteColor].CGColor;
-            cell.layer.borderWidth = 3.0f;
-
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-            [self.navigationController pushViewController:readScreen animated:YES];
-        };
-        
-    //사진객수 10 ~ 11
-    }else {
-        if (cell.bounds.size.height >= 220) {
-            NSLog(@"cell height : %lf", cell.bounds.size.height);
-            
-            cell.layer.borderColor = [UIColor whiteColor].CGColor;
-            cell.layer.borderWidth = 3.0f;
-
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-            UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-            [self.navigationController pushViewController:readScreen animated:YES];
-        };
-    };
-    
-//    UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-//    UIViewController *readScreen = [stotyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-//    [self.navigationController pushViewController:readScreen animated:YES];
->>>>>>> ddd464469f3d478dcc76ab845946a08a73844d74
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
     UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
@@ -228,76 +158,6 @@
     cell.layer.borderWidth = 0.0f;
 }
 
-<<<<<<< HEAD
-=======
-//collection size fix
-- (void)collectionSizeFix {
-    
-    switch ( self.userWord.count ) {
-        case 1:
-            self.maxRatio = 0.7;
-            self.minRatio = 2;
-            break;
-            
-        case 2:
-            self.maxRatio = 0.7;
-            self.minRatio = 2;
-            break;
-            
-        case 3:
-            self.maxRatio = 1;
-            self.minRatio = 3;
-            break;
-            
-        case 4:
-            self.maxRatio = 1.1;
-            self.minRatio = 4;
-            break;
-            
-        case 5:
-            self.maxRatio = 1.2;
-            self.minRatio = 5;
-            break;
-            
-        case 6:
-            self.maxRatio = 1.3;
-            self.minRatio = 6;
-            break;
-            
-        case 7:
-            self.maxRatio = 1.4;
-            self.minRatio = 7;
-            break;
-            
-        case 8:
-            self.maxRatio = 1.5;
-            self.minRatio = 8;
-            break;
-            
-        case 9:
-            self.maxRatio = 1.5;
-            self.minRatio = 9;
-            break;
-            
-        case 10:
-            self.maxRatio = 1.5;
-            self.minRatio = 10;
-            break;
-            
-        case 11:
-            self.maxRatio = 1.6;
-            self.minRatio = 11;
-            break;
-            
-        case 12:
-            self.maxRatio = 1.7;
-            self.minRatio = 12;
-            break;
-    }
-    
-}
-
->>>>>>> ddd464469f3d478dcc76ab845946a08a73844d74
 //homeviewCollectionReload
 //네트워크에서 사진 불러오기
 - (void)homeviewCollectionReload:(NSNotification *)noti
