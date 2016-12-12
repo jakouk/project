@@ -216,6 +216,7 @@ static NSString *JSONSuccessValue = @"success";
     [dataTask resume];
 }
 
+
 //requestRead
 + (void)requestReadData:(NSString *)PostId {
     
@@ -371,6 +372,7 @@ static NSString *JSONSuccessValue = @"success";
 + (void)requestFaceBook {
     
 }
+
 
 
 @end
