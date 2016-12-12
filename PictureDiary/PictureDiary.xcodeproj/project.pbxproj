@@ -31,10 +31,10 @@
 		73D621F41DF1BA51005AAF2A /* Read.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D621F31DF1BA51005AAF2A /* Read.storyboard */; };
 		73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D621F61DF1C474005AAF2A /* RequestObject.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
-		A82CCF6F1DF925EA0001F185 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82CCF6B1DF925EA0001F185 /* Bolts.framework */; };
-		A82CCF701DF925EA0001F185 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82CCF6C1DF925EA0001F185 /* FBSDKCoreKit.framework */; };
-		A82CCF711DF925EA0001F185 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82CCF6D1DF925EA0001F185 /* FBSDKLoginKit.framework */; };
-		A82CCF721DF925EA0001F185 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82CCF6E1DF925EA0001F185 /* FBSDKShareKit.framework */; };
+		A836057B1DFEAC2F00C71927 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605771DFEAC2F00C71927 /* Bolts.framework */; };
+		A836057C1DFEAC2F00C71927 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605781DFEAC2F00C71927 /* FBSDKCoreKit.framework */; };
+		A836057D1DFEAC2F00C71927 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605791DFEAC2F00C71927 /* FBSDKLoginKit.framework */; };
+		A836057E1DFEAC2F00C71927 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836057A1DFEAC2F00C71927 /* FBSDKShareKit.framework */; };
 		BB7310681DF5DA9800B4BF0C /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7310671DF5DA9800B4BF0C /* CustomCell.m */; };
 		BB73106D1DF5DAE100B4BF0C /* CellStyle.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */; };
 		BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */; };
@@ -83,10 +83,10 @@
 		73D621F51DF1C474005AAF2A /* RequestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestObject.h; sourceTree = "<group>"; };
 		73D621F61DF1C474005AAF2A /* RequestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestObject.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A82CCF6B1DF925EA0001F185 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
-		A82CCF6C1DF925EA0001F185 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		A82CCF6D1DF925EA0001F185 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		A82CCF6E1DF925EA0001F185 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		A83605771DFEAC2F00C71927 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		A83605781DFEAC2F00C71927 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		A83605791DFEAC2F00C71927 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		A836057A1DFEAC2F00C71927 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		BB7310661DF5DA9800B4BF0C /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		BB7310671DF5DA9800B4BF0C /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellStyle.xib; sourceTree = "<group>"; };
@@ -102,10 +102,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */,
-				A82CCF701DF925EA0001F185 /* FBSDKCoreKit.framework in Frameworks */,
-				A82CCF721DF925EA0001F185 /* FBSDKShareKit.framework in Frameworks */,
-				A82CCF711DF925EA0001F185 /* FBSDKLoginKit.framework in Frameworks */,
-				A82CCF6F1DF925EA0001F185 /* Bolts.framework in Frameworks */,
+				A836057C1DFEAC2F00C71927 /* FBSDKCoreKit.framework in Frameworks */,
+				A836057E1DFEAC2F00C71927 /* FBSDKShareKit.framework in Frameworks */,
+				A836057D1DFEAC2F00C71927 /* FBSDKLoginKit.framework in Frameworks */,
+				A836057B1DFEAC2F00C71927 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,10 +266,10 @@
 		D83FF282BD27D2370D0FDB4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A82CCF6B1DF925EA0001F185 /* Bolts.framework */,
-				A82CCF6C1DF925EA0001F185 /* FBSDKCoreKit.framework */,
-				A82CCF6D1DF925EA0001F185 /* FBSDKLoginKit.framework */,
-				A82CCF6E1DF925EA0001F185 /* FBSDKShareKit.framework */,
+				A83605771DFEAC2F00C71927 /* Bolts.framework */,
+				A83605781DFEAC2F00C71927 /* FBSDKCoreKit.framework */,
+				A83605791DFEAC2F00C71927 /* FBSDKLoginKit.framework */,
+				A836057A1DFEAC2F00C71927 /* FBSDKShareKit.framework */,
 				89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */,
 			);
 			name = Frameworks;
@@ -463,6 +463,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -510,6 +511,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -538,8 +540,12 @@
 			baseConfigurationReference = EC89CDE1C20AE90D327C1B56 /* Pods-PictureDiary.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
+				FRAMEWORK_SEARCH_PATHS = (
+					"~/Documents/FacebookSDK",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = PictureDiary/Info.plist;
@@ -554,8 +560,12 @@
 			baseConfigurationReference = E2ADA6D9BE9A3F14A4D86135 /* Pods-PictureDiary.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
+				FRAMEWORK_SEARCH_PATHS = (
+					"~/Documents/FacebookSDK",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = PictureDiary/Info.plist;

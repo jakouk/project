@@ -67,22 +67,35 @@
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    //title
-    NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-    NSString *title =  [wordDic objectForKey:@"title"];
-    cell.nameLabel.text = title;
-    
-    //image
-    NSArray *imageArray = [wordDic objectForKey:@"photos"];
-    
-    if (imageArray.count != 0) {
+    if (self.userWord.count != 0) {
         
-        NSDictionary *imageSize = [imageArray objectAtIndex:0];
-        NSDictionary *imageURL = [imageSize objectForKey:@"image"];
-        NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
-        [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        //title
+//        NSDictionary *wordDic =  self.userWord[indexPath.row];
+        NSDictionary *wordDic = [[NSDictionary alloc] init];
+        wordDic = (NSDictionary *)self.userWord[indexPath.row];
+        
+        NSString *title =  [wordDic objectForKey:@"title"];
+        cell.nameLabel.text = title;
+        
+        //image
+        NSArray *imageArray = [wordDic objectForKey:@"photos"];
+        
+        if (imageArray.count != 0) {
+            
+            NSDictionary *imageSize = [imageArray objectAtIndex:0];
+            NSDictionary *imageURL = [imageSize objectForKey:@"image"];
+            NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
+            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            
+        } else {
+            
+            cell.backgroundColor = [UIColor blueColor];
+            
+        }
         
     }
+    
+    
     return cell;
 }
 
@@ -119,7 +132,7 @@
     
     //post-id
     NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-    NSString *postId =  [wordDic objectForKey:@"id"];
+    NSString *postId =  [NSString stringWithFormat:@"%@",[wordDic objectForKey:@"id"]];
     
     NSLog(@"Read setPost Id");
     [readScreen setPostId:postId];
@@ -151,7 +164,7 @@
 - (void)homeviewCollectionReload:(NSNotification *)noti
 {
     NSDictionary *wordDic = noti.userInfo;
-    self.userWord = [wordDic objectForKey:@"word"];
+    self.userWord = [wordDic objectForKey:@"results"];
     
     [self.collectionView reloadData];
 }

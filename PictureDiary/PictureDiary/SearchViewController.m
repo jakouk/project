@@ -13,16 +13,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
 
-//join Test
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *pass;
-@property (weak, nonatomic) IBOutlet UITextField *username;
-
-
-//login test
-@property (weak, nonatomic) IBOutlet UITextField *loginEmail;
-@property (weak, nonatomic) IBOutlet UITextField *loginPass;
-
 
 @end
 
@@ -82,7 +72,8 @@
 //searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     
-    
+    NSString *searchData = self.searchData.text;
+    [RequestObject requestSearch:searchData];
 }
 
 
