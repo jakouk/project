@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,13 +23,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HDp-76-XP4">
-                                <rect key="frame" x="0.0" y="42" width="375" height="576"/>
+                                <rect key="frame" x="0.0" y="42" width="375" height="293"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rkU-ta-en2">
+                                <rect key="frame" x="16" y="557" width="343" height="40"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="사다리 로그아웃">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonAction:" destination="PXB-ii-mDk" eventType="touchUpInside" id="RZ2-Pg-lRq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="6bJ-Hr-y9l" firstAttribute="top" secondItem="HDp-76-XP4" secondAttribute="bottom" id="RMA-P8-u1E"/>
+                            <constraint firstItem="rkU-ta-en2" firstAttribute="leading" secondItem="y2B-4E-00j" secondAttribute="leadingMargin" id="20L-B7-UAH"/>
+                            <constraint firstItem="rkU-ta-en2" firstAttribute="trailing" secondItem="y2B-4E-00j" secondAttribute="trailingMargin" id="C1k-gj-dIT"/>
+                            <constraint firstItem="6bJ-Hr-y9l" firstAttribute="top" secondItem="rkU-ta-en2" secondAttribute="bottom" constant="21" id="HOf-um-eh7"/>
+                            <constraint firstItem="6bJ-Hr-y9l" firstAttribute="top" secondItem="HDp-76-XP4" secondAttribute="bottom" constant="283" id="RMA-P8-u1E"/>
+                            <constraint firstItem="rkU-ta-en2" firstAttribute="top" secondItem="HDp-76-XP4" secondAttribute="bottom" constant="222" id="SSe-Ff-0ei"/>
                             <constraint firstItem="HDp-76-XP4" firstAttribute="top" secondItem="y2B-4E-00j" secondAttribute="top" constant="42" id="jRF-aU-YsK"/>
                             <constraint firstItem="HDp-76-XP4" firstAttribute="leading" secondItem="y2B-4E-00j" secondAttribute="leading" id="qwy-Rg-GfI"/>
                             <constraint firstAttribute="trailing" secondItem="HDp-76-XP4" secondAttribute="trailing" id="tz2-M0-Xla"/>
