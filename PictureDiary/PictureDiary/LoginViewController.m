@@ -15,7 +15,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+@interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate, FBSDKLoginButtonDelegate>
 
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UITextField *emailTextField;
@@ -45,13 +45,14 @@
                                                object:nil];
     
     // 페이스북 로그인 버튼 클릭시 액션
-//    [self.fbLoginButton addTarget:self
-//                           action:@selector(onTouchupInsideFbLoginButton:)
-//                 forControlEvents:UIControlEventTouchUpInside];
+    [self.fbLoginButton addTarget:self
+                           action:@selector(onTouchupInsideFbLoginButton:)
+                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LoginNotification object:nil];
@@ -276,33 +277,11 @@
 }
 
 
-- (void)onTouchupInsideJoinButton:(UIButton *)sender {
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    JoinViewController *joinViewController = [storyBoard instantiateViewControllerWithIdentifier:@"JoinViewController"];
-    [self presentViewController:joinViewController animated:YES completion:nil];
-    
-}
-
 
 - (void)onTouchupInsideFbLoginButton:(UIButton *)sender {
     
     // 현재 페이스북 로그인 상태 확인
-    if ([FBSDKAccessToken currentAccessToken]) {
-        
-        // 로그인 후 액션 지정
-        [self fetchUserInfo];
-        NSLog(@"로그인 성공");
-        
-        // MainTabBarController로 이동
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-        UIApplication *application = [UIApplication sharedApplication];
-        UIWindow *window = [application.delegate window];
-        window.rootViewController = mainTabBarController;
-        [window makeKeyAndVisible];
-        
-    } else {
+    if ([FBSDKAccessToken currentAccessToken] == nil) {
         
         // 한번도 로그인 하지 않은 사용자의 경우
         FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
@@ -324,8 +303,35 @@
                                         }
                                     }
                                 }];
+    } else {
+        
+        // 기존에 로그인했던 사용자의 경우 로그인 후 액션 지정
+        [self fetchUserInfo];
+        NSLog(@"로그인 성공");
+        
     }
     
+}
+
+
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+    
+    if (error == nil) {
+        
+        NSLog(@"로그인 성공");
+        
+        // MainTabBarController로 이동
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+        UIApplication *application = [UIApplication sharedApplication];
+        UIWindow *window = [application.delegate window];
+        window.rootViewController = mainTabBarController;
+        [window makeKeyAndVisible];
+        
+    } else {
+        
+        NSLog(@"%@",error.localizedDescription);
+    }
 }
 
 
@@ -348,6 +354,22 @@
         }
     }];
     [connection start];
+    
+    // MainTabBarController로 이동
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+    UIApplication *application = [UIApplication sharedApplication];
+    UIWindow *window = [application.delegate window];
+    window.rootViewController = mainTabBarController;
+    [window makeKeyAndVisible];
+}
+
+
+- (void)onTouchupInsideJoinButton:(UIButton *)sender {
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    JoinViewController *joinViewController = [storyBoard instantiateViewControllerWithIdentifier:@"JoinViewController"];
+    [self presentViewController:joinViewController animated:YES completion:nil];
     
 }
 
