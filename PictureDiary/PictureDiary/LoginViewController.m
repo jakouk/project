@@ -239,25 +239,14 @@
 - (void)userLogin:(NSNotification *)noti {
     
     NSDictionary *dic = noti.userInfo;
-    NSLog(@"%@",dic);
+    NSLog(@"LoginViewController uerLogin %@",dic);
     
-    if ( [dic objectForKey:@"key"] == NULL ) {
-        
-
-        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
-        NSLog(@"로그인 실패");
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-
-    } else {
+    
+    if ( [dic objectForKey:@"token"] != nil ) {
         
         // 로그인에 성공한 경우
         NSLog(@"로그인 성공");
-        [UserInfo sharedUserInfo].userToken = [dic objectForKey:@"key"];
+        [UserInfo sharedUserInfo].userToken = [dic objectForKey:@"token"];
         
         // MainTabBarController로 이동
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -266,6 +255,16 @@
         UIWindow *window = [application.delegate window];
         window.rootViewController = mainTabBarController;
         [window makeKeyAndVisible];
+    } else {
+        
+        // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
+        NSLog(@"로그인 실패");
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                                       message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
 }
