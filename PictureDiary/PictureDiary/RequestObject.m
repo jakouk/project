@@ -220,7 +220,7 @@ static NSString *JSONSuccessValue = @"success";
 //requestRead
 + (void)requestReadData:(NSString *)PostId {
     
-    NSString *urlStr = @"http://www.anyfut.com/post/";
+    NSString *urlStr = @"https://www.anyfut.com/post/";
     NSMutableString *urlStrs = [urlStr mutableCopy];
     [urlStrs appendString:PostId];
     
@@ -320,8 +320,6 @@ static NSString *JSONSuccessValue = @"success";
     
     [urlStrs appendString:searchWord];
     
-    NSString *hanUrl = [urlStrs stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    
     NSCharacterSet *allowedCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSURL *url = [NSURL URLWithString:[urlStrs stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet]];
     
@@ -366,6 +364,38 @@ static NSString *JSONSuccessValue = @"success";
 //UserInfo
 + (void)requestUserInfo {
     
+    NSString *urlStr = @"http://www.anyfut.com/member/detail/";
+    
+    NSURL * url = [NSURL URLWithString:urlStr];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject main allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
+        wordDic = responseObject;
+        
+        NSLog(@"responseObject ===@@@!! %@",responseObject);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
+        
+    }];
+    
+    [dataTask resume];
+
 }
 
 //faceBook Login
