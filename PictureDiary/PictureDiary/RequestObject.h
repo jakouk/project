@@ -20,4 +20,6 @@
 + (void)requestMainData;
 
 + (void)requestReadData:(NSString *)PostId;
+
++ (void)requestSearch:(NSString *)searchData;
 @end

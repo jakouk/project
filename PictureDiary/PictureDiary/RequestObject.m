@@ -185,10 +185,12 @@ static NSString *JSONSuccessValue = @"success";
     
     NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
+    
     NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
     [token appendString:[UserInfo sharedUserInfo].userToken];
-    
     [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject main allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
@@ -199,7 +201,7 @@ static NSString *JSONSuccessValue = @"success";
         NSString *notificationName = MainNotification;
         
         NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
-        [wordDic setObject:responseObject forKey:@"word"];
+        wordDic = responseObject;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -218,19 +220,25 @@ static NSString *JSONSuccessValue = @"success";
 + (void)requestReadData:(NSString *)PostId {
     
     NSString *urlStr = @"http://www.anyfut.com/post/";
-
     NSMutableString *urlStrs = [urlStr mutableCopy];
-    [urlStrs appendFormat:@"%@", PostId];
+    [urlStrs appendString:PostId];
+    
+    NSLog(@"RequestObject urlStrs = %@",urlStrs);
     NSURL * url = [NSURL URLWithString:urlStrs];
     
     NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
-    NSLog(@"UserInfo sharedUserInfo ===~~~~~ %@",[UserInfo sharedUserInfo].userToken);
     
-    [token appendString:[UserInfo sharedUserInfo].userToken];
+//    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+//    [token appendString:[UserInfo sharedUserInfo].userToken];
+    NSString *token = [UserInfo sharedUserInfo].userToken;
+    NSString *appendToken = @"Token ";
+    NSString *resultToken = [appendToken stringByAppendingString:token];
     
-    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+//    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:resultToken forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject readData allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
@@ -238,6 +246,9 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
+        if (error) {
+            NSLog(@"error!! %@",error);
+        }
         
         NSLog(@"response !!!!==== %@",response);
         NSLog(@"responseObject ?????==== %@",responseObject);
@@ -250,10 +261,47 @@ static NSString *JSONSuccessValue = @"success";
     
     [dataTask resume];
     
+    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]init];
+//    [request setHTTPMethod:@"GET"];
+//    
+//    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+//    NSString *loginToken = [UserInfo sharedUserInfo].userToken;
+//    [token appendString:loginToken];
+//    [request setValue:token forHTTPHeaderField:@"Authorization"];
+//    [request setURL:url];
+//    
+//    NSLog(@"RequestObject readData allHTTPHeaderFields : %@",request.allHTTPHeaderFields);
+//    NSLog(@"ReqeustObject readData url : %@",request.URL.absoluteString);
+//    
+//    id taskHandler =^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        NSLog(@"request image list response : %@, error: %@",response,error);
+//        
+//        NSError *jsonParsingError;
+//        NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonParsingError];
+//        NSLog(@"json parsing error : %@, json result : %@",jsonParsingError,jsonResult);
+//        
+//        NSLog(@"error ===!!!! %@",error);
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//        });
+//    };
+//    
+//    NSURLSession *session = [NSURLSession sharedSession];
+//    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:taskHandler
+//    ];
+//    
+//    
+//    [dataTask resume];
+
 }
 
 //reuqestModify
 + (void)requestModifyData {
+    
+}
+
++ (void)requestDeleteData {
     
 }
 
@@ -263,7 +311,54 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestSearch
-+ (void)requestSearch {
++ (void)requestSearch:(NSString *)searchData {
+    
+    NSString *urlStr = @"https://www.anyfut.com/post/search";
+    NSMutableString *urlStrs = [urlStr mutableCopy];
+    NSString *searchWord = [NSString stringWithFormat:@"?title=%@",searchData];
+    
+    [urlStrs appendString:searchWord];
+    
+    NSString *hanUrl = [urlStrs stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSCharacterSet *allowedCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
+    NSURL *url = [NSURL URLWithString:[urlStrs stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet]];
+    
+    NSLog(@"RequestObject urlStrs = %@",urlStrs);
+    //NSURL * url = [NSURL URLWithString:hanUrl];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject readData allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    NSLog(@"ReqeustObject readData url : %@",urlRequest.URL.absoluteString);
+    NSLog(@"RequestObject readData Method : %@",urlRequest.HTTPMethod);
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        if (error) {
+            NSLog(@"error!! %@",error);
+        }
+        
+        NSLog(@"response !!!!==== %@",response);
+        NSLog(@"responseObject ?????==== %@",responseObject);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
+        
+    }];
+    
+    [dataTask resume];
     
 }
 
