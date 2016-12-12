@@ -67,58 +67,30 @@ static NSString *JSONSuccessValue = @"success";
 + (void)requestUserData {
     
     //기존
-//    NSURL *requestURL = [NSURL URLWithString:baseURLString];
-//    
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    
-//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-//    
-//    NSURL *URL = requestURL;
-//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-//    
-//    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-//        
-//        NSLog(@"%@", response);
-//        NSLog(@"%@", error);
-//        
-//        NSArray *data = responseObject;
-//        
-//        for(NSDictionary *dic in data){
-//            NSLog(@"%@",dic);
-//        }
-//        
-//    }];
-//    
-//    [dataTask resume];
-    
-    //새로 작성
-    //어렵구만 어려워...... 아니 어렵다기 보단 복잡한데 아직 머릿속에 정리만 잘된다면 이해가 될거같은..
-    NSString *urlString = @"http://www.anyfut.com/member/detail/";
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    NSMutableString *token = [NSMutableString stringWithFormat:@"Token"];
-    [token appendString:[UserInfo sharedUserInfo].userToken];
-    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    NSURL *requestURL = [NSURL URLWithString:baseURLString];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
-    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    NSURL *URL = requestURL;
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSString *notificationName = UserNotification;
-        NSMutableDictionary *userDic = [[NSMutableDictionary alloc] init];
-        [userDic setObject:responseObject forKey:@"user"];
+        NSLog(@"%@", response);
+        NSLog(@"%@", error);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userDic];
-        });
+        NSArray *data = responseObject;
+        
+        for(NSDictionary *dic in data){
+            NSLog(@"%@",dic);
+        }
+        
     }];
     
     [dataTask resume];
+    
 }
 
 //requestJoin (POST)

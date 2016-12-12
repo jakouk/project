@@ -18,11 +18,6 @@
 static NSString *const JoinNotification = @"JoinNoti";
 static NSString *const LoginNotification = @"LoginNoti";
 static NSString *const MainNotification = @"MainNoti";
-<<<<<<< HEAD
-static NSString *const UserNotification = @"UserNoti";
-=======
 static NSString *const UserInfoNotification = @"UserNoti";
-
->>>>>>> be8c4ba3b54149616a108d9ef3b7c4c198bf179b
 
 #endif /* PrefixHeader_pch */
