@@ -200,8 +200,7 @@
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
     
     UIAlertController *alert;
-    UIAlertAction *action;
-    
+    UIAlertAction *action;    
     
     // 텍스트 필드 입력 내용 체크
     if (email.length == 0 || [email containsString:@" "]) {
@@ -220,13 +219,10 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-
-    } else if (nil) {
-
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-        
+
     } else {
         
         [RequestObject requestLoginData:email userPass:password];
@@ -239,8 +235,6 @@
 - (void)userLogin:(NSNotification *)noti {
     
     NSDictionary *dic = noti.userInfo;
-    NSLog(@"LoginViewController uerLogin %@",dic);
-    
     
     if ( [dic objectForKey:@"token"] != nil ) {
         
