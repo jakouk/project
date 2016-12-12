@@ -19,12 +19,17 @@
 @property (strong, nonatomic) IBOutlet UITextView *contentText;
 
 @property NSArray *imageList;
+
+
 @end
 
 @implementation ReadViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"ReadeViewDidLoad");
+    [RequestObject requestReadData:self.postId];
     
     [self.navigationController.navigationBar setHidden:NO];
     
@@ -59,6 +64,8 @@
     
     //페이지 컨트롤 값변경시 이벤트 처리 등록
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
+    NSLog(@"Indexrow!!!! ==== %@",self.postId);
 }
 
 //오토레이아웃 적용 후 뷰 로드
@@ -153,6 +160,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+    
 }
 
 /*

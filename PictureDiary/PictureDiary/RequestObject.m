@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeSearchData
 };
 
-static NSString *const baseURLString = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/member/user/";
+static NSString *const baseURLString = @"http://www.anyfut.com/member/create/";
 
 static NSString *ParamNameUserIDKey = @"email";
 static NSString *ParamNameUserNameKey = @"username";
@@ -139,7 +139,7 @@ static NSString *JSONSuccessValue = @"success";
 //requestLogin ( POST )
 +(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
     
-    NSString *requestURL = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/member/auth/login/";
+    NSString *requestURL = @"http://www.anyfut.com/member/login/";
     
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] init];
     
@@ -179,7 +179,7 @@ static NSString *JSONSuccessValue = @"success";
 //requestMain ( get )
 + (void)requestMainData {
     
-    NSString *urlStr = @"http://photodiary-dev.ap-northeast-2.elasticbeanstalk.com/post/";
+    NSString *urlStr = @"http://www.anyfut.com/post/";
     
     NSURL * url = [NSURL URLWithString:urlStr];
     
@@ -216,7 +216,40 @@ static NSString *JSONSuccessValue = @"success";
 
 
 //requestRead
-+ (void)requestReadData {
++ (void)requestReadData:(NSString *)PostId {
+    
+    NSString *urlStr = @"http://www.anyfut.com/post/";
+
+    NSMutableString *urlStrs = [urlStr mutableCopy];
+    [urlStrs appendFormat:@"%@", PostId];
+    NSURL * url = [NSURL URLWithString:urlStrs];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    NSLog(@"UserInfo sharedUserInfo ===~~~~~ %@",[UserInfo sharedUserInfo].userToken);
+    
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        
+        NSLog(@"response !!!!==== %@",response);
+        NSLog(@"responseObject ?????==== %@",responseObject);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
+        
+    }];
+    
+    [dataTask resume];
     
 }
 
@@ -232,6 +265,16 @@ static NSString *JSONSuccessValue = @"success";
 
 //requestSearch
 + (void)requestSearch {
+    
+}
+
+//UserInfo
++ (void)requestUserInfo {
+    
+}
+
+//faceBook Login
++ (void)requestFaceBook {
     
 }
 

@@ -108,7 +108,7 @@
     
     // placeholder custom
     self.userNameField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 닉네임"
+    [[NSAttributedString alloc] initWithString:@" 아이디"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
@@ -234,17 +234,9 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-
-    } else if (nil) {
-        // 가입된 이름인지 여부 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이미 등록된 이름입니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-        
 
     } else if (email.length == 0 || [email containsString:@" "]) {
         
@@ -262,17 +254,9 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"정확한 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-
-    } else if (nil) {
-        // 가입된 이메일인지 여부 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이미 등록된 이메일입니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-        
 
     } else if (password.length == 0 || [password containsString:@" "]) {
         
@@ -317,15 +301,21 @@
     
     UIAlertController *alert;
     UIAlertAction *action;
-    
     NSDictionary *dic = noti.userInfo;
     
-    NSLog(@"%@",dic);
-    
-    if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
+    if (dic == nil) {
+        
+        // 네트워크가 연결되지 않은 경우
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"사용중인 네트워크 상태를 확인해 주세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    } else if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
         
         // 이름 가입 여부 체크
-        NSLog(@" 가입 실패 이미 존재하는 이름");
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이름이 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
@@ -336,8 +326,6 @@
     } else if ([dic objectForKey:@"email"] != nil && [dic objectForKey:@"password"] == nil) {
         
         // 이메일 가입 여부 체크
-        NSLog(@" 가입 실패 이미 존재하는 이메일 ");
-        
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이메일이 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
@@ -347,17 +335,13 @@
         
     } else if ([dic objectForKey:@"password"] != nil) {
         
-        NSLog(@"가입 완료");
-        
         // 회원 정보 서버 저장 메소드
-        UIAlertController *alert =
-        [UIAlertController alertControllerWithTitle:@"알림"
-                                            message:@"회원가입이 완료되었습니다. 로그인 하세요."
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action =
-        [UIAlertAction actionWithTitle:@"확인"
-                                 style:UIAlertActionStyleDefault
-                               handler:nil];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"회원가입이 완료되었습니다. 로그인 하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인"
+                                          style:UIAlertActionStyleDefault
+                                        handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }

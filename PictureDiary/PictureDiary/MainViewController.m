@@ -9,6 +9,7 @@
 //ui
 #import "MainViewController.h"
 #import "CustomCell.h"
+#import "ReadViewController.h"
 
 #import <UIImageView+WebCache.h>
 
@@ -58,7 +59,6 @@
 //로우 갯수
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"self.userWord.count %ld",self.userWord.count);
     return self.userWord.count;
 }
 
@@ -79,9 +79,6 @@
         
         NSDictionary *imageSize = [imageArray objectAtIndex:0];
         NSDictionary *imageURL = [imageSize objectForKey:@"image"];
-        NSString *urlStr = [imageURL objectForKey:@"full_size"];
-        NSLog(@"urlStr === %@",urlStr);
-        
         NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
         [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
         
@@ -108,23 +105,37 @@
     return 5;
 }
 
-
 //셀 선택시
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@" cell number : %ld", indexPath.row);
-
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-
 
     cell.layer.borderColor = [UIColor whiteColor].CGColor;
     cell.layer.borderWidth = 3.0f;
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-    UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    
+    //post-id
+    NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
+    NSString *postId =  [wordDic objectForKey:@"id"];
+    
+    NSLog(@"Read setPost Id");
+    [readScreen setPostId:postId];
     [self.navigationController pushViewController:readScreen animated:YES];
+
 }
+
+//selectedCell segue
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    if ([identifier isEqualToString:@"readSegue"]) {
+        
+    }
+    
+}
+
 
 //셀을 다시 선택했을 경우
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -142,9 +153,10 @@
     NSDictionary *wordDic = noti.userInfo;
     self.userWord = [wordDic objectForKey:@"word"];
     
-    NSLog(@"homeviewCollectionReload");
     [self.collectionView reloadData];
 }
+
+
 
 #pragma mark - memory
 - (void)didReceiveMemoryWarning {
