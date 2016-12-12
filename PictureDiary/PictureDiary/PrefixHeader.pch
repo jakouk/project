@@ -18,7 +18,7 @@
 static NSString *const JoinNotification = @"JoinNoti";
 static NSString *const LoginNotification = @"LoginNoti";
 static NSString *const MainNotification = @"MainNoti";
-
+static NSString *const UserNotification = @"UserNoti";
 
 
 static NSString *const ImageListUpdatedNotification = @"ImageListUpdated";

@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *userTableView;
 
+@property NSDictionary *userDataDic;
+
 @end
 
 @implementation UserViewController
@@ -23,14 +25,24 @@
     [self.userTableView setDelegate:self];
     [self.userTableView setDataSource:self];
     
-    UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.userTableView.frame.size.width,
-                                                                        self.userTableView.frame.size.height)];
-    [footerview setBackgroundColor:[UIColor clearColor]];
-    [self.userTableView setTableFooterView:footerview];
+    [self tableviewFrameSize];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDataRoad:)
+                                                 name:UserNotification
+                                               object:nil];
 }
 
 #pragma mark - tableview setting
+//frame size
+- (void)tableviewFrameSize
+{
+    UIView *footerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.userTableView.frame.size.width,
+                                                                  self.userTableView.frame.size.height)];
+    [footerview setBackgroundColor:[UIColor clearColor]];
+    [self.userTableView setTableFooterView:footerview];
+}
+
 //session
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -40,7 +52,7 @@
 //row
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 //cell
@@ -54,28 +66,34 @@
         
         //사용자 이름
         if (indexPath.row == 0) {
+            NSString *userName = [self.userDataDic objectForKey:@"username"];
+            
             [cell.imageView setImage:[UIImage imageNamed:@"usericon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
             [cell.textLabel setText:@"사용자 이름"];
-            [cell.detailTextLabel setText:@"김건희"];
+            [cell.detailTextLabel setText:userName];
         }
         
         //사다리 계정
         if (indexPath.row == 1) {
+            NSString *email = [self.userDataDic objectForKey:@"email"];
+            
             [cell.imageView setImage:[UIImage imageNamed:@"Emailicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
             [cell.textLabel setText:@"계정 e-mail"];
-            [cell.detailTextLabel setText:@"cptcpt123@gmail.com"];
+            [cell.detailTextLabel setText:email];
         }
         
-//        //페북
-//        if (indexPath.row == 2) {
-//            [cell.imageView setImage:[UIImage imageNamed:@"Facebookicon"]];
-//            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-//            [cell.textLabel setText:@"페북 계정"];
-//            [cell.detailTextLabel setText:@"연동"];
-//        }
-//        
+        //id
+        if (indexPath.row == 2) {
+            NSString *idString = [self.userDataDic objectForKey:@"id"];
+            
+            [cell.imageView setImage:[UIImage imageNamed:@"Facebookicon"]];
+            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
+            [cell.textLabel setText:@"ID"];
+            [cell.detailTextLabel setText:idString];
+        }
+//
 //        //전화번호
 //        if (indexPath.row == 3) {
 //            [cell.imageView setImage:[UIImage imageNamed:@"Phoneicon"]];
@@ -129,6 +147,16 @@
     [logoutAlert addAction:no];
     
     [self presentViewController:logoutAlert animated:YES completion:nil];
+}
+
+#pragma mark - network
+- (void)userDataRoad:(NSNotification *)noti
+{
+    NSDictionary *userDic = noti.userInfo;
+    [self.userDataDic setValue:userDic forKey:@"user"];
+    
+    NSLog(@"userdic : %@", self.userDataDic);
+    [self.userTableView reloadData];
 }
 
 #pragma mark - memory
