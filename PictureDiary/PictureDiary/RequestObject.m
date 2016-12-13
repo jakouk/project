@@ -66,6 +66,7 @@ static NSString *JSONSuccessValue = @"success";
 //ServerCheck (get)
 + (void)requestUserData {
     
+    //기존
     NSURL *requestURL = [NSURL URLWithString:baseURLString];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -89,6 +90,7 @@ static NSString *JSONSuccessValue = @"success";
     }];
     
     [dataTask resume];
+    
 }
 
 //requestJoin (POST)
