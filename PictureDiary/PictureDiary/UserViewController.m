@@ -7,6 +7,7 @@
 //
 
 #import "UserViewController.h"
+#import "LoginViewController.h"
 
 @interface UserViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -27,6 +28,11 @@
                                                                         self.userTableView.frame.size.height)];
     [footerview setBackgroundColor:[UIColor clearColor]];
     [self.userTableView setTableFooterView:footerview];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(logoutViewChangeMethod:)
+                                                 name:LogoutNotification
+                                               object:nil];
     
 }
 
@@ -119,6 +125,8 @@
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction * _Nonnull action) {
                                                    NSLog(@"로그아웃 허가");
+                                                   [RequestObject requestLogoutData];
+                                                   
                                                }];
     
     UIAlertAction *no = [UIAlertAction actionWithTitle:@"취소"
@@ -134,6 +142,18 @@
 #pragma mark - memory
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+}
+
+- (void)logoutViewChangeMethod:(NSNotification *)noti {
+    
+    // MainTabBarController로 이동
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *LoginView = [storyBoard instantiateInitialViewController];
+    UIApplication *application = [UIApplication sharedApplication];
+    UIWindow *window = [application.delegate window];
+    window.rootViewController = LoginView;
+    [window makeKeyAndVisible];
     
 }
 
