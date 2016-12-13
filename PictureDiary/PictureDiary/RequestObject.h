@@ -24,4 +24,9 @@
 + (void)requestSearch:(NSString *)searchData;
 
 + (void)requestUserInfo;
+<<<<<<< HEAD
+=======
+
++ (void)requestLogoutData;
+>>>>>>> ab62a92ff396f34cec52ea1b0e3c35f97b6fcfe1
 @end

@@ -132,7 +132,9 @@
     
     //post-id
     NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-    NSString *postId =  [NSString stringWithFormat:@"%@",[wordDic objectForKey:@"id"]];
+    NSNumber *post = [wordDic objectForKey:@"id"];
+    
+    NSString *postId =  [post stringValue];
     
     NSLog(@"Read setPost Id");
     [readScreen setPostId:postId];
