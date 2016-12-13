@@ -16,18 +16,19 @@
 
 @property NSDictionary *userDataDic;
 
+//@property NSMutableArray *userData;
+
 @end
 
 @implementation UserViewController
 
+#pragma mark - view life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.userTableView setDelegate:self];
-    [self.userTableView setDataSource:self];
-    
     [self tableviewFrameSize];
-    
+
+    //유저정보와 로그아웃 노티피케이션
     [RequestObject requestUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userDataRoad:)
@@ -39,6 +40,16 @@
                                              selector:@selector(logoutViewChangeMethod:)
                                                  name:LogoutNotification
                                                object:nil];
+}
+
+//뷰가 화면에 나타난 후에 테이블뷰 델리게이트 실행
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSLog(@"viewdidappear");
+    [self.userTableView setDelegate:self];
+    [self.userTableView setDataSource:self];
 }
 
 #pragma mark - tableview setting
@@ -113,6 +124,7 @@
     return headerString;
 }
 
+//header height
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
@@ -145,7 +157,7 @@
     [self presentViewController:logoutAlert animated:YES completion:nil];
 }
 
-#pragma mark - network
+#pragma mark - user data noti
 - (void)userDataRoad:(NSNotification *)noti
 {
     NSDictionary *wordDic = noti.userInfo;
@@ -154,16 +166,11 @@
     NSLog(@"method in username : %@",[self.userDataDic objectForKey:@"username"]);
     NSLog(@"method in email : %@",[self.userDataDic objectForKey:@"email"]);
     NSLog(@"method in id : %@",[self.userDataDic objectForKey:@"id"]);
-
+    
     [self.userTableView reloadData];
 }
 
-#pragma mark - memory
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
-
+#pragma mark - logout noti
 - (void)logoutViewChangeMethod:(NSNotification *)noti {
     
     // MainTabBarController로 이동
@@ -174,6 +181,11 @@
     window.rootViewController = LoginView;
     [window makeKeyAndVisible];
     
+}
+
+#pragma mark - memory
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 /*
