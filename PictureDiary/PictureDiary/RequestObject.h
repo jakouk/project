@@ -22,4 +22,6 @@
 + (void)requestReadData:(NSString *)PostId;
 
 + (void)requestSearch:(NSString *)searchData;
+
++ (void)requestUserInfo;
 @end

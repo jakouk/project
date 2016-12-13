@@ -13,9 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *userTableView;
 
-@property NSDictionary *userNameDic;
-@property NSDictionary *emailDic;
-@property NSDictionary *idDataDic;
+@property NSDictionary *userDataDic;
 
 @end
 
@@ -29,6 +27,7 @@
     
     [self tableviewFrameSize];
     
+    [RequestObject requestUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userDataRoad:)
                                                  name:UserInfoNotification
@@ -66,48 +65,30 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        //사용자 이름
-        if (indexPath.row == 0) {
-            NSString *userName = [self.userNameDic objectForKey:@"username"];
+            //사용자 이름
+            if (indexPath.row == 0) {
+                [cell.imageView setImage:[UIImage imageNamed:@"Nameicon"]];
+                [cell.imageView setContentMode:UIViewContentModeScaleToFill];
+                [cell.textLabel setText:@"사용자 이름"];
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"username"]]];
+            }
             
-            [cell.imageView setImage:[UIImage imageNamed:@"usericon"]];
-            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-            [cell.textLabel setText:@"사용자 이름"];
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",userName]];
-            NSLog(@"username : %@",userName);
-        }
-        
-        //사다리 계정
-        if (indexPath.row == 1) {
-            NSString *email = [self.emailDic objectForKey:@"email"];
+            //사다리 계정
+            if (indexPath.row == 1) {
+                [cell.imageView setImage:[UIImage imageNamed:@"Emailicon"]];
+                [cell.imageView setContentMode:UIViewContentModeScaleToFill];
+                [cell.textLabel setText:@"e-mail"];
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"email"]]];
+            }
             
-            [cell.imageView setImage:[UIImage imageNamed:@"Emailicon"]];
-            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-            [cell.textLabel setText:@"계정 e-mail"];
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",email]];
-            NSLog(@"email : %@",email);
+            //id
+            if (indexPath.row == 2) {
+                [cell.imageView setImage:[UIImage imageNamed:@"IDCardicon"]];
+                [cell.imageView setContentMode:UIViewContentModeScaleToFill];
+                [cell.textLabel setText:@"ID"];
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"id"]]];
         }
-        
-        //id
-        if (indexPath.row == 2) {
-            NSString *idString = [self.idDataDic objectForKey:@"id"];
-            
-            [cell.imageView setImage:[UIImage imageNamed:@"Facebookicon"]];
-            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-            [cell.textLabel setText:@"ID"];
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",idString]];
-            NSLog(@"idstring : %@",idString);
-        }
-//
-//        //전화번호
-//        if (indexPath.row == 3) {
-//            [cell.imageView setImage:[UIImage imageNamed:@"Phoneicon"]];
-//            [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-//            [cell.textLabel setText:@"연락처"];
-//            [cell.detailTextLabel setText:@"010 - 1234 - 5678"];
-//        }
     }
-    
     return cell;
 }
 
@@ -158,10 +139,12 @@
 - (void)userDataRoad:(NSNotification *)noti
 {
     NSDictionary *wordDic = noti.userInfo;
-    self.userNameDic = [wordDic objectForKey:@"username"];
-    self.emailDic = [wordDic objectForKey:@"email"];
-    self.idDataDic = [wordDic objectForKey:@"id"];
     
+    self.userDataDic = wordDic;
+    NSLog(@"method in username : %@",[self.userDataDic objectForKey:@"username"]);
+    NSLog(@"method in email : %@",[self.userDataDic objectForKey:@"email"]);
+    NSLog(@"method in id : %@",[self.userDataDic objectForKey:@"id"]);
+
     [self.userTableView reloadData];
 }
 
