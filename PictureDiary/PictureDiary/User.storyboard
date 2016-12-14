@@ -50,6 +50,7 @@
                             <constraint firstAttribute="trailing" secondItem="HDp-76-XP4" secondAttribute="trailing" id="tz2-M0-Xla"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="user" id="1YB-8b-nna"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="userTableView" destination="HDp-76-XP4" id="mhT-BP-MGT"/>
@@ -60,4 +61,7 @@
             <point key="canvasLocation" x="1064.8" y="157.87106446776613"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="user" width="25" height="25"/>
+    </resources>
 </document>
