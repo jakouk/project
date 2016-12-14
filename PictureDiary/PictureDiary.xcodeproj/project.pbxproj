@@ -21,7 +21,6 @@
 		73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E99F1DEBEFE600CDF36D /* SearchViewController.m */; };
 		73C6E9A31DEBF39100CDF36D /* ReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9A21DEBF39100CDF36D /* ReadViewController.m */; };
 		73C6E9A61DEBF46000CDF36D /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */; };
-		73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AB1DEBF94500CDF36D /* NetworkData.m */; };
 		73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9AE1DEBF95700CDF36D /* UserInfo.m */; };
 		73C6E9B81DEC407700CDF36D /* Word.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9B71DEC407700CDF36D /* Word.storyboard */; };
 		73C6E9BA1DEC408600CDF36D /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73C6E9B91DEC408600CDF36D /* Search.storyboard */; };
@@ -68,8 +67,6 @@
 		73C6E9A21DEBF39100CDF36D /* ReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadViewController.m; sourceTree = "<group>"; };
 		73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
 		73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
-		73C6E9AA1DEBF94500CDF36D /* NetworkData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkData.h; sourceTree = "<group>"; };
-		73C6E9AB1DEBF94500CDF36D /* NetworkData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkData.m; sourceTree = "<group>"; };
 		73C6E9AD1DEBF95700CDF36D /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		73C6E9AE1DEBF95700CDF36D /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		73C6E9B71DEC407700CDF36D /* Word.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Word.storyboard; sourceTree = "<group>"; };
@@ -225,8 +222,6 @@
 		73C6E9B21DEBF97B00CDF36D /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
-				73C6E9AA1DEBF94500CDF36D /* NetworkData.h */,
-				73C6E9AB1DEBF94500CDF36D /* NetworkData.m */,
 				73D621F51DF1C474005AAF2A /* RequestObject.h */,
 				73D621F61DF1C474005AAF2A /* RequestObject.m */,
 			);
@@ -414,7 +409,6 @@
 				73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */,
 				73C6E97D1DEBE68400CDF36D /* AppDelegate.m in Sources */,
 				73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */,
-				73C6E9AC1DEBF94500CDF36D /* NetworkData.m in Sources */,
 				73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */,
 				73C6E99D1DEBEFDB00CDF36D /* UserViewController.m in Sources */,
 				73C6E99A1DEBEFAD00CDF36D /* WriteViewController.m in Sources */,

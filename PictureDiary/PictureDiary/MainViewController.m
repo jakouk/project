@@ -9,6 +9,7 @@
 //ui
 #import "MainViewController.h"
 #import "CustomCell.h"
+#import "ReadViewController.h"
 
 #import <UIImageView+WebCache.h>
 
@@ -37,9 +38,9 @@
     [RequestObject requestMainData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(homeviewCollectionReload:)
-                                                      name:MainNotification
-                                                    object:nil];
+                                             selector:@selector(homeviewCollectionReload:)
+                                                 name:MainNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -58,7 +59,6 @@
 //로우 갯수
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"self.userWord.count %ld",self.userWord.count);
     return self.userWord.count;
 }
 
@@ -67,25 +67,35 @@
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    //title
-    NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
-    NSString *title =  [wordDic objectForKey:@"title"];
-    cell.nameLabel.text = title;
-    
-    //image
-    NSArray *imageArray = [wordDic objectForKey:@"photos"];
-    
-    if (imageArray.count != 0) {
+    if (self.userWord.count != 0) {
         
-        NSDictionary *imageSize = [imageArray objectAtIndex:0];
-        NSDictionary *imageURL = [imageSize objectForKey:@"image"];
-        NSString *urlStr = [imageURL objectForKey:@"full_size"];
-        NSLog(@"urlStr === %@",urlStr);
+        //title
+        //        NSDictionary *wordDic =  self.userWord[indexPath.row];
+        NSDictionary *wordDic = [[NSDictionary alloc] init];
+        wordDic = (NSDictionary *)self.userWord[indexPath.row];
         
-        NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
-        [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        NSString *title =  [wordDic objectForKey:@"title"];
+        cell.nameLabel.text = title;
+        
+        //image
+        NSArray *imageArray = [wordDic objectForKey:@"photos"];
+        
+        if (imageArray.count != 0) {
+            
+            NSDictionary *imageSize = [imageArray objectAtIndex:0];
+            NSDictionary *imageURL = [imageSize objectForKey:@"image"];
+            NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
+            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            
+        } else {
+            
+            cell.backgroundColor = [UIColor blueColor];
+            
+        }
         
     }
+    
+    
     return cell;
 }
 
@@ -108,23 +118,39 @@
     return 5;
 }
 
-
 //셀 선택시
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@" cell number : %ld", indexPath.row);
-
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-
-
+    
     cell.layer.borderColor = [UIColor whiteColor].CGColor;
     cell.layer.borderWidth = 3.0f;
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-    UIViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    
+    //post-id
+    NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
+    NSNumber *post = [wordDic objectForKey:@"id"];
+    
+    NSString *postId =  [post stringValue];
+    
+    NSLog(@"Read setPost Id");
+    [readScreen setPostId:postId];
     [self.navigationController pushViewController:readScreen animated:YES];
+    
 }
+
+//selectedCell segue
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    if ([identifier isEqualToString:@"readSegue"]) {
+        
+    }
+    
+}
+
 
 //셀을 다시 선택했을 경우
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -140,11 +166,12 @@
 - (void)homeviewCollectionReload:(NSNotification *)noti
 {
     NSDictionary *wordDic = noti.userInfo;
-    self.userWord = [wordDic objectForKey:@"word"];
+    self.userWord = [wordDic objectForKey:@"results"];
     
-    NSLog(@"homeviewCollectionReload");
     [self.collectionView reloadData];
 }
+
+
 
 #pragma mark - memory
 - (void)didReceiveMemoryWarning {
@@ -153,13 +180,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

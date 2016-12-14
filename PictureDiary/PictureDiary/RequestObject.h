@@ -10,8 +10,23 @@
 
 @interface RequestObject : NSObject
 
+
 + (void)requestUserData;
+
 + (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
-+(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
+
++ (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
+
 + (void)requestMainData;
+
++ (void)requestReadData:(NSString *)PostId;
+
++ (void)requestSearch:(NSString *)searchData;
+
++ (void)requestUserInfo;
+
++ (void)requestLogoutData;
+
++ (void)requestDeleteData:(NSString *)deletaData;
+
 @end

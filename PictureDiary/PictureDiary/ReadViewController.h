@@ -10,4 +10,6 @@
 
 @interface ReadViewController : UIViewController
 
+@property NSString *postId;
+
 @end
