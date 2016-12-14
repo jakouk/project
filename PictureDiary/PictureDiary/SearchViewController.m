@@ -13,6 +13,16 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
 
+//join Test
+@property (weak, nonatomic) IBOutlet UITextField *email;
+@property (weak, nonatomic) IBOutlet UITextField *pass;
+@property (weak, nonatomic) IBOutlet UITextField *username;
+
+
+//login test
+@property (weak, nonatomic) IBOutlet UITextField *loginEmail;
+@property (weak, nonatomic) IBOutlet UITextField *loginPass;
+
 
 @end
 
@@ -23,6 +33,21 @@
     // Do any additional setup after loading the view.
     self.mainCollection.delegate = self;
     self.mainCollection.dataSource = self;
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(joinMethod:)
+//                                                 name:JoinNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loginMethod:)
+//                                                 name:LoginNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(mainMehtod:)
+//                                                 name:MainNotification
+//                                               object:nil];
     
 }
 
@@ -72,10 +97,73 @@
 //searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     
-    NSString *searchData = self.searchData.text;
-    [RequestObject requestSearch:searchData];
+    
 }
 
+
+
+//network Test
+- (IBAction)networkTest:(UIButton *)sender {
+    
+    [RequestObject requestMainData];
+
+}
+
+//join Test
+- (IBAction)joinTest:(UIButton *)sender {
+    
+    NSString *userId = self.email.text;
+    NSString *userName = self.username.text;
+    NSString *pass = self.pass.text;
+    [RequestObject requestJoinData:userId userPass:pass userName:userName];
+}
+
+//login Test
+- (IBAction)loginTest:(UIButton *)sender {
+    
+    NSString *userId = self.loginEmail.text;
+    NSString *pass = self.loginPass.text;
+    [RequestObject requestLoginData:userId userPass:pass];
+}
+
+//joinMehtod
+- (void)joinMethod:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    
+    NSLog(@"%@",dic);
+    
+    if ( [dic objectForKey:@"username"] == nil  && [dic objectForKey:@"password"] == nil) {
+        NSLog(@" 가입 실패 이미 존재하는 이메일 ");
+    } else if ( [dic objectForKey:@"email"] == nil && [dic objectForKey:@"password"] == nil) {
+        NSLog(@" 가입 실패 이미 존재하는 유저네임 ");
+    } else {
+        NSLog(@" 가입 성공 ");
+    }
+    
+}
+
+//loginMethod
+- (void)loginMethod:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    
+    NSLog(@"%@",dic);
+    
+    if ( [dic objectForKey:@"key"] == NULL ) {
+        NSLog(@"로그인 실패");
+    } else {
+        NSLog(@"로그인 성공");
+        [UserInfo sharedUserInfo].userToken = [dic objectForKey:@"key"];
+    }
+    
+}
+
+//mainMethod
+- (void)mainMehtod:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    
+    NSLog(@"%@",dic);
+    
+}
 
 
 /*

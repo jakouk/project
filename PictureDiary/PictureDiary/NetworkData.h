@@ -1,13 +1,13 @@
 //
-//  ReadViewController.h
+//  NetworkData.h
 //  PictureDiary
 //
 //  Created by jakouk on 2016. 11. 28..
 //  Copyright © 2016년 jakouk. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface ReadViewController : UIViewController
+@interface NetworkData : NSObject
 
 @end
