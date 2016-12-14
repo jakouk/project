@@ -248,6 +248,7 @@ static NSString *JSONSuccessValue = @"success";
         
         NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
         wordDic = responseObject;
+        NSLog(@"\n\n wordDic, responseObject = %@\n\n",responseObject);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
