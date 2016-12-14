@@ -314,6 +314,47 @@ static NSString *JSONSuccessValue = @"success";
 #pragma mark -requestDelete
 + (void)requestDeleteData:(NSString *)deletaData {
     
+    NSString *urlStr = @"http://www.anyfut.com/post/";
+    
+    NSMutableString *urlString = [NSMutableString stringWithString:urlStr];
+    [urlString appendString:deletaData];
+    
+    NSURL * url = [NSURL URLWithString:urlString];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"DELETE"];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject main allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        NSString *notificationName = DeleteNotfication;
+        
+        if ( error == NULL ) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                    object:nil];
+            });
+            
+        }
+        
+        
+        
+        
+    }];
+    [dataTask resume];
+    
 }
 
 //requestWrite

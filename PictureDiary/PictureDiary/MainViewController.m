@@ -95,7 +95,6 @@
         
     }
     
-    
     return cell;
 }
 
@@ -142,21 +141,11 @@
 
 }
 
-//selectedCell segue
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    
-    if ([identifier isEqualToString:@"readSegue"]) {
-        
-    }
-    
-}
-
 
 //셀을 다시 선택했을 경우
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    
     cell.layer.borderColor = nil;
     cell.layer.borderWidth = 0.0f;
 }

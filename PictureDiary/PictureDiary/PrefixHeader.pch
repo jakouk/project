@@ -21,5 +21,6 @@ static NSString *const MainNotification = @"MainNoti";
 static NSString *const ReadNotification = @"ReadNoti";
 static NSString *const UserInfoNotification = @"UserNoti";
 static NSString *const LogoutNotification = @"LogoutNoti";
+static NSString *const DeleteNotfication = @"DeleteNoti";
 
 #endif /* PrefixHeader_pch */

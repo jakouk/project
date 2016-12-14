@@ -38,6 +38,11 @@
                                                  name:ReadNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(requestDeleteView:)
+                                                 name:DeleteNotfication
+                                               object:nil];
+    
     [self.navigationController.navigationBar setHidden:NO];
     
     UIBarButtonItem *modifiedButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
@@ -142,17 +147,17 @@
                                                             style:UIAlertActionStyleDestructive
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               //글 삭제
-                                                              UIAlertController *deleteAlert = [UIAlertController alertControllerWithTitle:@"글 삭제"
-                                                                                                                                   message:@"이 글을 영구적으로 삭제하시겠어요?"
-                                                                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                                                              UIAlertController *deleteAlert = [UIAlertController alertControllerWithTitle:@"글 삭제"                              message:@"이 글을 영구적으로 삭제하시겠어요?"                  preferredStyle:UIAlertControllerStyleAlert];
                                                               
-                                                              UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제"
-                                                                                                                     style:UIAlertActionStyleDestructive
-                                                                                                                   handler:nil];
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제"
+                                                                    style:UIAlertActionStyleDestructive
+                                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                                            [RequestObject requestDeleteData:self.postId];
+                                                                    }];
                                                               
-                                                              UIAlertAction *deleteActionCancel = [UIAlertAction actionWithTitle:@"취소"
-                                                                                                                           style:UIAlertActionStyleCancel
-                                                                                                                         handler:nil];
+    UIAlertAction *deleteActionCancel = [UIAlertAction actionWithTitle:@"취소"
+                                                                  style:UIAlertActionStyleCancel
+                                                                  handler:nil];
                                                               
                                                               [deleteAlert addAction:deleteAction];
                                                               [deleteAlert addAction:deleteActionCancel];
@@ -173,6 +178,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)requestDeleteView:(NSNotification *)noti {
+    
+    [RequestObject requestMainData];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)requestReadViewChange:(NSNotification *)noti {

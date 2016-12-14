@@ -27,4 +27,6 @@
 
 + (void)requestLogoutData;
 
++ (void)requestDeleteData:(NSString *)deletaData;
+
 @end
