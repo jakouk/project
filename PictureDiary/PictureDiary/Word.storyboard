@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OH1-BA-EQv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OH1-BA-EQv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -172,7 +172,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="5ay-Ay-sQx">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="5ay-Ay-sQx" customClass="CustomCollectionCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -182,28 +182,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Y2r-UW-7e5">
-                                <rect key="frame" x="16" y="312" width="343" height="36"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqG-Rb-dAy">
-                                        <rect key="frame" x="0.0" y="0.0" width="161.5" height="36"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="취소">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-XP-yeO">
-                                        <rect key="frame" x="181.5" y="0.0" width="161.5" height="36"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="확인">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="GoW-iL-BTv"/>
-                                </constraints>
-                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-XP-yeO">
+                                <rect key="frame" x="16" y="318" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="확인">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchupInsideCheckButton:" destination="OH1-BA-EQv" eventType="touchUpInside" id="v7c-fX-r9m"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="제목" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQO-HR-sgR">
                                 <rect key="frame" x="16" y="40" width="343" height="36"/>
                                 <constraints>
@@ -214,33 +202,33 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DOM-SA-DlB">
-                                <rect key="frame" x="16" y="96" width="343" height="196"/>
+                                <rect key="frame" x="16" y="96" width="343" height="202"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nlD-Xq-scO" firstAttribute="top" secondItem="8fH-XP-yeO" secondAttribute="bottom" constant="20" id="6X7-jf-SBh"/>
                             <constraint firstItem="DOM-SA-DlB" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="6u8-g2-aIZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Y2r-UW-7e5" secondAttribute="trailing" id="79J-jG-pbq"/>
                             <constraint firstItem="nlD-Xq-scO" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="8xa-gk-uCM"/>
-                            <constraint firstItem="nlD-Xq-scO" firstAttribute="top" secondItem="Y2r-UW-7e5" secondAttribute="bottom" constant="20" id="EzP-3m-kbu"/>
+                            <constraint firstItem="8fH-XP-yeO" firstAttribute="top" secondItem="DOM-SA-DlB" secondAttribute="bottom" constant="20" id="AXK-Fi-xxW"/>
                             <constraint firstItem="cQO-HR-sgR" firstAttribute="top" secondItem="mlA-GR-n3K" secondAttribute="bottom" constant="20" id="GqH-XF-rZh"/>
                             <constraint firstItem="0CL-t9-BN3" firstAttribute="top" secondItem="nlD-Xq-scO" secondAttribute="bottom" id="IHg-E0-0JR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8fH-XP-yeO" secondAttribute="trailing" id="PBJ-RV-Lrc"/>
                             <constraint firstItem="nlD-Xq-scO" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="Tqy-kN-dh1"/>
                             <constraint firstItem="cQO-HR-sgR" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="gMm-N0-rtk"/>
-                            <constraint firstItem="Y2r-UW-7e5" firstAttribute="top" secondItem="DOM-SA-DlB" secondAttribute="bottom" constant="20" id="gmS-UL-jsz"/>
+                            <constraint firstItem="8fH-XP-yeO" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="hyb-3x-anA"/>
                             <constraint firstItem="DOM-SA-DlB" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="iex-op-LQc"/>
                             <constraint firstItem="cQO-HR-sgR" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="pRs-8c-oNv"/>
                             <constraint firstItem="DOM-SA-DlB" firstAttribute="top" secondItem="cQO-HR-sgR" secondAttribute="bottom" constant="20" id="qPh-ab-h0S"/>
-                            <constraint firstItem="Y2r-UW-7e5" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="uLC-tV-g2k"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="word" id="dxZ-am-H0A"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bodyTextView" destination="DOM-SA-DlB" id="hEb-3E-33p"/>
                         <outlet property="collectionViewImage" destination="nlD-Xq-scO" id="K3d-zG-tHS"/>
                     </connections>
                 </viewController>

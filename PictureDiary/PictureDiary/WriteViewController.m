@@ -7,6 +7,7 @@
 //
 
 #import "WriteViewController.h"
+#import "CustomCollectionCell.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <Photos/PHAssetChangeRequest.h>
@@ -14,7 +15,6 @@
 #import <Photos/PHImageManager.h>
 
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-
 
 //PHPhoto
 @property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
@@ -125,14 +125,34 @@
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
+    
+    cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
     NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
     UIImage *image = [imageData objectForKey:@"image"];
+    cell.imageView.image = image;
     
-    imageView.image = image;
-    [cell.contentView addSubview:imageView];
+    for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+        
+        NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+        NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+        
+        NSLog(@"\n imageNubmer.interValue = %ld",imageNumber.integerValue);
+        NSLog(@"\n indexPath.row = %ld",indexPath.row);
+        
+        if ( imageNumber.integerValue == indexPath.row ) {
+            [cell.imageView setAlpha:0.5];
+            break;
+        } else {
+            [cell.imageView setAlpha:1.0];
+        }
+    }
+    
     return cell;
     
 }
@@ -152,58 +172,71 @@
     return 5;
 }
 
+//Before Reuse Cell
+-(void)prepareForReuse {
+    
+}
+
 //cell selected
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     if ( self.seletedImages.count < 5) {
         
-        if ( cell.layer.borderWidth == 2.0f ) {
+        if ( cell.imageView.alpha == 0.5 ) {
+
+            for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+                
+                NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+                NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+                
+                if ( imageNumber.integerValue == indexPath.row ) {
+                    [cell.imageView setAlpha:1];
+                    [self.seletedImages removeObjectAtIndex:i];
+                }
+                
+            }
             
-            cell.layer.borderWidth=0;
-            cell.alpha=1.0;
-            cell.contentView.alpha=1.0;
+        }else if ( cell.imageView.alpha == 1.0  ) {
+            
+            NSLog(@"\n didSelectedItemAtIndexPath = %ld\n",indexPath.row);
+            
+            [cell.imageView setAlpha:0.5];
+            [self.seletedImages addObject: [self.photoArray objectAtIndex:indexPath.row]];
+        }
+    } else {
+        
+        if ( cell.imageView.alpha == 1.0 ) {
+            
+            UIAlertController *imageCountAlert = [UIAlertController alertControllerWithTitle:@"사진개수"
+                                                                                     message:@"사진개수를 초과하였습니다. ( 최대 5개 )"
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *check = [UIAlertAction actionWithTitle:@"확인"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:nil];
+            
+            [imageCountAlert addAction:check];
+            [self presentViewController:imageCountAlert animated:YES completion:nil];
+            
+        } else {
             
             for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
                 
                 NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
                 NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
                 
-                NSLog(@"\n\n imageNumber = %ld \n\n indexPath.row = %ld \n\n ",imageNumber.integerValue, indexPath.row);
-                
                 if ( imageNumber.integerValue == indexPath.row ) {
                     
+                    [cell.imageView setAlpha:1];
                     [self.seletedImages removeObjectAtIndex:i];
-                    NSLog(@"\n\n remobeObjectAtIndex = %ld \n\n",i);
-                    NSLog(@" \n\n self.selectedImages Number = %ld \n\n",self.seletedImages.count);
                 }
                 
             }
             
-        } if (cell.layer.borderWidth == 0 ) {
-            
-            cell.layer.borderWidth=2.0f;
-            cell.layer.borderColor=[UIColor blueColor].CGColor;
-            cell.alpha=0.5;
-            cell.contentView.alpha=0.5;
-            [self.seletedImages addObject: [self.photoArray objectAtIndex:indexPath.row]];
-            
         }
-    } else {
-        
-        UIAlertController *imageCountAlert = [UIAlertController alertControllerWithTitle:@"사진개수"
-                                                                                 message:@"사진개수를 초과하였습니다. ( 최대 5개 )"
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *check = [UIAlertAction actionWithTitle:@"확인"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:nil];
-        
-        [imageCountAlert addAction:check];
-        [self presentViewController:imageCountAlert animated:YES completion:nil];
         
     }
-    
 }
 
 @end

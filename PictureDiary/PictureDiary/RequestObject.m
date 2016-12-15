@@ -9,6 +9,8 @@
 #import "RequestObject.h"
 #import <AFNetworking.h>
 
+
+
 typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeLogin,
     RequestTypeJoin,
@@ -306,9 +308,6 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //reuqestModify
-+ (void)requestModifyData {
-    
-}
 
 //requestDelete
 #pragma mark -requestDelete
@@ -349,33 +348,33 @@ static NSString *JSONSuccessValue = @"success";
             
         }
         
-        
-        
-        
     }];
     [dataTask resume];
     
 }
 
+#pragma mark -requestWrite
 //requestWrite
 + (void)requestWriteData {
     
 }
 
+#pragma mark -requstModify
+//requestModify
++ (void)requestModifyData {
+    
+}
+
+
 //requestSearch
-+ (void)requestSearch:(NSString *)searchData {
++ (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
-    NSString *urlStr = @"https://www.anyfut.com/post/search";
-    NSMutableString *urlStrs = [urlStr mutableCopy];
-    NSString *searchWord = [NSString stringWithFormat:@"?title=%@",searchData];
+    NSString *urlStr = [NSString stringWithFormat:@"https://www.anyfut.com/post/search?title=%@",searchData];
+    NSLog(@"\n\n url = %@\n\n",urlStr);
     
-    [urlStrs appendString:searchWord];
+    NSString *urlString = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
-    NSCharacterSet *allowedCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    NSURL *url = [NSURL URLWithString:[urlStrs stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet]];
-    
-    NSLog(@"RequestObject urlStrs = %@",urlStrs);
-    //NSURL * url = [NSURL URLWithString:hanUrl];
+    NSURL * url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
@@ -384,6 +383,8 @@ static NSString *JSONSuccessValue = @"success";
     [token appendString:[UserInfo sharedUserInfo].userToken];
     [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
     
+    NSLog(@"RequestObject search allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
@@ -391,15 +392,14 @@ static NSString *JSONSuccessValue = @"success";
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         if (error) {
-            NSLog(@"error!! %@",error);
+            NSLog(@"\n\n error = %@\n\n",error);
+            NSLog(@"\n\n response = %@\n\n",response);
+            NSLog(@"\n\n responseObject = %@\n\n",responseObject);
+        } else {
+            NSLog(@"success");
+            [UserInfo sharedUserInfo].searchData = responseObject;
+            UpdateFinishDataBlock();
         }
-        
-        NSLog(@"response !!!!==== %@",response);
-        NSLog(@"responseObject ?????==== %@",responseObject);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
         
     }];
     

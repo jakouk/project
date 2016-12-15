@@ -2,7 +2,7 @@
 //  CustomCell.m
 //  PictureDiary
 //
-//  Created by geon hui kim on 2016. 12. 6..
+//  Created by jakouk on 2016. 12. 15..
 //  Copyright © 2016년 jakouk. All rights reserved.
 //
 

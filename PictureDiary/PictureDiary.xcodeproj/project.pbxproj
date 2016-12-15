@@ -29,12 +29,13 @@
 		73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9C01DEC434000CDF36D /* MainTabBarController.m */; };
 		73D621F41DF1BA51005AAF2A /* Read.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D621F31DF1BA51005AAF2A /* Read.storyboard */; };
 		73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D621F61DF1C474005AAF2A /* RequestObject.m */; };
+		73F0C54E1E028C03004F125C /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F0C54D1E028C03004F125C /* CustomCell.m */; };
+		73F0C5511E028CD8004F125C /* CustomCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F0C5501E028CD8004F125C /* CustomCollectionCell.m */; };
 		90419FE3BF1C7524AE5BBE49 /* libPods-PictureDiary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */; };
 		A836057B1DFEAC2F00C71927 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605771DFEAC2F00C71927 /* Bolts.framework */; };
 		A836057C1DFEAC2F00C71927 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605781DFEAC2F00C71927 /* FBSDKCoreKit.framework */; };
 		A836057D1DFEAC2F00C71927 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83605791DFEAC2F00C71927 /* FBSDKLoginKit.framework */; };
 		A836057E1DFEAC2F00C71927 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836057A1DFEAC2F00C71927 /* FBSDKShareKit.framework */; };
-		BB7310681DF5DA9800B4BF0C /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7310671DF5DA9800B4BF0C /* CustomCell.m */; };
 		BB73106D1DF5DAE100B4BF0C /* CellStyle.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */; };
 		BBB6E5921DEC13FE00CE2DB6 /* WordNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */; };
 /* End PBXBuildFile section */
@@ -79,13 +80,15 @@
 		73D621F31DF1BA51005AAF2A /* Read.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Read.storyboard; sourceTree = "<group>"; };
 		73D621F51DF1C474005AAF2A /* RequestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestObject.h; sourceTree = "<group>"; };
 		73D621F61DF1C474005AAF2A /* RequestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestObject.m; sourceTree = "<group>"; };
+		73F0C54C1E028C03004F125C /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		73F0C54D1E028C03004F125C /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		73F0C54F1E028CD8004F125C /* CustomCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionCell.h; sourceTree = "<group>"; };
+		73F0C5501E028CD8004F125C /* CustomCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionCell.m; sourceTree = "<group>"; };
 		89BF7E4B369D321622FE68D9 /* libPods-PictureDiary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PictureDiary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83605771DFEAC2F00C71927 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		A83605781DFEAC2F00C71927 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A83605791DFEAC2F00C71927 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		A836057A1DFEAC2F00C71927 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		BB7310661DF5DA9800B4BF0C /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
-		BB7310671DF5DA9800B4BF0C /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellStyle.xib; sourceTree = "<group>"; };
 		BBB6E5901DEC13FE00CE2DB6 /* WordNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordNavigationController.h; sourceTree = "<group>"; };
 		BBB6E5911DEC13FE00CE2DB6 /* WordNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordNavigationController.m; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 			children = (
 				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
 				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
+				73F0C54F1E028CD8004F125C /* CustomCollectionCell.h */,
+				73F0C5501E028CD8004F125C /* CustomCollectionCell.m */,
 				73C6E99B1DEBEFDB00CDF36D /* UserViewController.h */,
 				73C6E99C1DEBEFDB00CDF36D /* UserViewController.m */,
 				73C6E99E1DEBEFE600CDF36D /* SearchViewController.h */,
@@ -233,8 +238,8 @@
 			children = (
 				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
 				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
-				BB7310661DF5DA9800B4BF0C /* CustomCell.h */,
-				BB7310671DF5DA9800B4BF0C /* CustomCell.m */,
+				73F0C54C1E028C03004F125C /* CustomCell.h */,
+				73F0C54D1E028C03004F125C /* CustomCell.m */,
 				BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */,
 			);
 			name = main;
@@ -400,6 +405,8 @@
 			files = (
 				73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */,
 				73C6E9A31DEBF39100CDF36D /* ReadViewController.m in Sources */,
+				73F0C54E1E028C03004F125C /* CustomCell.m in Sources */,
+				73F0C5511E028CD8004F125C /* CustomCollectionCell.m in Sources */,
 				73C6E9911DEBEF7100CDF36D /* LoginViewController.m in Sources */,
 				73C6E9971DEBEF9800CDF36D /* MainViewController.m in Sources */,
 				73C6E9A61DEBF46000CDF36D /* ModifyViewController.m in Sources */,
@@ -413,7 +420,6 @@
 				73C6E99D1DEBEFDB00CDF36D /* UserViewController.m in Sources */,
 				73C6E99A1DEBEFAD00CDF36D /* WriteViewController.m in Sources */,
 				73C6E97A1DEBE68400CDF36D /* main.m in Sources */,
-				BB7310681DF5DA9800B4BF0C /* CustomCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

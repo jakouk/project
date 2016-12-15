@@ -73,9 +73,18 @@
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     
     NSString *searchData = self.searchData.text;
-    [RequestObject requestSearch:searchData];
+    SearchViewController * __weak wself = self;
+    
+    [RequestObject requestSearch:searchData updateFinishDataBlock:^{
+        [wself searchCollectionViewReload];
+    }];
 }
 
+- (void)searchCollectionViewReload {
+    
+    NSDictionary *searchWordDictionary = [UserInfo sharedUserInfo].searchData;
+    
+}
 
 
 /*
