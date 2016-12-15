@@ -9,6 +9,8 @@
 #import "RequestObject.h"
 #import <AFNetworking.h>
 
+
+
 typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeLogin,
     RequestTypeJoin,
@@ -107,8 +109,8 @@ static NSString *JSONSuccessValue = @"success";
     
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
-                                                                 URLString:requestURL
-                                                                 parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) { } error:nil];
+                                                                                              URLString:requestURL
+                                                                                             parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) { } error:nil];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -121,17 +123,17 @@ static NSString *JSONSuccessValue = @"success";
                       });
                   }
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                    
+                      
                       NSDictionary *dic = responseObject;
                       NSString *notificationName = JoinNotification;
                       
                       //main deque
                       dispatch_async(dispatch_get_main_queue(), ^{
-                              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                                  object:nil userInfo:dic];
-                              
-                          });
+                          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                          [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                              object:nil userInfo:dic];
+                          
+                      });
                   }];
     
     [uploadTask resume];
@@ -153,7 +155,7 @@ static NSString *JSONSuccessValue = @"success";
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
                                                                                               URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                                                                    } error:nil];
+                                                                                              } error:nil];
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
@@ -169,7 +171,7 @@ static NSString *JSONSuccessValue = @"success";
                                                                 object:nil userInfo:dic];
             
         });
-    
+        
     }];
     
     
@@ -221,7 +223,7 @@ static NSString *JSONSuccessValue = @"success";
 
 //requestRead
 + (void)requestReadData:(NSString *)PostId {
- 
+    
     NSString *urlStr = @"http://www.anyfut.com/post/";
     
     NSMutableString *urlString = [NSMutableString stringWithString:urlStr];
@@ -248,7 +250,6 @@ static NSString *JSONSuccessValue = @"success";
         
         NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
         wordDic = responseObject;
-        NSLog(@"\n\n wordDic, responseObject = %@\n\n",responseObject);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -261,80 +262,116 @@ static NSString *JSONSuccessValue = @"success";
         
     }];
     [dataTask resume];
-
-//    NSString *destinationURLString = @"http://www.anyfut.com/post/12";
-//    
-//    NSURL *destinationURL = [NSURL URLWithString:destinationURLString];
-//    
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]init];
-//    [request setHTTPMethod:@"GET"];
-//    [request setURL:destinationURL];
-//    
-//    NSMutableString *token = [NSMutableString stringWithFormat:@"token "];
-//    [token appendString:[UserInfo sharedUserInfo].userToken];
-//    
-//    [request setValue:token forHTTPHeaderField:@"Authorization"];
-//    
-//    NSLog(@"token == %@",request.allHTTPHeaderFields);
-//    
-//    id taskHandler =^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSLog(@"request image list response : %@, error: %@",response,error);
-//        
-//        NSError *jsonParsingError;
-//        NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonParsingError];
-//        NSLog(@"json parsing error : %@, json result : %@",jsonParsingError,jsonResult);
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//        });
-//    };
     
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    
-//    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    [sessionConfiguration setHTTPAdditionalHeaders:@{@"Authorization":token}];
-//    session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-//    
-//    [[session dataTaskWithURL:destinationURL
-//            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                
-//                NSError *jsonParsingError;
-//                NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonParsingError];
-//                NSLog(@"json parsing error : %@, \n json result : %@",jsonParsingError,jsonResult);
-//                
-//            }] resume];
+    //    NSString *destinationURLString = @"http://www.anyfut.com/post/12";
+    //
+    //    NSURL *destinationURL = [NSURL URLWithString:destinationURLString];
+    //
+    //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]init];
+    //    [request setHTTPMethod:@"GET"];
+    //    [request setURL:destinationURL];
+    //
+    //    NSMutableString *token = [NSMutableString stringWithFormat:@"token "];
+    //    [token appendString:[UserInfo sharedUserInfo].userToken];
+    //
+    //    [request setValue:token forHTTPHeaderField:@"Authorization"];
+    //
+    //    NSLog(@"token == %@",request.allHTTPHeaderFields);
+    //
+    //    id taskHandler =^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    //        NSLog(@"request image list response : %@, error: %@",response,error);
+    //
+    //        NSError *jsonParsingError;
+    //        NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonParsingError];
+    //        NSLog(@"json parsing error : %@, json result : %@",jsonParsingError,jsonResult);
+    //
+    //        dispatch_async(dispatch_get_main_queue(), ^{
+    //
+    //        });
+    //    };
+    
+    //    NSURLSession *session = [NSURLSession sharedSession];
+    //
+    //    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //    [sessionConfiguration setHTTPAdditionalHeaders:@{@"Authorization":token}];
+    //    session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+    //
+    //    [[session dataTaskWithURL:destinationURL
+    //            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    //
+    //                NSError *jsonParsingError;
+    //                NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&jsonParsingError];
+    //                NSLog(@"json parsing error : %@, \n json result : %@",jsonParsingError,jsonResult);
+    //
+    //            }] resume];
 }
 
 //reuqestModify
-+ (void)requestModifyData {
-    
-}
 
 //requestDelete
 #pragma mark -requestDelete
 + (void)requestDeleteData:(NSString *)deletaData {
+    NSString *urlStr = @"http://www.anyfut.com/post/";
     
+    NSMutableString *urlString = [NSMutableString stringWithString:urlStr];
+    [urlString appendString:deletaData];
+    
+    NSURL * url = [NSURL URLWithString:urlString];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"DELETE"];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject main allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        NSString *notificationName = DeleteNotfication;
+        
+        if ( error == NULL ) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                    object:nil];
+            });
+            
+        }
+        
+    }];
+    [dataTask resume];
 }
 
+#pragma mark -requestWrite
 //requestWrite
 + (void)requestWriteData {
     
 }
 
+#pragma mark -requstModify
+//requestModify
++ (void)requestModifyData {
+    
+}
+
+
 //requestSearch
-+ (void)requestSearch:(NSString *)searchData {
++ (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
-    NSString *urlStr = @"https://www.anyfut.com/post/search";
-    NSMutableString *urlStrs = [urlStr mutableCopy];
-    NSString *searchWord = [NSString stringWithFormat:@"?title=%@",searchData];
+    NSString *urlStr = [NSString stringWithFormat:@"https://www.anyfut.com/post/search?title=%@",searchData];
+    NSLog(@"\n\n url = %@\n\n",urlStr);
     
-    [urlStrs appendString:searchWord];
+    NSString *urlString = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
-    NSCharacterSet *allowedCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    NSURL *url = [NSURL URLWithString:[urlStrs stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet]];
-    
-    NSLog(@"RequestObject urlStrs = %@",urlStrs);
-    //NSURL * url = [NSURL URLWithString:hanUrl];
+    NSURL * url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
@@ -343,6 +380,8 @@ static NSString *JSONSuccessValue = @"success";
     [token appendString:[UserInfo sharedUserInfo].userToken];
     [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
     
+    NSLog(@"RequestObject search allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
@@ -350,15 +389,14 @@ static NSString *JSONSuccessValue = @"success";
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         if (error) {
-            NSLog(@"error!! %@",error);
+            NSLog(@"\n\n error = %@\n\n",error);
+            NSLog(@"\n\n response = %@\n\n",response);
+            NSLog(@"\n\n responseObject = %@\n\n",responseObject);
+        } else {
+            NSLog(@"success");
+            [UserInfo sharedUserInfo].searchData = responseObject;
+            UpdateFinishDataBlock();
         }
-        
-        NSLog(@"response !!!!==== %@",response);
-        NSLog(@"responseObject ?????==== %@",responseObject);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
         
     }];
     
@@ -403,7 +441,7 @@ static NSString *JSONSuccessValue = @"success";
     }];
     
     [dataTask resume];
-
+    
 }
 
 //logout
@@ -418,7 +456,7 @@ static NSString *JSONSuccessValue = @"success";
     NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
     [token appendString:[UserInfo sharedUserInfo].userToken];
     [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
-
+    
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
@@ -432,7 +470,7 @@ static NSString *JSONSuccessValue = @"success";
         wordDic = responseObject;
         
         if ( responseObject != NULL ) {
-
+            
             NSLog(@"\n\n error = %@\n\n",error);
             NSLog(@"\n\n responseObject = %@\n\n",responseObject);
             NSLog(@"\n\n response = %@\n\n",response);

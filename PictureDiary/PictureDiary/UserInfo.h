@@ -11,6 +11,7 @@
 @interface UserInfo : NSObject
 
 @property NSString *userToken;
+@property NSDictionary *searchData;
 
 + (instancetype)sharedUserInfo;
 

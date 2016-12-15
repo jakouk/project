@@ -7,6 +7,7 @@
 //
 
 #import "WriteViewController.h"
+#import "CustomCollectionCell.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/PHPhotoLibrary.h>
 #import <Photos/PHAssetChangeRequest.h>
@@ -14,8 +15,6 @@
 #import <Photos/PHImageManager.h>
 
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-
-@property (nonatomic, strong) ALAssetsLibrary *specialLibrary;
 
 //PHPhoto
 @property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
@@ -28,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
 @property (weak, nonatomic) IBOutlet UITextField *objectTextfiled;
 //@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+
+@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
+
 
 
 //deleteImage
@@ -53,7 +55,7 @@
     self.collectionViewImage.dataSource = self;
     self.collectionViewImage.delegate = self;
     
-    self.chosenImages = [[NSMutableArray alloc] init];
+    self.seletedImages = [[NSMutableArray alloc] init];
     self.photoArray = [[NSMutableArray alloc] init];
     
     NSLog(@"%lf",self.view.frame.size.height);
@@ -81,144 +83,29 @@
         [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             self.photoImage = result;
+            NSLog(@"self.phtoImage inside");
             
         }];
-        [self.photoArray addObject:self.photoImage];
+        
+        NSLog(@"self.phtoImage outside");
+        NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
+        [imageDataDictionary setObject:self.photoImage forKey:@"image"];
+        [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
+        
+        [self.photoArray addObject:imageDataDictionary];
+        
     }
- 
+    
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
 
-- (IBAction)launchController
-{
-    
-    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-    
-    elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
-    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
-    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
-    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
-    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
-    
-    elcPicker.imagePickerDelegate = self;
-    
-    [self presentViewController:elcPicker animated:YES completion:nil];
-    
-}
-
-- (void)displayPickerForGroup:(ALAssetsGroup *)group
-{
-    ELCAssetTablePicker *tablePicker = [[ELCAssetTablePicker alloc] initWithStyle:UITableViewStylePlain];
-    tablePicker.singleSelection = YES;
-    tablePicker.immediateReturn = YES;
-    
-    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initWithRootViewController:tablePicker];
-    elcPicker.maximumImagesCount = 1;
-    elcPicker.imagePickerDelegate = self;
-    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
-    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
-    elcPicker.onOrder = NO; //For single image selection, do not display and return order of selected images
-    tablePicker.parent = elcPicker;
-    
-    // Move me
-    tablePicker.assetGroup = group;
-    [tablePicker.assetGroup setAssetsFilter:[ALAssetsFilter allAssets]];
-    
-    [self presentViewController:elcPicker animated:YES completion:nil];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return YES;
-    } else {
-        return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-    }
-}
-
-#pragma mark ELCImagePickerControllerDelegate Methods
-
-
-//// 선택하면 나오는 화면
-- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
-{
-    
-    NSLog(@"info count : %ld ",info.count);
-    if (info.count == 0) {
-        self.scrollViewHeight.constant = 0;
-    } else {
-        self.scrollViewHeight.constant = self.view.frame.size.width/3;
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    for (UIView *v in [_scrollView subviews]) {
-        [v removeFromSuperview];
-    }
-    
-    NSLog(@"self.scrollView.frame.size.height : %lf",self.scrollView.frame.size.height);
-    
-    CGRect workingFrame = CGRectMake(0, 20, self.view.frame.size.width/3 - 20, self.view.frame.size.width/3 - 20);
-    workingFrame.origin.x = 0;
-    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
-    
-    for (NSDictionary *dict in info) {
-        
-        if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
-            
-            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                [images addObject:image];
-                
-                UIImageView *imageview = [[UIImageView alloc] init];
-                [imageview setImage:image];
-                [imageview setContentMode:UIViewContentModeScaleAspectFit];
-                imageview.frame = workingFrame;
-                
-                [_scrollView addSubview:imageview];
-                
-                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width+20;
-                
-            } else {
-                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-            }
-            
-        } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
-            
-        } else {
-            NSLog(@"Uknown asset type");
-        }
-    }
-    self.chosenImages = images;
-    [_scrollView setPagingEnabled:NO];
-    [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
-}
-
-//imagePicker cancel
-- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-//cancel Button
-- (IBAction)touchupInsideCancelButton:(UIButton *)sender {
-    
-    self.scrollViewHeight.constant = 0;
-    self.subjectTextfiled.text = @"";
-    self.objectTextfiled.text = @"";
-}
 
 //CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
-    
-}
-
-//deleteButton
-- (void)touchupInsideImageDeleteButton:(UIButton *)sender {
     
 }
 
@@ -238,12 +125,34 @@
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
-    imageView.image = [self.photoArray objectAtIndex:indexPath.row];
-    [cell.contentView addSubview:imageView];
+    
+    cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    
+    NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
+    UIImage *image = [imageData objectForKey:@"image"];
+    cell.imageView.image = image;
+    
+    for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+        
+        NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+        NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+        
+        NSLog(@"\n imageNubmer.interValue = %ld",imageNumber.integerValue);
+        NSLog(@"\n indexPath.row = %ld",indexPath.row);
+        
+        if ( imageNumber.integerValue == indexPath.row ) {
+            [cell.imageView setAlpha:0.5];
+            break;
+        } else {
+            [cell.imageView setAlpha:1.0];
+        }
+    }
+    
     return cell;
     
 }
@@ -261,6 +170,73 @@
 //cell Spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 5;
+}
+
+//Before Reuse Cell
+-(void)prepareForReuse {
+    
+}
+
+//cell selected
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    if ( self.seletedImages.count < 5) {
+        
+        if ( cell.imageView.alpha == 0.5 ) {
+
+            for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+                
+                NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+                NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+                
+                if ( imageNumber.integerValue == indexPath.row ) {
+                    [cell.imageView setAlpha:1];
+                    [self.seletedImages removeObjectAtIndex:i];
+                }
+                
+            }
+            
+        }else if ( cell.imageView.alpha == 1.0  ) {
+            
+            NSLog(@"\n didSelectedItemAtIndexPath = %ld\n",indexPath.row);
+            
+            [cell.imageView setAlpha:0.5];
+            [self.seletedImages addObject: [self.photoArray objectAtIndex:indexPath.row]];
+        }
+    } else {
+        
+        if ( cell.imageView.alpha == 1.0 ) {
+            
+            UIAlertController *imageCountAlert = [UIAlertController alertControllerWithTitle:@"사진개수"
+                                                                                     message:@"사진개수를 초과하였습니다. ( 최대 5개 )"
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *check = [UIAlertAction actionWithTitle:@"확인"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:nil];
+            
+            [imageCountAlert addAction:check];
+            [self presentViewController:imageCountAlert animated:YES completion:nil];
+            
+        } else {
+            
+            for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+                
+                NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+                NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+                
+                if ( imageNumber.integerValue == indexPath.row ) {
+                    
+                    [cell.imageView setAlpha:1];
+                    [self.seletedImages removeObjectAtIndex:i];
+                }
+                
+            }
+            
+        }
+        
+    }
 }
 
 @end

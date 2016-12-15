@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^UpdateFinishDataBlock)(void);
+
 @interface RequestObject : NSObject
 
 
@@ -21,10 +23,12 @@
 
 + (void)requestReadData:(NSString *)PostId;
 
-+ (void)requestSearch:(NSString *)searchData;
++ (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 + (void)requestUserInfo;
 
 + (void)requestLogoutData;
+
++ (void)requestDeleteData:(NSString *)deletaData;
 
 @end
