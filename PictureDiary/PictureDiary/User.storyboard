@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PXB-ii-mDk">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PXB-ii-mDk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,18 +21,45 @@
                     <view key="view" contentMode="scaleToFill" id="y2B-4E-00j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gIe-D4-pzI">
+                                <rect key="frame" x="0.0" y="40" width="375" height="299"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1se-ev-I2b">
+                                <rect key="frame" x="16" y="542" width="343" height="52"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="Nk4-PG-FV8"/>
+                                </constraints>
+                                <state key="normal" title="사진다이어리 로그아웃">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonAction:" destination="PXB-ii-mDk" eventType="touchUpInside" id="GNR-Wx-O6D"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1se-ev-I2b" firstAttribute="centerX" secondItem="gIe-D4-pzI" secondAttribute="centerX" id="3gC-H7-Bhm"/>
+                            <constraint firstItem="gIe-D4-pzI" firstAttribute="leading" secondItem="y2B-4E-00j" secondAttribute="leading" id="H0g-sR-tWL"/>
+                            <constraint firstItem="6bJ-Hr-y9l" firstAttribute="top" secondItem="1se-ev-I2b" secondAttribute="bottom" constant="24" id="KKg-81-5M1"/>
+                            <constraint firstAttribute="trailing" secondItem="gIe-D4-pzI" secondAttribute="trailing" id="Q4L-2G-gPE"/>
+                            <constraint firstItem="gIe-D4-pzI" firstAttribute="top" secondItem="sEo-CD-NBB" secondAttribute="bottom" constant="20" id="lRq-0m-sDX"/>
+                            <constraint firstItem="1se-ev-I2b" firstAttribute="top" secondItem="gIe-D4-pzI" secondAttribute="bottom" constant="203" id="nNR-SL-Kx6"/>
+                            <constraint firstItem="1se-ev-I2b" firstAttribute="leading" secondItem="y2B-4E-00j" secondAttribute="leadingMargin" id="xfP-38-0Su"/>
+                        </constraints>
                     </view>
-<<<<<<< HEAD
-                    <tabBarItem key="tabBarItem" title="" image="user" id="1YB-8b-nna"/>
-=======
                     <tabBarItem key="tabBarItem" title="" image="user" id="Brj-2d-ruI"/>
->>>>>>> 7800c071a22c94e2a324f30045b686bfc69ae84d
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="userTableView" destination="gIe-D4-pzI" id="n0g-fs-3d4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p8J-U6-Xuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="158"/>
+            <point key="canvasLocation" x="125.59999999999999" y="157.87106446776613"/>
         </scene>
     </scenes>
     <resources>
