@@ -336,12 +336,14 @@
     } else if ([dic objectForKey:@"password"] != nil) {
         
         // 회원 정보 서버 저장 메소드
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"회원가입이 완료되었습니다. 로그인 하세요."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인"
-                                          style:UIAlertActionStyleDefault
-                                        handler:nil];
+        UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"알림"
+                                            message:@"회원가입이 완료되었습니다. 로그인 하세요."
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action =
+        [UIAlertAction actionWithTitle:@"확인"
+                                 style:UIAlertActionStyleDefault
+                               handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }

@@ -38,9 +38,9 @@
     [RequestObject requestMainData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(homeviewCollectionReload:)
-                                                      name:MainNotification
-                                                    object:nil];
+                                             selector:@selector(homeviewCollectionReload:)
+                                                 name:MainNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,7 +70,7 @@
     if (self.userWord.count != 0) {
         
         //title
-//        NSDictionary *wordDic =  self.userWord[indexPath.row];
+        //        NSDictionary *wordDic =  self.userWord[indexPath.row];
         NSDictionary *wordDic = [[NSDictionary alloc] init];
         wordDic = (NSDictionary *)self.userWord[indexPath.row];
         
@@ -94,6 +94,7 @@
         }
         
     }
+    
     
     return cell;
 }
@@ -122,7 +123,7 @@
 {
     //선택시 구동
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-
+    
     cell.layer.borderColor = [UIColor whiteColor].CGColor;
     cell.layer.borderWidth = 3.0f;
     
@@ -138,7 +139,16 @@
     NSLog(@"Read setPost Id");
     [readScreen setPostId:postId];
     [self.navigationController pushViewController:readScreen animated:YES];
+    
+}
 
+//selectedCell segue
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    if ([identifier isEqualToString:@"readSegue"]) {
+        
+    }
+    
 }
 
 
@@ -146,6 +156,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    
     cell.layer.borderColor = nil;
     cell.layer.borderWidth = 0.0f;
 }
@@ -169,13 +180,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -15,7 +15,8 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate, FBSDKLoginButtonDelegate>
+
+@interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UITextField *emailTextField;
@@ -25,6 +26,7 @@
 @property (nonatomic) UIButton *joinButton;
 
 @end
+
 
 @implementation LoginViewController
 
@@ -136,7 +138,7 @@
     CALayer *passwordBottomBorder = [CALayer layer];
     passwordBottomBorder.borderColor = [UIColor whiteColor].CGColor;
     passwordBottomBorder.frame =
-    CGRectMake(0.0f,self.passwordTextField.frame.size.height - borderWidth,self.passwordTextField.frame.size.width,1.0f);
+    CGRectMake(0,self.passwordTextField.frame.size.height - borderWidth,self.passwordTextField.frame.size.width,1);
     passwordBottomBorder.borderWidth = borderWidth;
     [self.passwordTextField.layer addSublayer:passwordBottomBorder];
     [self.scrollView addSubview:self.passwordTextField];
@@ -195,13 +197,11 @@
 
 - (void)onTouchupInsideLoginButton:(UIButton *)sender {
     
-    NSLog(@"click login button");
-    
     NSString *email = [NSString stringWithFormat:@"%@",self.emailTextField.text];
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordTextField.text];
     
     UIAlertController *alert;
-    UIAlertAction *action;    
+    UIAlertAction *action;
     
     // 텍스트 필드 입력 내용 체크
     if (email.length == 0 || [email containsString:@" "]) {
@@ -223,7 +223,7 @@
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     } else {
         
         [RequestObject requestLoginData:email userPass:password];
@@ -235,29 +235,33 @@
 // 로그인시 네트워크 구현
 - (void)userLogin:(NSNotification *)noti {
     
+    UIAlertController *alert;
+    UIAlertAction *action;
     NSDictionary *dic = noti.userInfo;
     
-    if ( [dic objectForKey:@"token"] != nil ) {
+    if (dic == nil) {
+        
+        // 네트워크가 연결되지 않은 경우
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"사용중인 네트워크 상태를 확인해 주세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else if ([dic objectForKey:@"token"] != nil) {
         
         // 로그인에 성공한 경우
-        NSLog(@"로그인 성공");
         [UserInfo sharedUserInfo].userToken = [dic objectForKey:@"token"];
+        [self proceedToMain:YES];
         
-        // MainTabBarController로 이동
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-        UIApplication *application = [UIApplication sharedApplication];
-        UIWindow *window = [application.delegate window];
-        window.rootViewController = mainTabBarController;
-        [window makeKeyAndVisible];
     } else {
         
         // 등록되지 않은 이메일이거나 비밀번호가 틀린 경우
-        NSLog(@"로그인 실패");
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                                       message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력하셨습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }
@@ -265,10 +269,21 @@
 }
 
 
+// MainTabBarController로 이동
+- (void)proceedToMain:(BOOL)animated {
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+    
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    window.rootViewController = mainTabBarController;
+    [window makeKeyAndVisible];
+    
+}
+
 
 - (void)onTouchupInsideFbLoginButton:(UIButton *)sender {
     
-    // 현재 페이스북 로그인 상태 확인
     if ([FBSDKAccessToken currentAccessToken] == nil) {
         
         // 한번도 로그인 하지 않은 사용자의 경우
@@ -284,72 +299,23 @@
                                     } else {
                                         NSLog(@"Logged in");
                                         
-                                        // 로그인 후 액션 지정
+                                        // 로그인 후 액션
                                         if ([result.grantedPermissions containsObject:@"email"]) {
-                                            NSLog(@"result is:%@",result);
-                                            [self fetchUserInfo];
+                                            NSLog(@"result : %@",result);
+                                            [UserInfo sharedUserInfo].userToken = [FBSDKAccessToken currentAccessToken].tokenString;
+                                            [self proceedToMain:YES];
                                         }
                                     }
                                 }];
     } else {
         
-        // 기존에 로그인했던 사용자의 경우 로그인 후 액션 지정
-        [self fetchUserInfo];
-        NSLog(@"로그인 성공");
+        // 기존에 로그인했던 사용자의 로그인 후 액션
+        NSLog(@"Logged in");
+        [UserInfo sharedUserInfo].userToken = [FBSDKAccessToken currentAccessToken].tokenString;
+        [self proceedToMain:YES];
         
     }
     
-}
-
-
-- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
-    
-    if (error == nil) {
-        
-        NSLog(@"로그인 성공");
-        
-        // MainTabBarController로 이동
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-        UIApplication *application = [UIApplication sharedApplication];
-        UIWindow *window = [application.delegate window];
-        window.rootViewController = mainTabBarController;
-        [window makeKeyAndVisible];
-        
-    } else {
-        
-        NSLog(@"%@",error.localizedDescription);
-    }
-}
-
-
-- (void)fetchUserInfo {
-    
-    FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
-                                                                     parameters:@{@"fields":@"id, name, email"}];
-    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
-    [connection addRequest:requestMe completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-        if (result) {
-            if ([result objectForKey:@"email"]) {
-                NSLog(@"Email : %@", [result objectForKey:@"email"]);
-            }
-            if ([result objectForKey:@"name"]) {
-                NSLog(@"First Name : %@",[result objectForKey:@"name"]);
-            }
-            if ([result objectForKey:@"id"]) {
-                NSLog(@"User id : %@",[result objectForKey:@"id"]);
-            }
-        }
-    }];
-    [connection start];
-    
-    // MainTabBarController로 이동
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
-    UIApplication *application = [UIApplication sharedApplication];
-    UIWindow *window = [application.delegate window];
-    window.rootViewController = mainTabBarController;
-    [window makeKeyAndVisible];
 }
 
 
@@ -367,7 +333,7 @@
     [self.emailTextField endEditing:YES];
     [self.passwordTextField endEditing:YES];
     [self.scrollView setContentOffset:CGPointZero animated:YES];
-
+    
 }
 
 
@@ -441,4 +407,3 @@
 }
 
 @end
-

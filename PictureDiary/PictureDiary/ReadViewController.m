@@ -7,7 +7,6 @@
 //
 
 #import "ReadViewController.h"
-#import <UIImageView+WebCache.h>
 
 @interface ReadViewController ()
 <UIScrollViewDelegate>
@@ -38,15 +37,10 @@
                                                  name:ReadNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(requestDeleteView:)
-                                                 name:DeleteNotfication
-                                               object:nil];
-    
     [self.navigationController.navigationBar setHidden:NO];
     
     UIBarButtonItem *modifiedButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                                target:self action:@selector(touchinsideModifiedButton)];
+                                                                                    target:self action:@selector(touchinsideModifiedButton)];
     
     [self.navigationItem setRightBarButtonItem:modifiedButton];
     
@@ -79,6 +73,7 @@
     
     
 }
+
 
 - (void)awakeFromNib {
     
@@ -147,17 +142,17 @@
                                                             style:UIAlertActionStyleDestructive
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               //글 삭제
-                                                              UIAlertController *deleteAlert = [UIAlertController alertControllerWithTitle:@"글 삭제"                              message:@"이 글을 영구적으로 삭제하시겠어요?"                  preferredStyle:UIAlertControllerStyleAlert];
+                                                              UIAlertController *deleteAlert = [UIAlertController alertControllerWithTitle:@"글 삭제"
+                                                                                                                                   message:@"이 글을 영구적으로 삭제하시겠어요?"
+                                                                                                                            preferredStyle:UIAlertControllerStyleAlert];
                                                               
-    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제"
-                                                                    style:UIAlertActionStyleDestructive
-                                                                    handler:^(UIAlertAction * _Nonnull action) {
-                                                                            [RequestObject requestDeleteData:self.postId];
-                                                                    }];
+                                                              UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제"
+                                                                                                                     style:UIAlertActionStyleDestructive
+                                                                                                                   handler:nil];
                                                               
-    UIAlertAction *deleteActionCancel = [UIAlertAction actionWithTitle:@"취소"
-                                                                  style:UIAlertActionStyleCancel
-                                                                  handler:nil];
+                                                              UIAlertAction *deleteActionCancel = [UIAlertAction actionWithTitle:@"취소"
+                                                                                                                           style:UIAlertActionStyleCancel
+                                                                                                                         handler:nil];
                                                               
                                                               [deleteAlert addAction:deleteAction];
                                                               [deleteAlert addAction:deleteActionCancel];
@@ -180,60 +175,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)requestDeleteView:(NSNotification *)noti {
-    
-    [RequestObject requestMainData];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
 - (void)requestReadViewChange:(NSNotification *)noti {
-   
-    NSDictionary *wordDictionary = noti.userInfo;
-    self.titleLabel.text = [wordDictionary objectForKey:@"title"];
-    self.contentText.text = [wordDictionary objectForKey:@"content"];
-    
-    NSArray *imageArray = [wordDictionary objectForKey:@"photos"];
-    NSInteger imageCount = imageArray.count;
-    
-    //photosArray
-    
-    for ( NSInteger i = 0; i < imageCount ; i ++ ) {
-        
-        NSDictionary *photos  = [imageArray objectAtIndex:i];
-        NSDictionary *image = [photos objectForKey:@"image"];
-        NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
-        
-        UIImageView *fullSizeImage = [[UIImageView alloc] init];
-        [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-        
-        [fullSizeImage setFrame:CGRectMake(self.imageScrollView.frame.size.width * i, 0,
-                                       self.imageScrollView.frame.size.width, self.imageScrollView.frame.size.height)];
-        
-        [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
-        [self.imageScrollView addSubview:fullSizeImage];
-    }
-    
-    [self.imageScrollView setContentSize:CGSizeMake(self.imageScrollView.frame.size.width * imageCount,
-                                                    self.imageScrollView.frame.size.height)];
-    
-    
-    //페이지 갯수
-    self.pageControl.numberOfPages = self.imageList.count;
-    
-    //페이지 컨트롤 값변경시 이벤트 처리 등록
-    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
-    
+    NSLog(@"hello");
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
