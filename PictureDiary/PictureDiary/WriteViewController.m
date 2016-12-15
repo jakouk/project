@@ -60,6 +60,9 @@
     
     NSLog(@"%lf",self.view.frame.size.height);
     
+    self.bodyTextView.layer.borderWidth = 1.0;
+    self.bodyTextView.layer.borderColor = [UIColor blackColor].CGColor;
+    
     //PHAsset
     
     // 카메라 롤 앨범을 읽어온다.
