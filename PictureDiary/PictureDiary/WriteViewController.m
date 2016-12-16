@@ -21,12 +21,7 @@
 @property (nonatomic, strong)PHAssetChangeRequest *chageRequest;
 @property (nonatomic,strong)PHObjectPlaceholder *assetPlaceholder;
 
-
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeight;
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
-@property (weak, nonatomic) IBOutlet UITextField *objectTextfiled;
-//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
@@ -59,6 +54,9 @@
     self.photoArray = [[NSMutableArray alloc] init];
     
     NSLog(@"%lf",self.view.frame.size.height);
+    
+    self.bodyTextView.layer.borderWidth = 1.0;
+    self.bodyTextView.layer.borderColor = [UIColor blackColor].CGColor;
     
     //PHAsset
     
@@ -106,13 +104,27 @@
 //CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
+    [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
+        [self writeViewReset];
+    }];
+    
+}
+
+- (void)writeViewReset {
+    
+    self.subjectTextfiled.text = @"";
+    self.bodyTextView.text = @"";
+    
+    for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+        [self.seletedImages removeObjectAtIndex:i];
+    }
+    
     
 }
 
 //keyboard down
 - (IBAction)touchupInsideBackground:(UITapGestureRecognizer *)sender {
     
-    [self.objectTextfiled resignFirstResponder];
     [self.subjectTextfiled resignFirstResponder];
 }
 
@@ -127,11 +139,9 @@
     
     CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    
-    
     cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    //    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
     NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
     UIImage *image = [imageData objectForKey:@"image"];
@@ -172,11 +182,6 @@
     return 5;
 }
 
-//Before Reuse Cell
--(void)prepareForReuse {
-    
-}
-
 //cell selected
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -184,7 +189,7 @@
     if ( self.seletedImages.count < 5) {
         
         if ( cell.imageView.alpha == 0.5 ) {
-
+            
             for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
                 
                 NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
@@ -235,7 +240,6 @@
             }
             
         }
-        
     }
 }
 

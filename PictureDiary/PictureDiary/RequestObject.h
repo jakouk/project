@@ -31,4 +31,6 @@ typedef void(^UpdateFinishDataBlock)(void);
 
 + (void)requestDeleteData:(NSString *)deletaData;
 
++ (void)requestWriteData:(NSString *)title cotent:(NSString *)content imageArray:(NSArray *)imageArray updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
 @end

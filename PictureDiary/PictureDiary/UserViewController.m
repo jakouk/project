@@ -93,7 +93,7 @@
         if (indexPath.row == 1) {
             [cell.imageView setImage:[UIImage imageNamed:@"Emailicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-            [cell.textLabel setText:@"e-mail"];
+            [cell.textLabel setText:@"E-mail"];
             [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"email"]]];
         }
         

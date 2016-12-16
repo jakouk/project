@@ -352,7 +352,55 @@ static NSString *JSONSuccessValue = @"success";
 
 #pragma mark -requestWrite
 //requestWrite
-+ (void)requestWriteData {
++ (void)requestWriteData:(NSString *)title cotent:(NSString *)content imageArray:(NSArray *)imageArray updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
+    
+    NSString *requestURL = @"http://www.anyfut.com/post/";
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] init];
+    
+    [bodyParams setObject:title forKey:@"title"];
+    [bodyParams setObject:content forKey:@"content"];
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
+            URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                                                                  
+                for ( NSDictionary *imageData in imageArray) {
+                                                                                                      
+                    UIImage *image = [imageData objectForKey:@"image"];
+                    NSNumber *number = [imageData objectForKey:@"imageNumber"];
+                    NSLog(@"imageNumber : %ld",number.integerValue);
+                    NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
+                    [formData appendPartWithFileData:imageData name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpg"];
+                                                                                                      
+                }
+                                                                                              } error:nil];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [manager
+                  uploadTaskWithStreamedRequest:request
+                  progress:^(NSProgress * _Nonnull uploadProgress) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          NSLog(@"uploading... %lf %% completed",uploadProgress.fractionCompleted);
+                      });
+                  }
+                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                      
+                      NSLog(@"\n\n response : %@ \n\n",response);
+                      NSLog(@"\n\n responseObject : %@ \n\n",responseObject);
+                      NSLog(@"\n\n error : %@ \n\n",error);
+                      
+                      UpdateFinishDataBlock();
+                      
+                  }];
+    
+    [uploadTask resume];
+    
     
 }
 

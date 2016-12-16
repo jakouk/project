@@ -7,6 +7,7 @@
 //
 
 #import "ReadViewController.h"
+#import <UIImageView+WebCache.h>
 
 @interface ReadViewController ()
 <UIScrollViewDelegate>
@@ -176,7 +177,43 @@
 }
 
 - (void)requestReadViewChange:(NSNotification *)noti {
-    NSLog(@"hello");
+        NSLog(@"hello");
+    
+        NSDictionary *wordDictionary = noti.userInfo;
+        self.titleLabel.text = [wordDictionary objectForKey:@"title"];
+        self.contentText.text = [wordDictionary objectForKey:@"content"];
+    
+        NSArray *imageArray = [wordDictionary objectForKey:@"photos"];
+        NSInteger imageCount = imageArray.count;
+    
+        //photosArray
+    
+        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
+        
+                NSDictionary *photos  = [imageArray objectAtIndex:i];
+                NSDictionary *image = [photos objectForKey:@"image"];
+                NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+        
+                UIImageView *fullSizeImage = [[UIImageView alloc] init];
+                [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        
+                [fullSizeImage setFrame:CGRectMake(self.imageScrollView.frame.size.width * i, 0,
+                                                    +                                       self.imageScrollView.frame.size.width, self.imageScrollView.frame.size.height)];
+        
+                [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+                [self.imageScrollView addSubview:fullSizeImage];
+            }
+    
+        [self.imageScrollView setContentSize:CGSizeMake(self.imageScrollView.frame.size.width * imageCount,
+                                                         +                                                    self.imageScrollView.frame.size.height)];
+    
+    
+    //페이지 갯수
+    self.pageControl.numberOfPages = self.imageList.count;
+    
+    //페이지 컨트롤 값변경시 이벤트 처리 등록
+    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
 }
 
 /*
