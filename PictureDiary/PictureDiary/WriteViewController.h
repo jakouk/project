@@ -11,7 +11,7 @@
 
 @interface WriteViewController : UIViewController <UINavigationControllerDelegate, UIScrollViewDelegate>
 
-//@property (nonatomic, copy) NSMutableArray *chosenImages;
+//seletedImages ( Dictionary )
 @property NSMutableArray *seletedImages;
 
 @end

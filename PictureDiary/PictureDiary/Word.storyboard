@@ -230,6 +230,7 @@
                     <connections>
                         <outlet property="bodyTextView" destination="DOM-SA-DlB" id="hEb-3E-33p"/>
                         <outlet property="collectionViewImage" destination="nlD-Xq-scO" id="K3d-zG-tHS"/>
+                        <outlet property="subjectTextfiled" destination="cQO-HR-sgR" id="qIY-eI-UtD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phO-Dm-Vwb" userLabel="First Responder" sceneMemberID="firstResponder"/>
