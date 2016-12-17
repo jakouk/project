@@ -81,11 +81,9 @@
         [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             self.photoImage = result;
-            NSLog(@"self.phtoImage inside");
             
         }];
         
-        NSLog(@"self.phtoImage outside");
         NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
         [imageDataDictionary setObject:self.photoImage forKey:@"image"];
         [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
@@ -106,6 +104,7 @@
     
     [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
         [self writeViewReset];
+        [RequestObject requestMainData];
     }];
     
 }
@@ -115,10 +114,8 @@
     self.subjectTextfiled.text = @"";
     self.bodyTextView.text = @"";
     
-    for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
-        [self.seletedImages removeObjectAtIndex:i];
-    }
-    
+    [self.seletedImages removeAllObjects];
+    [self.collectionViewImage reloadData];
     
 }
 
@@ -140,8 +137,6 @@
     CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    //    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
     NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
     UIImage *image = [imageData objectForKey:@"image"];

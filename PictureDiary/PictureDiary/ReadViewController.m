@@ -82,26 +82,6 @@
     self.wordDic = [[NSDictionary alloc] init];
 }
 
-//오토레이아웃 적용 후 뷰 로드
-- (void)viewDidLayoutSubviews
-{
-    
-    NSInteger i = self.imageList.count;
-    for (NSInteger i = 0; i < self.imageList.count; i ++) {
-        
-        UIImageView *imageView = [[UIImageView alloc] init];
-        [imageView setFrame:CGRectMake(self.imageScrollView.frame.size.width * i, 0,
-                                       self.imageScrollView.frame.size.width, self.imageScrollView.frame.size.height)];
-        
-        [imageView setImage:[UIImage imageNamed:[self.imageList objectAtIndex:i]]];
-        [imageView setContentMode:UIViewContentModeScaleToFill];
-        [self.imageScrollView addSubview:imageView];
-    }
-    
-    [self.imageScrollView setContentSize:CGSizeMake(self.imageScrollView.frame.size.width * i,
-                                                    self.imageScrollView.frame.size.height)];
-}
-
 //스크롤이 변경될때 page의 currentPage 설정
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
@@ -188,6 +168,12 @@
     
         //photosArray
     
+        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
+        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
+    
+        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount,
+                                                    +  imagePointHeight)];
+    
         for ( NSInteger i = 0; i < imageCount ; i ++ ) {
         
                 NSDictionary *photos  = [imageArray objectAtIndex:i];
@@ -197,16 +183,13 @@
                 UIImageView *fullSizeImage = [[UIImageView alloc] init];
                 [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
         
-                [fullSizeImage setFrame:CGRectMake(self.imageScrollView.frame.size.width * i, 0,
-                                                    +                                       self.imageScrollView.frame.size.width, self.imageScrollView.frame.size.height)];
+                [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
+                                                imagePointWidth, imagePointHeight)];
         
                 [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
                 [self.imageScrollView addSubview:fullSizeImage];
-            }
-    
-        [self.imageScrollView setContentSize:CGSizeMake(self.imageScrollView.frame.size.width * imageCount,
-                                                         +                                                    self.imageScrollView.frame.size.height)];
-    
+            
+        }
     
     //페이지 갯수
     self.pageControl.numberOfPages = self.imageList.count;

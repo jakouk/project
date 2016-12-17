@@ -369,8 +369,10 @@ static NSString *JSONSuccessValue = @"success";
                     UIImage *image = [imageData objectForKey:@"image"];
                     NSNumber *number = [imageData objectForKey:@"imageNumber"];
                     NSLog(@"imageNumber : %ld",number.integerValue);
+                    NSString *imagefileName = [NSString stringWithFormat:@"%@%ld.jpeg",title,number.integerValue];
+                    
                     NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
-                    [formData appendPartWithFileData:imageData name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpg"];
+                    [formData appendPartWithFileData:imageData name:@"image" fileName:imagefileName mimeType:@"image/jpeg"];
                                                                                                       
                 }
                                                                                               } error:nil];
