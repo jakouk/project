@@ -159,6 +159,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="제목" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQO-HR-sgR">
+                                <rect key="frame" x="16" y="40" width="343" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="CSw-Mi-K65"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DOM-SA-DlB">
+                                <rect key="frame" x="16" y="96" width="343" height="202"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-XP-yeO">
+                                <rect key="frame" x="16" y="318" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="확인">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchupInsideCheckButton:" destination="OH1-BA-EQv" eventType="touchUpInside" id="v7c-fX-r9m"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nlD-Xq-scO">
                                 <rect key="frame" x="16" y="368" width="343" height="250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -182,31 +207,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-XP-yeO">
-                                <rect key="frame" x="16" y="318" width="343" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="확인">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchupInsideCheckButton:" destination="OH1-BA-EQv" eventType="touchUpInside" id="v7c-fX-r9m"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="제목" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cQO-HR-sgR">
-                                <rect key="frame" x="16" y="40" width="343" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="CSw-Mi-K65"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DOM-SA-DlB">
-                                <rect key="frame" x="16" y="96" width="343" height="202"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -230,7 +230,7 @@
                     <connections>
                         <outlet property="bodyTextView" destination="DOM-SA-DlB" id="hEb-3E-33p"/>
                         <outlet property="collectionViewImage" destination="nlD-Xq-scO" id="K3d-zG-tHS"/>
-                        <outlet property="subjectTextfiled" destination="cQO-HR-sgR" id="qIY-eI-UtD"/>
+                        <outlet property="subjectTextfiled" destination="cQO-HR-sgR" id="Fs9-Wk-MAj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phO-Dm-Vwb" userLabel="First Responder" sceneMemberID="firstResponder"/>

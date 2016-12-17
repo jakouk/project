@@ -362,15 +362,22 @@ static NSString *JSONSuccessValue = @"success";
     [bodyParams setObject:content forKey:@"content"];
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
-                URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                        
+
+            URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                                                                  
                 for ( NSDictionary *imageData in imageArray) {
-                    
+                                                                                                      
                     UIImage *image = [imageData objectForKey:@"image"];
+                    NSNumber *number = [imageData objectForKey:@"imageNumber"];
+                    NSLog(@"imageNumber : %ld",number.integerValue);
+                    NSString *imagefileName = [NSString stringWithFormat:@"%@%ld.jpeg",title,number.integerValue];
+                    
                     NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
-                    [formData appendPartWithFileData:imageData name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpg"];
+                    [formData appendPartWithFileData:imageData name:@"image" fileName:imagefileName mimeType:@"image/jpeg"];
+                                                                                                      
                 }
                                                                                               } error:nil];
+    
     NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
     [token appendString:[UserInfo sharedUserInfo].userToken];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
@@ -396,7 +403,6 @@ static NSString *JSONSuccessValue = @"success";
                   }];
     
     [uploadTask resume];
-
     
 }
 

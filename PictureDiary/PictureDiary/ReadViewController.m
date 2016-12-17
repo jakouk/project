@@ -7,6 +7,7 @@
 //
 
 #import "ReadViewController.h"
+#import <UIImageView+WebCache.h>
 
 @interface ReadViewController ()
 <UIScrollViewDelegate>
@@ -79,26 +80,6 @@
     
     [super awakeFromNib];
     self.wordDic = [[NSDictionary alloc] init];
-}
-
-//오토레이아웃 적용 후 뷰 로드
-- (void)viewDidLayoutSubviews
-{
-    
-    NSInteger i = self.imageList.count;
-    for (NSInteger i = 0; i < self.imageList.count; i ++) {
-        
-        UIImageView *imageView = [[UIImageView alloc] init];
-        [imageView setFrame:CGRectMake(self.imageScrollView.frame.size.width * i, 0,
-                                       self.imageScrollView.frame.size.width, self.imageScrollView.frame.size.height)];
-        
-        [imageView setImage:[UIImage imageNamed:[self.imageList objectAtIndex:i]]];
-        [imageView setContentMode:UIViewContentModeScaleToFill];
-        [self.imageScrollView addSubview:imageView];
-    }
-    
-    [self.imageScrollView setContentSize:CGSizeMake(self.imageScrollView.frame.size.width * i,
-                                                    self.imageScrollView.frame.size.height)];
 }
 
 //스크롤이 변경될때 page의 currentPage 설정
@@ -176,7 +157,46 @@
 }
 
 - (void)requestReadViewChange:(NSNotification *)noti {
-    NSLog(@"hello");
+        NSLog(@"hello");
+    
+        NSDictionary *wordDictionary = noti.userInfo;
+        self.titleLabel.text = [wordDictionary objectForKey:@"title"];
+        self.contentText.text = [wordDictionary objectForKey:@"content"];
+    
+        NSArray *imageArray = [wordDictionary objectForKey:@"photos"];
+        NSInteger imageCount = imageArray.count;
+    
+        //photosArray
+    
+        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
+        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
+    
+        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount,
+                                                    +  imagePointHeight)];
+    
+        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
+        
+                NSDictionary *photos  = [imageArray objectAtIndex:i];
+                NSDictionary *image = [photos objectForKey:@"image"];
+                NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+        
+                UIImageView *fullSizeImage = [[UIImageView alloc] init];
+                [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        
+                [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
+                                                imagePointWidth, imagePointHeight)];
+        
+                [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+                [self.imageScrollView addSubview:fullSizeImage];
+            
+        }
+    
+    //페이지 갯수
+    self.pageControl.numberOfPages = self.imageList.count;
+    
+    //페이지 컨트롤 값변경시 이벤트 처리 등록
+    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
 }
 
 /*

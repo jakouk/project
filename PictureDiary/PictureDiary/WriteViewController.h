@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ELCImagePickerHeader.h"
 
 @interface WriteViewController : UIViewController <UINavigationControllerDelegate, UIScrollViewDelegate>
 
