@@ -220,6 +220,39 @@ static NSString *JSONSuccessValue = @"success";
     [dataTask resume];
 }
 
+//requestAddMain
++ (void)requestAddMain:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
+    
+    NSString *urlStr = nextUrl;
+    
+    NSURL * url = [NSURL URLWithString:urlStr];
+    
+    NSMutableURLRequest *urlRequest =  [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [urlRequest setValue:token forHTTPHeaderField:@"Authorization"];
+    
+    NSLog(@"RequestObject main allHTTPHeaderFields : %@",urlRequest.allHTTPHeaderFields);
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        if ( error == NULL ) {
+            [UserInfo sharedUserInfo].wordDic = responseObject;
+            NSLog(@"mainAdd");
+            UpdateFinishDataBlock();
+        }
+        
+    }];
+    
+    [dataTask resume];
+    
+}
 
 //requestRead
 + (void)requestReadData:(NSString *)PostId {
@@ -250,6 +283,8 @@ static NSString *JSONSuccessValue = @"success";
         
         NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
         wordDic = responseObject;
+        
+        NSLog(@"\n\n response : %@ \n\n",response);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -310,7 +345,8 @@ static NSString *JSONSuccessValue = @"success";
 
 //requestDelete
 #pragma mark -requestDelete
-+ (void)requestDeleteData:(NSString *)deletaData {
++ (void)requestDeleteData:(NSString *)deletaData pdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
+    
     NSString *urlStr = @"http://www.anyfut.com/post/";
     
     NSMutableString *urlString = [NSMutableString stringWithString:urlStr];
@@ -333,19 +369,9 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSString *notificationName = DeleteNotfication;
-        
         if ( error == NULL ) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                    object:nil];
-            });
-            
+            UpdateFinishDataBlock();
         }
-        
     }];
     [dataTask resume];
 }
@@ -405,6 +431,8 @@ static NSString *JSONSuccessValue = @"success";
     [uploadTask resume];
     
 }
+
+
 
 #pragma mark -requstModify
 //requestModify

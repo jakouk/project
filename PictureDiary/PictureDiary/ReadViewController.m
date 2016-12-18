@@ -22,7 +22,6 @@
 @property NSMutableArray *imageList;
 @property NSDictionary *wordDic;
 
-
 @end
 
 @implementation ReadViewController
@@ -30,7 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"ReadeViewDidLoad");
     [RequestObject requestReadData:self.postId];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -71,8 +69,6 @@
     
     //페이지 컨트롤 값변경시 이벤트 처리 등록
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
-    
-    
 }
 
 
@@ -157,14 +153,13 @@
 }
 
 - (void)requestReadViewChange:(NSNotification *)noti {
-        NSLog(@"hello");
     
         NSDictionary *wordDictionary = noti.userInfo;
         self.titleLabel.text = [wordDictionary objectForKey:@"title"];
         self.contentText.text = [wordDictionary objectForKey:@"content"];
     
-        NSArray *imageArray = [wordDictionary objectForKey:@"photos"];
-        NSInteger imageCount = imageArray.count;
+        self.imageList = [wordDictionary objectForKey:@"photos"];
+        NSInteger imageCount = self.imageList.count;
     
         //photosArray
     
@@ -176,7 +171,7 @@
     
         for ( NSInteger i = 0; i < imageCount ; i ++ ) {
         
-                NSDictionary *photos  = [imageArray objectAtIndex:i];
+                NSDictionary *photos  = [self.imageList objectAtIndex:i];
                 NSDictionary *image = [photos objectForKey:@"image"];
                 NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
         
