@@ -6,7 +6,6 @@
 //  Copyright © 2016년 jakouk. All rights reserved.
 //
 
-//ui
 #import "MainViewController.h"
 #import "CustomCell.h"
 #import "ReadViewController.h"
@@ -15,7 +14,7 @@
 
 @interface MainViewController ()
 
-@property NSArray *userWord;
+@property NSMutableArray *userWord;
 
 @end
 
@@ -26,7 +25,7 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    self.userWord = [[NSArray alloc] init];
+    self.userWord = [[NSMutableArray alloc] init];
     
 }
 
@@ -62,15 +61,31 @@
     return self.userWord.count;
 }
 
-//셀 셋팅
+//make cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    // indexPath.row 7 , 17, 27 ... nextCell check
+    if ( indexPath.row %10 == 7 ) {
+        
+        if ( self.userWord.count == indexPath.row + 3 ) {
+            
+            if ( [UserInfo sharedUserInfo].nextUrl != nil ) {
+                
+                [RequestObject requestAddMain:[UserInfo sharedUserInfo].nextUrl updateFinishDataBlock:^{
+                    [self addCellMethod];
+                }];
+                
+            }
+            
+        }
+        
+    }
+    
     if (self.userWord.count != 0) {
         
         //title
-        //        NSDictionary *wordDic =  self.userWord[indexPath.row];
         NSDictionary *wordDic = [[NSDictionary alloc] init];
         wordDic = (NSDictionary *)self.userWord[indexPath.row];
         
@@ -85,16 +100,14 @@
             NSDictionary *imageSize = [imageArray objectAtIndex:0];
             NSDictionary *imageURL = [imageSize objectForKey:@"image"];
             NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
-            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-            
+            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"sky"]];
         } else {
             
-            cell.backgroundColor = [UIColor blueColor];
+            cell.nameLabel.tintColor = [UIColor blackColor];
+            cell.backgroundColor = [UIColor whiteColor];
             
         }
-        
     }
-    
     
     return cell;
 }
@@ -133,7 +146,6 @@
     //post-id
     NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
     NSNumber *post = [wordDic objectForKey:@"id"];
-    
     NSString *postId =  [post stringValue];
     
     NSLog(@"Read setPost Id");
@@ -142,36 +154,31 @@
     
 }
 
-//selectedCell segue
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    
-    if ([identifier isEqualToString:@"readSegue"]) {
-        
-    }
-    
-}
-
-
-//셀을 다시 선택했을 경우
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    
-    cell.layer.borderColor = nil;
-    cell.layer.borderWidth = 0.0f;
-}
-
 //homeviewCollectionReload
 //네트워크에서 사진 불러오기
 - (void)homeviewCollectionReload:(NSNotification *)noti
 {
     NSDictionary *wordDic = noti.userInfo;
-    self.userWord = [wordDic objectForKey:@"results"];
     
-    [self.collectionView reloadData];
+    if ([wordDic objectForKey:@"results"] != nil ) {
+        
+        NSLog(@"MainViewController homeviewCollectionReload");
+        [self.userWord removeAllObjects];
+        [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
+        [UserInfo sharedUserInfo].nextUrl = [wordDic objectForKey:@"next"];
+        [self.collectionView reloadData];
+    }
 }
 
-
+//add Cell Method
+- (void)addCellMethod {
+    
+    NSDictionary *wordDic = [UserInfo sharedUserInfo].wordDic;
+    [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
+    [UserInfo sharedUserInfo].nextUrl = [wordDic objectForKey:@"next"];
+    [self.collectionView reloadData];
+    
+}
 
 #pragma mark - memory
 - (void)didReceiveMemoryWarning {

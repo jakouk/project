@@ -10,8 +10,17 @@
 
 @interface UserInfo : NSObject
 
+//userToken
 @property NSString *userToken;
+
+//Search search Data
 @property NSDictionary *searchData;
+
+//Main nextUrl
+@property NSString *nextUrl;
+
+//Main wordDic
+@property NSDictionary *wordDic;
 
 + (instancetype)sharedUserInfo;
 
