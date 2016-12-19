@@ -13,14 +13,18 @@
 //userToken
 @property NSString *userToken;
 
-//Search search Data
-@property NSDictionary *searchData;
-
 //Main nextUrl
-@property NSString *nextUrl;
+@property NSString *mainNextUrl;
 
 //Main wordDic
 @property NSDictionary *wordDic;
+
+
+//Search search Data
+@property NSDictionary *searchData;
+
+//Search searchNextUrl
+@property NSString *searchNextUrl;
 
 + (instancetype)sharedUserInfo;
 

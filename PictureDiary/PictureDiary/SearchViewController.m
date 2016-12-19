@@ -8,21 +8,15 @@
 
 #import "SearchViewController.h"
 #import "RequestObject.h"
+#import <UIImageView+WebCache.h>
+#import "CustomCell.h"
 
 @interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
 
-//join Test
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *pass;
-@property (weak, nonatomic) IBOutlet UITextField *username;
-
-
-//login test
-@property (weak, nonatomic) IBOutlet UITextField *loginEmail;
-@property (weak, nonatomic) IBOutlet UITextField *loginPass;
-
+@property NSMutableArray *searchArray;
 
 @end
 
@@ -30,25 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
+    
+    [self.mainCollection registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     self.mainCollection.delegate = self;
     self.mainCollection.dataSource = self;
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(joinMethod:)
-//                                                 name:JoinNotification
-//                                               object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(loginMethod:)
-//                                                 name:LoginNotification
-//                                               object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(mainMehtod:)
-//                                                 name:MainNotification
-//                                               object:nil];
-    
+    self.searchArray = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,19 +41,42 @@
 //cell numbers
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 10;
+    return self.searchArray.count;
 }
 
+//make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-         UICollectionViewCell *cell = [self.mainCollection dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    CustomCell *cell = (CustomCell *)[self.mainCollection dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     UIImageView *cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
     [cellImageView setContentMode:UIViewContentModeScaleAspectFit];
-    [cellImageView setImage:[UIImage imageNamed:@"home"]];
     
-    [cell addSubview:cellImageView];
+    if (self.searchArray.count != 0) {
+        //title
+        NSDictionary *wordDic = [[NSDictionary alloc] init];
+        wordDic = (NSDictionary *)[self.searchArray objectAtIndex:indexPath.row];
+        
+        NSString *title =  [wordDic objectForKey:@"title"];
+        cell.nameLabel.text = title;
+        
+        //image
+        NSArray *imageArray = [wordDic objectForKey:@"photos"];
+        
+        if (imageArray.count != 0) {
+            
+            NSDictionary *imageSize = [imageArray objectAtIndex:0];
+            NSDictionary *imageURL = [imageSize objectForKey:@"image"];
+            NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"medium_square_crop"]];
+            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            
+            
+        } else {
+            
+            cell.backgroundColor = [UIColor whiteColor];
+            
+        }
+    }
 
     return cell;
 }
@@ -98,19 +103,30 @@
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     NSString *searchData = self.searchData.text;
     SearchViewController * __weak wself = self;
-    
     [RequestObject requestSearch:searchData updateFinishDataBlock:^{
         [wself searchCollectionViewReload];
     }];
 }
 
 - (void)searchCollectionViewReload {
+
+    NSDictionary *searchData = [[NSDictionary alloc] init];
+    searchData = [UserInfo sharedUserInfo].searchData;
     
-    //NSDictionary *searchWordDictionary = [UserInfo sharedUserInfo].searchData;
+    NSLog(@" SearchViewController = %@",searchData);
+    
+    if ([searchData objectForKey:@"results"] != nil ) {
+        
+        NSLog(@"SearchViewController searchCollectionViewReload");
+        [self.searchArray removeAllObjects];
+        [self.searchArray addObjectsFromArray:[searchData objectForKey:@"results"]];
+        NSLog(@"SearchViewController self.searchArray.count = %ld",self.searchArray.count);
+        
+        [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
+        [self.mainCollection reloadData];
+    }
     
 }
-
-
 
 /*
 #pragma mark - Navigation

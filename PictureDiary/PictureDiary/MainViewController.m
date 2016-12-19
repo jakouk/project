@@ -71,12 +71,12 @@
         
         if ( self.userWord.count == indexPath.row + 3 ) {
             
-            NSLog(@"\n\n[UserInfo sharedUserInfo].nextUrl = %@\n\n",[UserInfo sharedUserInfo].nextUrl);
-            
-            if ( [UserInfo sharedUserInfo].nextUrl != nil ) {
+            if ( [UserInfo sharedUserInfo].mainNextUrl != nil ) {
                 
-                [RequestObject requestAddMain:[UserInfo sharedUserInfo].nextUrl updateFinishDataBlock:^{
-                    [self addCellMethod];
+                MainViewController * __weak wself = self;
+                
+                [RequestObject requestAddMain:[UserInfo sharedUserInfo].mainNextUrl updateFinishDataBlock:^{
+                    [wself addCellMethod];
                 }];
                 
             }
@@ -167,7 +167,7 @@
         NSLog(@"MainViewController homeviewCollectionReload");
         [self.userWord removeAllObjects];
         [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
-        [UserInfo sharedUserInfo].nextUrl = [wordDic objectForKey:@"next"];
+        [UserInfo sharedUserInfo].mainNextUrl = [wordDic objectForKey:@"next"];
         [self.collectionView reloadData];
     }
 }
@@ -177,7 +177,7 @@
     
     NSDictionary *wordDic = [UserInfo sharedUserInfo].wordDic;
     [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
-    [UserInfo sharedUserInfo].nextUrl = [wordDic objectForKey:@"next"];
+    [UserInfo sharedUserInfo].mainNextUrl = [wordDic objectForKey:@"next"];
     [self.collectionView reloadData];
     
 }
