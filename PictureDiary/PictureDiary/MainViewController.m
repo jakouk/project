@@ -71,6 +71,8 @@
         
         if ( self.userWord.count == indexPath.row + 3 ) {
             
+            NSLog(@"\n\n[UserInfo sharedUserInfo].nextUrl = %@\n\n",[UserInfo sharedUserInfo].nextUrl);
+            
             if ( [UserInfo sharedUserInfo].nextUrl != nil ) {
                 
                 [RequestObject requestAddMain:[UserInfo sharedUserInfo].nextUrl updateFinishDataBlock:^{
