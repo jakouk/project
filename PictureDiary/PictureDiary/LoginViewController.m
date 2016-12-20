@@ -30,7 +30,6 @@
 
 @implementation LoginViewController
 
-
 #pragma mark -
 #pragma mark View Controller Life Cycle
 
@@ -50,6 +49,12 @@
     [self.fbLoginButton addTarget:self
                            action:@selector(onTouchupInsideFbLoginButton:)
                  forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 
@@ -110,14 +115,14 @@
     
     // placeholder custom
     self.emailTextField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 이메일"
+    [[NSAttributedString alloc] initWithString:@"  이메일"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.passwordTextField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 비밀번호"
+    [[NSAttributedString alloc] initWithString:@"  비밀번호"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
@@ -204,11 +209,11 @@
     UIAlertAction *action;
     
     // 텍스트 필드 입력 내용 체크
-    if (email.length == 0 || [email containsString:@" "]) {
+    if (email.length == 0 || [email containsString:@" "] || [self checkEmail:email] == NO) {
         
         // 이메일 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이메일을 입력하세요."
+                                                    message:@"이메일을 정확하게 입력해 주세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
@@ -218,7 +223,7 @@
         
         // 비밀번호 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"비밀번호를 입력하세요."
+                                                    message:@"비밀번호를 정확하게 입력해 주세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
@@ -235,6 +240,7 @@
 // 로그인시 네트워크 구현
 - (void)userLogin:(NSNotification *)noti {
     
+    NSLog(@"%@",noti);
     UIAlertController *alert;
     UIAlertAction *action;
     NSDictionary *dic = noti.userInfo;
@@ -303,6 +309,7 @@
                                         if ([result.grantedPermissions containsObject:@"email"]) {
                                             NSLog(@"result : %@",result);
                                             [UserInfo sharedUserInfo].userToken = [FBSDKAccessToken currentAccessToken].tokenString;
+                                            NSLog(@"%@",[FBSDKAccessToken currentAccessToken].tokenString);
                                             [self proceedToMain:YES];
                                         }
                                     }
@@ -334,6 +341,26 @@
     [self.passwordTextField endEditing:YES];
     [self.scrollView setContentOffset:CGPointZero animated:YES];
     
+}
+
+
+
+#pragma mark -
+#pragma mark Validation
+
+// 이메일 유효성 확인
+- (BOOL)checkEmail:(NSString *)email {
+    
+    const char *temp = [email cStringUsingEncoding:NSUTF8StringEncoding];
+    if (email.length != strlen(temp)) {
+        return NO;
+    }
+    NSString *check = @"([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}";
+    NSRange match = [email rangeOfString:check options:NSRegularExpressionSearch];
+    if (NSNotFound == match.location) {
+        return NO;
+    }
+    return YES;
 }
 
 
@@ -393,11 +420,13 @@
     
 }
 
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     if (textField == self.emailTextField) {
         [textField endEditing:YES];
         [self.passwordTextField becomeFirstResponder];
+        
     } else if (textField == self.passwordTextField) {
         [textField endEditing:YES];
         [self onTouchupInsideLoginButton:self.emailLoginButton];

@@ -10,6 +10,7 @@
 #import "RequestObject.h"
 #import "UserInfo.h"
 
+
 @interface JoinViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) UIScrollView *scrollView;
@@ -22,13 +23,14 @@
 
 @end
 
-@implementation JoinViewController
 
+@implementation JoinViewController
 
 #pragma mark -
 #pragma mark View Controller Life Cycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self createLayoutSubview];
     
@@ -43,6 +45,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:JoinNotification object:nil];
@@ -104,32 +107,32 @@
     self.rePasswordField.secureTextEntry = YES;
     self.rePasswordField.borderStyle = UITextBorderStyleNone;
     self.rePasswordField.textColor = [UIColor whiteColor];
- 
+    
     
     // placeholder custom
     self.userNameField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 아이디"
+    [[NSAttributedString alloc] initWithString:@"  아이디"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.emailField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 이메일(example@gmail.com)"
+    [[NSAttributedString alloc] initWithString:@"  이메일(example@mail.com)"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.passwordField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 비밀번호"
+    [[NSAttributedString alloc] initWithString:@"  비밀번호"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.rePasswordField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@" 비밀번호 확인"
+    [[NSAttributedString alloc] initWithString:@"  비밀번호 확인"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
@@ -215,7 +218,6 @@
 #pragma mark -
 #pragma mark Actions
 
-
 // 회원가입 버튼 클릭시
 - (void)onTouchupInsideJoinButton:(UIButton *)sender {
     
@@ -232,12 +234,12 @@
         
         // 이름 미입력
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이름을 입력하세요."
+                                                    message:@"아이디를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     } else if (email.length == 0 || [email containsString:@" "]) {
         
         // 이메일 미입력
@@ -257,7 +259,7 @@
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     } else if (password.length == 0 || [password containsString:@" "]) {
         
         // 비밀번호 미입력
@@ -289,7 +291,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     } else {
-       
+        
         [RequestObject requestJoinData:email userPass:password userName:userName];
         
     }
@@ -312,12 +314,12 @@
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     } else if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
         
         // 이름 가입 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이름이 이미 등록되어 있습니다."
+                                                    message:@"아이디가 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
@@ -336,14 +338,10 @@
     } else if ([dic objectForKey:@"password"] != nil) {
         
         // 회원 정보 서버 저장 메소드
-        UIAlertController *alert =
-        [UIAlertController alertControllerWithTitle:@"알림"
-                                            message:@"회원가입이 완료되었습니다. 로그인 하세요."
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action =
-        [UIAlertAction actionWithTitle:@"확인"
-                                 style:UIAlertActionStyleDefault
-                               handler:nil];
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"회원가입이 완료되었습니다. 로그인 하세요."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }
@@ -363,6 +361,7 @@
     [self.emailField endEditing:YES];
     [self.passwordField endEditing:YES];
     [self.rePasswordField endEditing:YES];
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 
@@ -384,6 +383,7 @@
     }
     return YES;
 }
+
 
 // 글자 수 제한
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -423,6 +423,7 @@
                                                   object:nil];
 }
 
+
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
     
     if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
@@ -458,12 +459,15 @@
     if (textField == self.userNameField) {
         [textField endEditing:YES];
         [self.emailField becomeFirstResponder];
+        
     } else if (textField == self.emailField) {
         [textField endEditing:YES];
         [self.passwordField becomeFirstResponder];
+        
     } else if (textField == self.passwordField) {
         [textField endEditing:YES];
         [self.rePasswordField becomeFirstResponder];
+        
     } else if (textField == self.rePasswordField) {
         [textField endEditing:YES];
         [self onTouchupInsideJoinButton:self.joinButton];
