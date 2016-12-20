@@ -118,8 +118,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
                                                                         options:nil];
     
     PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[albumList firstObject];
-    //
-    //    // 카메라 롤에 있는 사진을 가져온다.
     PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -128,7 +126,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     PHImageManager *photoManager = [PHImageManager defaultManager];
     
     for (NSInteger i = range;i<assets.count;i++) {
-        [photoManager requestImageForAsset:assets[i] targetSize:CGSizeMake(80,80) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [photoManager requestImageForAsset:assets[i] targetSize:CGSizeMake(100,100) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
             [imageDataDictionary setObject:result forKey:@"image"];
@@ -137,9 +135,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             
         }];
         
-        // NSLog(@"로드이미지 카운트 : %ld",loadImages.count);
-        //NSLog(@"cell count :%ld",self.photoCount);
-        
         if(self.photoArray.count == self.photoCount){
             
             NSLog(@"self.photoArray.count : %ld",self.photoArray.count);
@@ -147,8 +142,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             return ;
         }
     }
-    
-    //  self.loadImageData = [NSMutableArray arrayWithArray:loadImages];
     
 }
 
@@ -170,10 +163,41 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
         [self presentViewController:imageCountAlert animated:YES completion:nil];
         
     } else {
+        NSLog(@"WriteViewController self.seletedImages.count = %ld ",self.seletedImages.count);
+        
+        PHFetchResult *albumList = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                            subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+                                                                            options:nil];
+        
+        PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[albumList firstObject];
+        PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.networkAccessAllowed = YES;
+        options.synchronous = YES;
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        PHImageManager *photoManager = [PHImageManager defaultManager];
+        
+        NSMutableArray *sendArray = [[NSMutableArray alloc]init];
+        [sendArray removeAllObjects];
+        
+        for (NSInteger i = 0;i<self.seletedImages.count;i++) {
+            
+            NSDictionary *imageDic = [self.seletedImages objectAtIndex:i];
+            NSNumber *imageNubmer = [imageDic objectForKey:@"imageNumber"];
+            
+            [photoManager requestImageForAsset:assets[imageNubmer.integerValue] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                
+                NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
+                [imageDataDictionary setObject:result forKey:@"image"];
+                [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
+                [sendArray addObject:imageDataDictionary];
+                
+            }];
+        }
         
         WriteViewController * __weak wself = self;
         
-        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
+        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
             [wself writeViewReset];
             [RequestObject requestMainData];
         }];
@@ -181,6 +205,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     }
 }
 
+//After write
 - (void)writeViewReset {
     
     self.subjectTextfiled.text = @"";
@@ -234,7 +259,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
         
     });
-    
     
     return cell;
     
