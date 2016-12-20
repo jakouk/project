@@ -40,7 +40,7 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestLogoutData;
 
 //requestDeleteData
-+ (void)requestDeleteData:(NSString *)deletaData;
++ (void)requestDeleteData:(NSString *)deletaData pdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //requestWriteData
 + (void)requestWriteData:(NSString *)title cotent:(NSString *)content imageArray:(NSArray *)imageArray updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;

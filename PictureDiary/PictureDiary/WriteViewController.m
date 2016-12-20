@@ -14,7 +14,8 @@
 #import <Photos/PHCollection.h>
 #import <Photos/PHImageManager.h>
 
-@interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 //PHPhoto
 @property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
@@ -25,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 
 
 //deleteImage
@@ -38,6 +40,10 @@
 @property (strong, nonatomic) NSMutableArray *photoArray;
 @property (weak, nonatomic) UIImage *photoImage;
 
+//photoInteger
+@property NSInteger photoStart;
+@property NSInteger photoEnd;
+
 @end
 
 @implementation WriteViewController
@@ -47,8 +53,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tapGesture.cancelsTouchesInView = NO;
+    
     self.collectionViewImage.dataSource = self;
     self.collectionViewImage.delegate = self;
+    self.bodyTextView.delegate = self;
     
     self.seletedImages = [[NSMutableArray alloc] init];
     self.photoArray = [[NSMutableArray alloc] init];
@@ -77,6 +86,9 @@
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     PHImageManager *photoManager = [PHImageManager defaultManager];
     
+    
+    
+    
     for (NSInteger i = 0; i < assets.count; i++) {
         [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
@@ -94,19 +106,33 @@
     
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-
 //CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
-    [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
-        [self writeViewReset];
-        [RequestObject requestMainData];
-    }];
     
+    if ( self.seletedImages.count == 0 ) {
+        
+        UIAlertController *imageCountAlert = [UIAlertController alertControllerWithTitle:@"사진선택"
+                                                                                 message:@"사진을 선택하지 않으셨습니다. 사진은 선택해 주세요"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *check = [UIAlertAction actionWithTitle:@"확인"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:nil];
+        
+        [imageCountAlert addAction:check];
+        [self presentViewController:imageCountAlert animated:YES completion:nil];
+        
+    } else {
+        
+        WriteViewController * __weak wself = self;
+        
+        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
+            [wself writeViewReset];
+            [RequestObject requestMainData];
+        }];
+        
+    }
 }
 
 - (void)writeViewReset {
@@ -237,5 +263,25 @@
         }
     }
 }
+
+//textView range.lenth
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if ( range.length > 10 ) {
+        
+        NSLog(@"WriteViewController range.length = %ld ",range.length);
+    }
+    
+    return YES;
+}
+
+- (IBAction)tapGestureMethod:(UITapGestureRecognizer *)sender {
+    
+    [self.subjectTextfiled resignFirstResponder];
+    [self.bodyTextView resignFirstResponder];
+    
+}
+
+
 
 @end

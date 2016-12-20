@@ -8,6 +8,7 @@
 
 #import "ReadViewController.h"
 #import <UIImageView+WebCache.h>
+#import "MainViewController.h"
 
 @interface ReadViewController ()
 <UIScrollViewDelegate>
@@ -123,9 +124,11 @@
                                                                                                                                    message:@"이 글을 영구적으로 삭제하시겠어요?"
                                                                                                                             preferredStyle:UIAlertControllerStyleAlert];
                                                               
-                                                              UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제"
-                                                                                                                     style:UIAlertActionStyleDestructive
-                                                                                                                   handler:nil];
+                                                              UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                                  [RequestObject requestDeleteData:self.postId pdateFinishDataBlock:^{
+                                                                      [self afterDeleteViewChangeMehtod];
+                                                                  }];
+                                                              }];
                                                               
                                                               UIAlertAction *deleteActionCancel = [UIAlertAction actionWithTitle:@"취소"
                                                                                                                            style:UIAlertActionStyleCancel
@@ -191,6 +194,18 @@
     
     //페이지 컨트롤 값변경시 이벤트 처리 등록
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+- (void)afterDeleteViewChangeMehtod {
+    
+    UIViewController *firstViewController = self.navigationController.viewControllers.firstObject;
+    
+    if ([firstViewController class] == [MainViewController class] ) {
+        
+        [RequestObject requestMainData];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
