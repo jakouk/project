@@ -9,8 +9,6 @@
 #import "RequestObject.h"
 #import <AFNetworking.h>
 
-
-
 typedef NS_ENUM(NSInteger, RequestType) {
     RequestTypeLogin,
     RequestTypeJoin,
@@ -401,7 +399,7 @@ static NSString *JSONSuccessValue = @"success";
 //requestSearch
 + (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://www.anyfut.com/post/search?title=%@",searchData];
+    NSString *urlStr = [NSString stringWithFormat:@"http://www.anyfut.com/post/search?title=%@",searchData];
     
     NSString *urlString = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
@@ -423,7 +421,11 @@ static NSString *JSONSuccessValue = @"success";
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         if (error) {
-            NSLog(@"\n\n error = %@\n\n",error);
+            
+            
+            NSLog(@"\n\n error = %@\n\n",[error localizedDescription]);
+            
+            
         } else {
             NSLog(@"success");
             

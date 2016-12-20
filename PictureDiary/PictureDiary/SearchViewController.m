@@ -10,6 +10,7 @@
 #import "RequestObject.h"
 #import <UIImageView+WebCache.h>
 #import "CustomCell.h"
+#import "ReadViewController.h"
 
 @interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -36,6 +37,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 //cell numbers
@@ -83,17 +89,17 @@
 
 
 
-//셀 크기 기정
+//cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake( (self.view.frame.size.width-20)/2- 5, (self.view.frame.size.width-20)/2- 5);
 }
 
-//내부 여백
+//inside padding
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
 
-//셀간의 최소간격
+//cell spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 10;
 }
@@ -101,6 +107,8 @@
 
 //searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
+    
+    [self.searchData resignFirstResponder];
     NSString *searchData = self.searchData.text;
     SearchViewController * __weak wself = self;
     [RequestObject requestSearch:searchData updateFinishDataBlock:^{
@@ -125,6 +133,29 @@
         [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
         [self.mainCollection reloadData];
     }
+    
+}
+
+//selected cell
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //선택시 구동
+    UICollectionViewCell *cell = [self.mainCollection cellForItemAtIndexPath:indexPath];
+    
+    cell.layer.borderColor = [UIColor whiteColor].CGColor;
+    cell.layer.borderWidth = 3.0f;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+    ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    
+    //post-id
+    NSDictionary *wordDic =  [self.searchArray objectAtIndex:indexPath.row];
+    NSNumber *post = [wordDic objectForKey:@"id"];
+    NSString *postId =  [post stringValue];
+    
+    NSLog(@"Read setPost Id");
+    [readScreen setPostId:postId];
+    [self.navigationController pushViewController:readScreen animated:YES];
     
 }
 

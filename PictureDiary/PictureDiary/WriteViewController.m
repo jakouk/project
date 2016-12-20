@@ -26,6 +26,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 
 
 //deleteImage
@@ -39,6 +40,10 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 @property (strong, nonatomic) NSMutableArray *photoArray;
 @property (weak, nonatomic) UIImage *photoImage;
 
+//photoInteger
+@property NSInteger photoStart;
+@property NSInteger photoEnd;
+
 @end
 
 @implementation WriteViewController
@@ -47,6 +52,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tapGesture.cancelsTouchesInView = NO;
     
     self.collectionViewImage.dataSource = self;
     self.collectionViewImage.delegate = self;
@@ -78,6 +85,9 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     options.synchronous = YES;
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     PHImageManager *photoManager = [PHImageManager defaultManager];
+    
+    
+    
     
     for (NSInteger i = 0; i < assets.count; i++) {
         [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -265,6 +275,12 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     return YES;
 }
 
+- (IBAction)tapGestureMethod:(UITapGestureRecognizer *)sender {
+    
+    [self.subjectTextfiled resignFirstResponder];
+    [self.bodyTextView resignFirstResponder];
+    
+}
 
 
 
