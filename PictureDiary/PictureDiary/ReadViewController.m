@@ -11,7 +11,7 @@
 #import "MainViewController.h"
 
 @interface ReadViewController ()
-<UIScrollViewDelegate>
+<UIScrollViewDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
@@ -45,6 +45,9 @@
     [self.navigationItem setRightBarButtonItem:modifiedButton];
     
     self.imageList = [[NSMutableArray alloc] init];
+    
+    //textview
+    self.contentText.delegate = self;
     
     //ScrollView에 필요한 옵션을 적용한다.
     //vertical = 세로 , Horizontal = 가로 스크롤효과를 적용.
@@ -155,6 +158,50 @@
     // Dispose of any resources that can be recreated.
 }
 
+//오토레이아웃 잡고 노티 받기
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+//    [RequestObject requestReadData:self.postId];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(requestReadViewChange:)
+//                                                 name:ReadNotification
+//                                               object:nil];
+    
+    NSInteger imageCount = self.imageList.count;
+    
+    //photosArray
+    CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
+    CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
+    
+    [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount, +  imagePointHeight)];
+    
+    for ( NSInteger i = 0; i < imageCount ; i ++ ) {
+        
+        NSDictionary *photos  = [self.imageList objectAtIndex:i];
+        NSDictionary *image = [photos objectForKey:@"image"];
+        NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+        
+        UIImageView *fullSizeImage = [[UIImageView alloc] init];
+        [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+        
+        [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
+                                           imagePointWidth, imagePointHeight)];
+        
+        [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+        [self.imageScrollView addSubview:fullSizeImage];
+        
+    }
+    
+    //페이지 갯수
+    self.pageControl.numberOfPages = self.imageList.count;
+    
+    //페이지 컨트롤 값변경시 이벤트 처리 등록
+    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+}
+
 - (void)requestReadViewChange:(NSNotification *)noti {
     
         NSDictionary *wordDictionary = noti.userInfo;
@@ -162,38 +209,36 @@
         self.contentText.text = [wordDictionary objectForKey:@"content"];
     
         self.imageList = [wordDictionary objectForKey:@"photos"];
-        NSInteger imageCount = self.imageList.count;
-    
-        //photosArray
-    
-        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
-        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
-    
-        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount,
-                                                    +  imagePointHeight)];
-    
-        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
-        
-                NSDictionary *photos  = [self.imageList objectAtIndex:i];
-                NSDictionary *image = [photos objectForKey:@"image"];
-                NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
-        
-                UIImageView *fullSizeImage = [[UIImageView alloc] init];
-                [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-        
-                [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
-                                                imagePointWidth, imagePointHeight)];
-        
-                [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
-                [self.imageScrollView addSubview:fullSizeImage];
-            
-        }
-    
-    //페이지 갯수
-    self.pageControl.numberOfPages = self.imageList.count;
-    
-    //페이지 컨트롤 값변경시 이벤트 처리 등록
-    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+//        NSInteger imageCount = self.imageList.count;
+//    
+//        //photosArray
+//        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
+//        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
+//    
+//        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount, +  imagePointHeight)];
+//    
+//        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
+//        
+//                NSDictionary *photos  = [self.imageList objectAtIndex:i];
+//                NSDictionary *image = [photos objectForKey:@"image"];
+//                NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+//        
+//                UIImageView *fullSizeImage = [[UIImageView alloc] init];
+//                [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+//        
+//                [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
+//                                                imagePointWidth, imagePointHeight)];
+//        
+//                [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+//                [self.imageScrollView addSubview:fullSizeImage];
+//            
+//        }
+//    
+//    //페이지 갯수
+//    self.pageControl.numberOfPages = self.imageList.count;
+//    
+//    //페이지 컨트롤 값변경시 이벤트 처리 등록
+//    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
     
 }
 
@@ -207,6 +252,13 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     
+}
+
+//텍스트뷰
+//키보드 활성화 안되도록 설정
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    return NO;
 }
 
 /*

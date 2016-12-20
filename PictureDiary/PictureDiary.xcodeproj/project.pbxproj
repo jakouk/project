@@ -551,11 +551,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = PictureDiary/Info.plist;
-<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-=======
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
->>>>>>> bdceb6acc3fe42b8c5c9574476f7b53cb3b8f28b
+
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.PictureDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -577,11 +574,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = PictureDiary/Info.plist;
-<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-=======
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
->>>>>>> bdceb6acc3fe42b8c5c9574476f7b53cb3b8f28b
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.PictureDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
