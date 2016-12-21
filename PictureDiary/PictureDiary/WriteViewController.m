@@ -41,7 +41,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 @property (weak, nonatomic) UIImage *photoImage;
 
 //photoInteger
-@property NSInteger photoStart;
+@property NSInteger photoCount;
 @property NSInteger photoEnd;
 
 @end
@@ -52,6 +52,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.photoCount = 0;
     
     self.tapGesture.cancelsTouchesInView = NO;
     
@@ -67,41 +69,78 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     self.bodyTextView.layer.borderWidth = 1.0;
     self.bodyTextView.layer.borderColor = [UIColor blackColor].CGColor;
     
-    //PHAsset
+    [self loadImageInDevicePhotoLibray:self.photoCount];
     
-    // 카메라 롤 앨범을 읽어온다.
-    PHFetchResult *smartFolderLists = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
-                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
-                                                                               options:nil];
+//    //PHAsset
+//    
+//    // 카메라 롤 앨범을 읽어온다.
+//    PHFetchResult *smartFolderLists = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+//                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+//                                                                               options:nil];
+//    
+//    PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[smartFolderLists firstObject];
+//    //
+//    
+//    // 카메라 롤에 있는 사진을 가져온다.
+//    PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
+//    
+//    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+//    options.networkAccessAllowed = YES;
+//    options.synchronous = YES;
+//    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+//    PHImageManager *photoManager = [PHImageManager defaultManager];
+//    
+//    
+//    
+//    
+//    for (NSInteger i = 0; i < assets.count; i++) {
+//        [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+//            
+//            self.photoImage = result;
+//            
+//        }];
+//        
+//        NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
+//        [imageDataDictionary setObject:self.photoImage forKey:@"image"];
+//        [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
+//        
+//        [self.photoArray addObject:imageDataDictionary];
+//        
+//    }
     
-    PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[smartFolderLists firstObject];
-    //
+}
+
+- (void)loadImageInDevicePhotoLibray:(NSUInteger)range{
     
-    // 카메라 롤에 있는 사진을 가져온다.
+    self.photoCount +=40;
+    PHFetchResult *albumList = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                        subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+                                                                        options:nil];
+    
+    PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[albumList firstObject];
     PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
-    
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     options.synchronous = YES;
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     PHImageManager *photoManager = [PHImageManager defaultManager];
     
-    
-    
-    
-    for (NSInteger i = 0; i < assets.count; i++) {
-        [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    for (NSInteger i = range;i<assets.count;i++) {
+        [photoManager requestImageForAsset:assets[i] targetSize:CGSizeMake(100,100) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
-            self.photoImage = result;
+            NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
+            [imageDataDictionary setObject:result forKey:@"image"];
+            [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
+            [self.photoArray addObject:imageDataDictionary];
             
         }];
         
-        NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
-        [imageDataDictionary setObject:self.photoImage forKey:@"image"];
-        [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
-        
-        [self.photoArray addObject:imageDataDictionary];
-        
+        if(self.photoArray.count == self.photoCount){
+            
+            NSLog(@"self.photoArray.count : %ld",self.photoArray.count);
+            
+            return ;
+        }
     }
     
 }
@@ -124,10 +163,41 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
         [self presentViewController:imageCountAlert animated:YES completion:nil];
         
     } else {
+        NSLog(@"WriteViewController self.seletedImages.count = %ld ",self.seletedImages.count);
+        
+        PHFetchResult *albumList = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                            subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+                                                                            options:nil];
+        
+        PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[albumList firstObject];
+        PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.networkAccessAllowed = YES;
+        options.synchronous = YES;
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        PHImageManager *photoManager = [PHImageManager defaultManager];
+        
+        NSMutableArray *sendArray = [[NSMutableArray alloc]init];
+        [sendArray removeAllObjects];
+        
+        for (NSInteger i = 0;i<self.seletedImages.count;i++) {
+            
+            NSDictionary *imageDic = [self.seletedImages objectAtIndex:i];
+            NSNumber *imageNubmer = [imageDic objectForKey:@"imageNumber"];
+            
+            [photoManager requestImageForAsset:assets[imageNubmer.integerValue] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                
+                NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
+                [imageDataDictionary setObject:result forKey:@"image"];
+                [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
+                [sendArray addObject:imageDataDictionary];
+                
+            }];
+        }
         
         WriteViewController * __weak wself = self;
         
-        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:self.seletedImages updateFinishDataBlock:^{
+        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
             [wself writeViewReset];
             [RequestObject requestMainData];
         }];
@@ -135,6 +205,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     }
 }
 
+//After write
 - (void)writeViewReset {
     
     self.subjectTextfiled.text = @"";
@@ -160,29 +231,34 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    __block CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
-    UIImage *image = [imageData objectForKey:@"image"];
-    cell.imageView.image = image;
-    
-    for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+    dispatch_async(dispatch_get_main_queue(), ^{
         
-        NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
-        NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+        cell = [cell initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
         
-        NSLog(@"\n imageNubmer.interValue = %ld",imageNumber.integerValue);
-        NSLog(@"\n indexPath.row = %ld",indexPath.row);
+        NSDictionary *imageData = [self.photoArray objectAtIndex:indexPath.row];
+        UIImage *image = [imageData objectForKey:@"image"];
+        cell.imageView.image = image;
         
-        if ( imageNumber.integerValue == indexPath.row ) {
-            [cell.imageView setAlpha:0.5];
-            break;
-        } else {
-            [cell.imageView setAlpha:1.0];
+        for ( NSInteger i =0; i < self.seletedImages.count; i++ ) {
+            
+            NSDictionary *imageData = [self.seletedImages objectAtIndex:i];
+            NSNumber *imageNumber = [imageData objectForKey:@"imageNumber"];
+            
+            NSLog(@"\n imageNubmer.interValue = %ld",imageNumber.integerValue);
+            NSLog(@"\n indexPath.row = %ld",indexPath.row);
+            
+            if ( imageNumber.integerValue == indexPath.row ) {
+                [cell.imageView setAlpha:0.5];
+                break;
+            } else {
+                [cell.imageView setAlpha:1.0];
+            }
         }
-    }
+
+        
+    });
     
     return cell;
     
@@ -262,6 +338,27 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             
         }
     }
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    
+    CGFloat contentHeight = scrollView.contentSize.height;
+    if (offsetY < contentHeight-30)
+    {
+        [self loadImageInDevicePhotoLibray:self.photoCount];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [UIView animateWithDuration:0 animations:^{
+                [self.collectionViewImage performBatchUpdates:^{
+                    [self.collectionViewImage reloadSections:[NSIndexSet indexSetWithIndex:0]];
+                } completion:nil];
+            }];
+        });
+        
+    }
+    
 }
 
 //textView range.lenth
