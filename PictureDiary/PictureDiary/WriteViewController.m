@@ -148,7 +148,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 //CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
-    
     if ( self.seletedImages.count == 0 ) {
         
         UIAlertController *imageCountAlert = [UIAlertController alertControllerWithTitle:@"사진선택"
@@ -364,9 +363,20 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 //textView range.lenth
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    if ( range.length > 10 ) {
-        
-        NSLog(@"WriteViewController range.length = %ld ",range.length);
+    NSCharacterSet *doneButtonCharacterSet = [NSCharacterSet newlineCharacterSet];
+    NSRange replacementTextRange = [text rangeOfCharacterFromSet:doneButtonCharacterSet];
+    NSUInteger location = replacementTextRange.location;
+    
+    //텍스트가 140자가 넘지 않도록 제한
+    if (textView.text.length + text.length > 140){
+        if (location != NSNotFound){
+            [textView resignFirstResponder];
+        }
+        return NO;
+    }
+    else if (location != NSNotFound){
+        [textView resignFirstResponder];
+        return NO;
     }
     
     return YES;

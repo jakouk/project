@@ -26,6 +26,9 @@
 //Search searchNextUrl
 @property NSString *searchNextUrl;
 
+//ReadData
+@property NSDictionary *readData;
+
 + (instancetype)sharedUserInfo;
 
 @end

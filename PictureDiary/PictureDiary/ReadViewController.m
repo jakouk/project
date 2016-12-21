@@ -28,7 +28,10 @@
 @implementation ReadViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    self.contentText.editable = NO;
     
     [RequestObject requestReadData:self.postId];
     
@@ -111,7 +114,7 @@
                                                             handler:^(UIAlertAction * _Nonnull action) {
                                                                 //수정화면으로 화면전환
                                                                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
-                                                                UIViewController *modifiedScreen = [storyboard instantiateViewControllerWithIdentifier:@"ModifyViewController"];
+                                                                UIViewController *modifiedScreen = [storyboard instantiateViewControllerWithIdentifier:@"ModifyController"];
                                                                 [self.navigationController pushViewController:modifiedScreen animated:YES];
                                                                 
                                                             }];
