@@ -80,7 +80,7 @@
 - (void)createTitle {
     
     UIImageView *titleLogo =
-    [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-30, self.view.frame.size.height*0.25, 60, 60)];
+    [[UIImageView alloc] initWithFrame:CGRectMake(self.view.center.x-32, self.view.frame.size.height*0.22, 64, 64)];
     [titleLogo setImage:[UIImage imageNamed:@"ladder-128"]];
     [self.scrollView addSubview:titleLogo];
     
@@ -89,21 +89,21 @@
 
 - (void)createInputTextFields {
     
-    self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.475, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.445, self.view.frame.size.width*0.8, self.view.frame.size.height*0.06)];
     self.userNameField.borderStyle = UITextBorderStyleNone;
     self.userNameField.textColor = [UIColor whiteColor];
     
-    self.emailField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.555, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.emailField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.535, self.view.frame.size.width*0.8, self.view.frame.size.height*0.06)];
     self.emailField.borderStyle = UITextBorderStyleNone;
     self.emailField.textColor = [UIColor whiteColor];
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     
-    self.passwordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.635, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.passwordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.625, self.view.frame.size.width*0.8, self.view.frame.size.height*0.06)];
     self.passwordField.secureTextEntry = YES;
     self.passwordField.borderStyle = UITextBorderStyleNone;
     self.passwordField.textColor = [UIColor whiteColor];
     
-    self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.715, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.715, self.view.frame.size.width*0.8, self.view.frame.size.height*0.06)];
     self.rePasswordField.secureTextEntry = YES;
     self.rePasswordField.borderStyle = UITextBorderStyleNone;
     self.rePasswordField.textColor = [UIColor whiteColor];
@@ -111,28 +111,28 @@
     
     // placeholder custom
     self.userNameField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@"  아이디"
+    [[NSAttributedString alloc] initWithString:@" 아이디"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.emailField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@"  이메일(example@mail.com)"
+    [[NSAttributedString alloc] initWithString:@" 이메일(example@mail.com)"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.passwordField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@"  비밀번호"
+    [[NSAttributedString alloc] initWithString:@" 비밀번호"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
                                                  }
      ];
     self.rePasswordField.attributedPlaceholder =
-    [[NSAttributedString alloc] initWithString:@"  비밀번호 확인"
+    [[NSAttributedString alloc] initWithString:@" 비밀번호 확인"
                                     attributes:@{
                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont boldSystemFontOfSize:15.0f]
@@ -184,7 +184,7 @@
 - (void)createJoinButton {
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.joinButton setFrame:CGRectMake(self.view.frame.size.width*0.12, self.view.frame.size.height*0.81, self.view.frame.size.width*0.76, self.view.frame.size.height*0.06)];
+    [self.joinButton setFrame:CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.80, self.view.frame.size.width*0.8, self.view.frame.size.height*0.07)];
     [self.joinButton setTitle:@"회원가입" forState:UIControlStateNormal];
     [self.joinButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -203,7 +203,7 @@
     
     self.cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height*0.93, self.view.frame.size.width, self.view.frame.size.height*0.07)];
     [self.cancelButton setTitle:@"계정이 있으신가요?  로그인" forState:UIControlStateNormal];
-    [self.cancelButton setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
+    [self.cancelButton setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
     [self.cancelButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15.f]];
     [self.cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.cancelButton addTarget:self
@@ -226,8 +226,18 @@
     NSString *password = [NSString stringWithFormat:@"%@",self.passwordField.text];
     NSString *rePassword = [NSString stringWithFormat:@"%@",self.rePasswordField.text];
     
+    id okHandler = ^(UIAlertAction * _Nonnull action) {
+        
+        self.userNameField.text = nil;
+        self.emailField.text = nil;
+        self.passwordField.text = nil;
+        self.rePasswordField.text = nil;
+    };
+    
     UIAlertController *alert;
-    UIAlertAction *action;
+    UIAlertAction *action =
+    [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:okHandler];
+    
     
     // 텍스트필드 입력 내용 체크
     if (userName.length == 0 || [userName containsString:@" "]) {
@@ -236,7 +246,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"아이디를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -246,7 +255,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -256,7 +264,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"정확한 이메일을 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -266,7 +273,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -276,7 +282,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"비밀번호를 다시 한 번 입력하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -286,7 +291,6 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"입력한 비밀번호가 서로 일치하지 않습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -301,9 +305,21 @@
 // 회원가입시 네트워크 구현
 - (void)userJoinIn:(NSNotification *)noti {
     
+    id okHandler = ^(UIAlertAction * _Nonnull action) {
+        
+        self.userNameField.text = nil;
+        self.emailField.text = nil;
+        self.passwordField.text = nil;
+        self.rePasswordField.text = nil;
+    };
+    
     UIAlertController *alert;
-    UIAlertAction *action;
+    UIAlertAction *action =
+    [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:okHandler];
+    
+    
     NSDictionary *dic = noti.userInfo;
+    NSLog(@"%@",dic);
     
     if (dic == nil) {
         
@@ -311,37 +327,38 @@
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"사용중인 네트워크 상태를 확인해 주세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
-    } else if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
+    } else if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"id"] == nil) {
         
         // 이름 가입 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"아이디가 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
-    } else if ([dic objectForKey:@"email"] != nil && [dic objectForKey:@"password"] == nil) {
+    } else if ([dic objectForKey:@"email"] != nil && [dic objectForKey:@"id"] == nil) {
         
         // 이메일 가입 여부 체크
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"이메일이 이미 등록되어 있습니다."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
-    } else if ([dic objectForKey:@"password"] != nil) {
+    } else {
         
         // 회원 정보 서버 저장 메소드
         alert = [UIAlertController alertControllerWithTitle:@"알림"
                                                     message:@"회원가입이 완료되었습니다. 로그인 하세요."
                                              preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        action = [UIAlertAction actionWithTitle:@"확인"
+                                          style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * _Nonnull action) {
+                                            [self onTouchupInsideCancelButton:self.cancelButton];
+                                        }];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }
@@ -427,7 +444,7 @@
 - (void)didReceiveKeyboardChangeNotification:(NSNotification *)notification {
     
     if ([[notification name] isEqualToString:UIKeyboardDidShowNotification]) {
-        [self.scrollView setContentOffset:CGPointMake(0, 140) animated:YES];
+        [self.scrollView setContentOffset:CGPointMake(0, 150) animated:YES];
         
     } else if ([[notification name] isEqualToString:UIKeyboardDidHideNotification]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
