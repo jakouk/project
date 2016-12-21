@@ -8,21 +8,16 @@
 
 #import "SearchViewController.h"
 #import "RequestObject.h"
+#import <UIImageView+WebCache.h>
+#import "CustomCell.h"
+#import "ReadViewController.h"
 
 @interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
 
-//join Test
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *pass;
-@property (weak, nonatomic) IBOutlet UITextField *username;
-
-
-//login test
-@property (weak, nonatomic) IBOutlet UITextField *loginEmail;
-@property (weak, nonatomic) IBOutlet UITextField *loginPass;
-
+@property NSMutableArray *searchArray;
 
 @end
 
@@ -30,25 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
+    
+    [self.mainCollection registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     self.mainCollection.delegate = self;
     self.mainCollection.dataSource = self;
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(joinMethod:)
-//                                                 name:JoinNotification
-//                                               object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(loginMethod:)
-//                                                 name:LoginNotification
-//                                               object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(mainMehtod:)
-//                                                 name:MainNotification
-//                                               object:nil];
-    
+    self.searchArray = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,39 +39,67 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self.navigationController.navigationBar setHidden:YES];
+}
+
 //cell numbers
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 10;
+    return self.searchArray.count;
 }
 
+//make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-         UICollectionViewCell *cell = [self.mainCollection dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    CustomCell *cell = (CustomCell *)[self.mainCollection dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     UIImageView *cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
     [cellImageView setContentMode:UIViewContentModeScaleAspectFit];
-    [cellImageView setImage:[UIImage imageNamed:@"home"]];
     
-    [cell addSubview:cellImageView];
+    if (self.searchArray.count != 0) {
+        //title
+        NSDictionary *wordDic = [[NSDictionary alloc] init];
+        wordDic = (NSDictionary *)[self.searchArray objectAtIndex:indexPath.row];
+        
+        NSString *title =  [wordDic objectForKey:@"title"];
+        cell.nameLabel.text = title;
+        
+        //image
+        NSArray *imageArray = [wordDic objectForKey:@"photos"];
+        
+        if (imageArray.count != 0) {
+            
+            NSDictionary *imageSize = [imageArray objectAtIndex:0];
+            NSDictionary *imageURL = [imageSize objectForKey:@"image"];
+            NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"medium_square_crop"]];
+            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            
+            
+        } else {
+            
+            cell.backgroundColor = [UIColor whiteColor];
+            
+        }
+    }
 
     return cell;
 }
 
 
 
-//셀 크기 기정
+//cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake( (self.view.frame.size.width-20)/2- 5, (self.view.frame.size.width-20)/2- 5);
 }
 
-//내부 여백
+//inside padding
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
 
-//셀간의 최소간격
+//cell spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 10;
 }
@@ -96,21 +107,57 @@
 
 //searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
+    
+    [self.searchData resignFirstResponder];
     NSString *searchData = self.searchData.text;
     SearchViewController * __weak wself = self;
-    
     [RequestObject requestSearch:searchData updateFinishDataBlock:^{
         [wself searchCollectionViewReload];
     }];
 }
 
 - (void)searchCollectionViewReload {
+
+    NSDictionary *searchData = [[NSDictionary alloc] init];
+    searchData = [UserInfo sharedUserInfo].searchData;
     
-    //NSDictionary *searchWordDictionary = [UserInfo sharedUserInfo].searchData;
+    NSLog(@" SearchViewController = %@",searchData);
+    
+    if ([searchData objectForKey:@"results"] != nil ) {
+        
+        NSLog(@"SearchViewController searchCollectionViewReload");
+        [self.searchArray removeAllObjects];
+        [self.searchArray addObjectsFromArray:[searchData objectForKey:@"results"]];
+        NSLog(@"SearchViewController self.searchArray.count = %ld",self.searchArray.count);
+        
+        [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
+        [self.mainCollection reloadData];
+    }
     
 }
 
-
+//selected cell
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //선택시 구동
+    UICollectionViewCell *cell = [self.mainCollection cellForItemAtIndexPath:indexPath];
+    
+    cell.layer.borderColor = [UIColor whiteColor].CGColor;
+    cell.layer.borderWidth = 3.0f;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
+    ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
+    
+    //post-id
+    NSDictionary *wordDic =  [self.searchArray objectAtIndex:indexPath.row];
+    NSNumber *post = [wordDic objectForKey:@"id"];
+    NSString *postId =  [post stringValue];
+    
+    NSLog(@"Read setPost Id");
+    [readScreen setPostId:postId];
+    [self.navigationController pushViewController:readScreen animated:YES];
+    
+}
 
 /*
 #pragma mark - Navigation
