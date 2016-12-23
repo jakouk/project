@@ -295,6 +295,7 @@ static NSString *JSONSuccessValue = @"success";
         wordDic = responseObject;
         
         NSLog(@"\n\n response : %@ \n\n",response);
+        [UserInfo sharedUserInfo].readData = responseObject;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -391,8 +392,9 @@ static NSString *JSONSuccessValue = @"success";
                       NSLog(@"\n\n responseObject : %@ \n\n",responseObject);
                       NSLog(@"\n\n error : %@ \n\n",error);
                       
-                      UpdateFinishDataBlock();
-                      
+                      if (error == NULL) {
+                          UpdateFinishDataBlock();
+                      }
                   }];
     
     [uploadTask resume];
@@ -403,8 +405,46 @@ static NSString *JSONSuccessValue = @"success";
 
 #pragma mark -requstModify
 //requestModify
-+ (void)requestModifyData {
++ (void)requestModifyData:(NSString *)title content:(NSString *)content postId:(NSString *)postId updateFinishDataBlok:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
+    NSString *requestURL = [NSString stringWithFormat:@"http://www.anyfut.com/post/%@",postId];
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] init];
+    
+    [bodyParams setObject:title forKey:@"title"];
+    [bodyParams setObject:content forKey:@"content"];
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"PUT"
+                                    
+                                                                                              URLString:requestURL parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                                                              } error:nil];
+    
+    NSMutableString *token = [NSMutableString stringWithFormat:@"Token "];
+    [token appendString:[UserInfo sharedUserInfo].userToken];
+    [request setValue:token forHTTPHeaderField:@"X-Authorization"];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [manager
+                  uploadTaskWithStreamedRequest:request
+                  progress:^(NSProgress * _Nonnull uploadProgress) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          NSLog(@"uploading... %lf %% completed",uploadProgress.fractionCompleted);
+                      });
+                  }
+                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                      
+                      NSLog(@"\n\n response : %@ \n\n",response);
+                      NSLog(@"\n\n responseObject : %@ \n\n",responseObject);
+                      NSLog(@"\n\n error : %@ \n\n",error);
+                      
+                      if (error == NULL) {
+                          UpdateFinishDataBlock();
+                      }
+                  }];
+    
+    [uploadTask resume];
 }
 
 

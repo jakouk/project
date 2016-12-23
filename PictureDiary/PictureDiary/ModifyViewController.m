@@ -7,19 +7,26 @@
 //
 
 #import "ModifyViewController.h"
+#import <UIImageView+WebCache.h>
 
 @interface ModifyViewController ()
 <UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
-//사진 수정 컬렉션뷰, 텍스트관련 누를 경우 스크롤뷰
-@property (strong, nonatomic) IBOutlet UICollectionView *imageCollectionView;
-@property (strong, nonatomic) IBOutlet UIScrollView *editScrollView;
+//imageCollectionView
+@property (weak, nonatomic) IBOutlet UICollectionView *imageCollection;
 
-//수정될 텍스트 필드, 텍스트뷰
-@property (strong, nonatomic) IBOutlet UITextField *modifiedTextField;
-@property (strong, nonatomic) IBOutlet UITextView *modifiedTextView;
+//title
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 
-@property NSArray *modifiedImageList;
+//content
+@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+
+//keyboardUpdown Check
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyBoardView;
+
+@property NSString *postId;
+
+@property NSMutableArray *modifiedImageList;
 @end
 
 @implementation ModifyViewController
@@ -27,31 +34,57 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //컬렉션뷰
-    [self.imageCollectionView setDelegate:self];
-    [self.imageCollectionView setDataSource:self];
-    //스크롤뷰
-    [self.editScrollView setDelegate:self];
-    //텍스트뷰
-    [self.modifiedTextView setDelegate:self];
-    //텍스트필드
-    [self.modifiedTextField setDelegate:self];
+    self.imageCollection.dataSource = self;
+    self.imageCollection.delegate = self;
     
-    self.modifiedImageList =
-    @[@"sample1",@"sample2",@"sample3",@"sample4",@"sample5",@"sample6",@"sample7",@"sample8",@"sample9",@"sample10",@"sample11"];
+    // imageList
+    self.modifiedImageList = [[NSMutableArray alloc] init];
+    
+    //title, content, image
+    [self.modifiedImageList addObjectsFromArray:[[UserInfo sharedUserInfo].readData objectForKey:@"photos"]];
+    
+    NSLog(@"readData photos count = %@",[[UserInfo sharedUserInfo].readData objectForKey:@"photos"]);
+    
+    NSLog(@"self.modifiedImageList.count = %ld",self.modifiedImageList.count);
+    
+    self.titleTextField.text = [[UserInfo sharedUserInfo].readData objectForKey:@"title"];
+    self.contentTextView.text = [[UserInfo sharedUserInfo].readData objectForKey:@"content"];
+    
+    NSNumber *postNumber = [[NSNumber alloc] init];
+    postNumber = [[UserInfo sharedUserInfo].readData objectForKey:@"id"];
+    self.postId = [[NSString alloc] initWithString:[postNumber stringValue]];
+    
+    //collectionView reload
+    //[self collectionViewReload];
+    
+    //keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillAnimate:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillAnimate:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 
+}
+
+- (void)collectionViewReload {
+    [self.imageCollection reloadData];
 }
 
 #pragma mark - collection count
 //컬렉션뷰 세션 갯수
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-//{
-//    return 1;
-//}
-
-//컬렉션뷰 아이템 갯수
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    return 1;
+}
+
+//collectionView cell number
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    NSLog(@"self.modifiedImageList.count = %ld",self.modifiedImageList.count);
     return self.modifiedImageList.count;
 }
 
@@ -59,13 +92,20 @@
 //셀 셋팅
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [self.imageCollectionView dequeueReusableCellWithReuseIdentifier:@"modifiedCell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    //image
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:cell.contentView.bounds];
-    [imageview setFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    [imageview setImage:[UIImage imageNamed:self.modifiedImageList[indexPath.row]]];
-    [cell.contentView addSubview:imageview];
+    NSDictionary *photos  = [self.modifiedImageList objectAtIndex:indexPath.row];
+    NSDictionary *image = [photos objectForKey:@"image"];
+    NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+    
+    UIImageView *fullSizeImage = [[UIImageView alloc] init];
+    fullSizeImage.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
+    
+    [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+    [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+    [cell.contentView addSubview:fullSizeImage];
+    
+    NSLog(@"hello");
     
     return cell;
 }
@@ -73,7 +113,7 @@
 //셀 크기
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((self.imageCollectionView.bounds.size.width / 3) - 2.5, self.imageCollectionView.bounds.size.height / 3);
+    return CGSizeMake(self.imageCollection.frame.size.height, self.imageCollection.frame.size.height);
 }
 
 //컬렉션과 컬렉션 width 간격, 내부여백
@@ -87,39 +127,16 @@
     return 5;
 }
 
-#pragma mark - cell action
-//셀을 선택했을 경우
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    
-    cell.layer.borderColor = [UIColor orangeColor].CGColor;
-    cell.layer.borderWidth = 3.0f;
-    NSLog(@"select");
-}
-
-//셀을 다시 선택했을 경우
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    
-    cell.layer.borderColor = nil;
-    cell.layer.borderWidth = 0.0f;
-    NSLog(@"deselect");
-}
-
 #pragma mark - text field
 //텍스트필드를 처음눌렀을 경우에 동작하는 메서드
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {   //메인스크롤이 위로 올라감
-    [self.editScrollView setContentOffset:CGPointMake(0, 100) animated:YES];
     return YES;
 }
 
 //텍스트필드에서 작업을 종료했을 경우에 동작하는 메서드
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {   //메일스크롤이 원래위치로 돌아옴
-    [self.editScrollView setContentOffset:CGPointMake(0, - 60) animated:YES];
     return YES;
 }
 
@@ -133,13 +150,11 @@
 #pragma mark - text view
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    [self.editScrollView setContentOffset:CGPointMake(0, 180) animated:YES];
     return YES;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
-    [self.editScrollView setContentOffset:CGPointMake(0, - 60) animated:YES];
     return YES;
 }
 
@@ -166,9 +181,49 @@
     return YES;
 }
 
+//checkBtn Click
+- (IBAction)touchupInsideEditingFinishButton:(UIButton *)sender {
+    
+    [RequestObject requestModifyData:self.titleTextField.text content:self.contentTextView.text postId:self.postId updateFinishDataBlok:^{
+        [self readViewUpdateMethod];
+    }];
+}
+
+//readViewUpdate
+- (void)readViewUpdateMethod {
+    NSLog(@"??");
+    [RequestObject requestReadData:self.postId];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+//keyboard up
+- (void)keyboardWillAnimate:(NSNotification *)notification {
+    
+    CGRect keyboardBounds;
+     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardBounds];
+    
+    if([notification name] == UIKeyboardWillShowNotification)
+    {
+        self.keyBoardView.constant = keyboardBounds.size.height;
+    }
+    else if([notification name] == UIKeyboardWillHideNotification)
+    {
+        self.keyBoardView.constant = 0;
+    }
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)tapGestureMethod:(UITapGestureRecognizer *)sender {
+    
+    [self.titleTextField resignFirstResponder];
+    [self.contentTextView resignFirstResponder];
+    
 }
 
 /*

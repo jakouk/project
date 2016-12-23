@@ -45,5 +45,7 @@ typedef void(^UpdateFinishDataBlock)(void);
 //requestWriteData
 + (void)requestWriteData:(NSString *)title cotent:(NSString *)content imageArray:(NSArray *)imageArray updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
+//requestModifyData
++ (void)requestModifyData:(NSString *)title content:(NSString *)content postId:(NSString *)postId updateFinishDataBlok:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 @end
