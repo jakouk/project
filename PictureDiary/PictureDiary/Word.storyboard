@@ -214,6 +214,9 @@
                                     <constraint firstAttribute="height" id="xRb-1I-Ow7"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6Ww-hB-dFw">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -225,8 +228,10 @@
                             <constraint firstItem="AEA-br-YYR" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="BBm-9V-naK"/>
                             <constraint firstItem="AEA-br-YYR" firstAttribute="top" secondItem="nlD-Xq-scO" secondAttribute="bottom" constant="20" id="Dkt-6l-bej"/>
                             <constraint firstItem="cQO-HR-sgR" firstAttribute="top" secondItem="mlA-GR-n3K" secondAttribute="bottom" id="GqH-XF-rZh"/>
+                            <constraint firstItem="6Ww-hB-dFw" firstAttribute="centerY" secondItem="NwA-g4-9aL" secondAttribute="centerY" id="Jqi-Ol-xjt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8fH-XP-yeO" secondAttribute="trailing" id="PBJ-RV-Lrc"/>
                             <constraint firstItem="nlD-Xq-scO" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="Tqy-kN-dh1"/>
+                            <constraint firstItem="6Ww-hB-dFw" firstAttribute="centerX" secondItem="NwA-g4-9aL" secondAttribute="centerX" id="fCe-Lk-dt7"/>
                             <constraint firstItem="cQO-HR-sgR" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="gMm-N0-rtk"/>
                             <constraint firstItem="8fH-XP-yeO" firstAttribute="leading" secondItem="NwA-g4-9aL" secondAttribute="leadingMargin" id="hyb-3x-anA"/>
                             <constraint firstItem="DOM-SA-DlB" firstAttribute="trailing" secondItem="NwA-g4-9aL" secondAttribute="trailingMargin" id="iex-op-LQc"/>
@@ -244,6 +249,7 @@
                     <connections>
                         <outlet property="bodyTextView" destination="DOM-SA-DlB" id="hEb-3E-33p"/>
                         <outlet property="collectionViewImage" destination="nlD-Xq-scO" id="K3d-zG-tHS"/>
+                        <outlet property="indicator" destination="6Ww-hB-dFw" id="Ydm-MG-560"/>
                         <outlet property="subjectTextfiled" destination="cQO-HR-sgR" id="Fs9-Wk-MAj"/>
                         <outlet property="tapGesture" destination="seB-SX-Pw1" id="v2M-hj-akV"/>
                     </connections>

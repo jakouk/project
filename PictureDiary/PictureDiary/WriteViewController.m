@@ -44,6 +44,9 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 @property NSInteger photoCount;
 @property NSInteger photoEnd;
 
+//indicatior
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+
 @end
 
 @implementation WriteViewController
@@ -53,8 +56,10 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.photoCount = 0;
+    self.indicator.hidden = YES;
+    [self.indicator stopAnimating];
     
+    self.photoCount = 0;
     self.tapGesture.cancelsTouchesInView = NO;
     
     self.collectionViewImage.dataSource = self;
@@ -194,9 +199,13 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             }];
         }
         
+        self.indicator.hidden = NO;
+        [self.indicator startAnimating];
+        
         WriteViewController * __weak wself = self;
         
         [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
+            
             [wself writeViewReset];
             [RequestObject requestMainData];
         }];
@@ -212,6 +221,9 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     
     [self.seletedImages removeAllObjects];
     [self.collectionViewImage reloadData];
+    
+    self.indicator.hidden = YES;
+    [self.indicator stopAnimating];
     
 }
 

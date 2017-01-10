@@ -66,6 +66,8 @@
 {
     CustomCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    
+    
     // indexPath.row 7 , 17, 27 ... nextCell check
     if ( indexPath.row %10 == 7 ) {
         
@@ -76,6 +78,7 @@
                 MainViewController * __weak wself = self;
                 
                 [RequestObject requestAddMain:[UserInfo sharedUserInfo].mainNextUrl updateFinishDataBlock:^{
+                    
                     [wself addCellMethod];
                 }];
                 
@@ -144,7 +147,6 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
     ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
-    
     //post-id
     NSDictionary *wordDic =  [self.userWord objectAtIndex:indexPath.row];
     NSNumber *post = [wordDic objectForKey:@"id"];
