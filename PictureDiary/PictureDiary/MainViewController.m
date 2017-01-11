@@ -105,7 +105,8 @@
             NSDictionary *imageSize = [imageArray objectAtIndex:0];
             NSDictionary *imageURL = [imageSize objectForKey:@"image"];
             NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"full_size"]];
-            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"sky"]];
+            [cell.imageView sd_setImageWithURL:url
+                              placeholderImage:[UIImage imageNamed:@"sky"]];
         } else {
             
             cell.nameLabel.tintColor = [UIColor blackColor];

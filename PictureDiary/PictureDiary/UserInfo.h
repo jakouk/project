@@ -10,10 +10,17 @@
 
 @interface UserInfo : NSObject
 
-//userToken
+
+/***
+ Outh 2.0 Token number Save
+ Token use X-Authorization
+***/
 @property NSString *userToken;
 
-//Main nextUrl
+/***
+ mainData is Maxmum 10
+ downScroll mod 7 is zero addReadData;
+ ***/
 @property NSString *mainNextUrl;
 
 //Main wordDic
@@ -28,6 +35,10 @@
 
 //ReadData
 @property NSDictionary *readData;
+
+
+//userInfomation
+@property NSDictionary *userInfomation;
 
 + (instancetype)sharedUserInfo;
 

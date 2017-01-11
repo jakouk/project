@@ -36,6 +36,7 @@
     
     self.imageCollection.dataSource = self;
     self.imageCollection.delegate = self;
+    [self.imageCollection setShowsHorizontalScrollIndicator:NO];
     
     // imageList
     self.modifiedImageList = [[NSMutableArray alloc] init];
@@ -104,8 +105,6 @@
     [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
     [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
     [cell.contentView addSubview:fullSizeImage];
-    
-    NSLog(@"hello");
     
     return cell;
 }
@@ -191,7 +190,6 @@
 
 //readViewUpdate
 - (void)readViewUpdateMethod {
-    NSLog(@"??");
     [RequestObject requestReadData:self.postId];
     [self.navigationController popViewControllerAnimated:YES];
 }

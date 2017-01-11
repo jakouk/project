@@ -337,10 +337,9 @@ static NSString *JSONSuccessValue = @"success";
 
 }
 
-
-//requestDelete ( DELETE )
 #pragma mark -requestDelete
-+ (void)requestDeleteData:(NSString *)deletaData pdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
+//requestDelete ( DELETE )
++ (void)requestDeleteData:(NSString *)deletaData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
     NSURL * url = [self requestURL:RequestTypeDelete
                              param:nil
@@ -451,10 +450,6 @@ static NSString *JSONSuccessValue = @"success";
                   }
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                       
-                      NSLog(@"\n\n response : %@ \n\n",response);
-                      NSLog(@"\n\n responseObject : %@ \n\n",responseObject);
-                      NSLog(@"\n\n error : %@ \n\n",error);
-                      
                       if (error == NULL) {
                           UpdateFinishDataBlock();
                       }
@@ -486,8 +481,6 @@ static NSString *JSONSuccessValue = @"success";
         
         if (error) {
             
-            NSLog(@"\n\n error = %@\n\n",[error localizedDescription]);
-            
         } else {
             
             [UserInfo sharedUserInfo].searchData = responseObject;
@@ -502,30 +495,21 @@ static NSString *JSONSuccessValue = @"success";
 
 
 //UserInfo Data ( GET )
-+ (void)requestUserInfo {
++ (void)requestUserInfo:(UpdateFinishDataBlock)updateFinishDataBlock{
     
     NSURL * url = [self requestURL:RequestTypeUserInfo
                              param:nil
                           postData:nil];
-    
     NSMutableURLRequest *urlRequest = [self requestURL:url httpMethod:@"GET"];
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
-        NSString *notificationName = UserInfoNotification;
-        wordDic = responseObject;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:nil userInfo:wordDic];
-            
-        });
+        [UserInfo sharedUserInfo].userInfomation = responseObject;
+        updateFinishDataBlock();
         
     }];
     
@@ -534,7 +518,7 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //logout ( GET )
-+ (void)requestLogoutData {
++ (void)requestLogoutData:(UpdateFinishDataBlock)updateFinishDataBlock {
     
     NSURL *url = [self requestURL:RequestTypeLogout
                             param:nil
@@ -547,28 +531,12 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSString *notificationName = LogoutNotification;
-        
-        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
-        wordDic = responseObject;
-        
         if ( responseObject != NULL ) {
-            
-            NSLog(@"\n\n error = %@\n\n",error);
-            NSLog(@"\n\n responseObject = %@\n\n",responseObject);
-            NSLog(@"\n\n response = %@\n\n",response);
             
         } else {
             
             [UserInfo sharedUserInfo].userToken = nil;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                    object:nil userInfo:wordDic];
-                
-            });
-            
+            updateFinishDataBlock();
         }
         
     }];

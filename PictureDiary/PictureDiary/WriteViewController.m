@@ -76,43 +76,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     
     [self loadImageInDevicePhotoLibray:self.photoCount];
     
-//    //PHAsset
-//    
-//    // 카메라 롤 앨범을 읽어온다.
-//    PHFetchResult *smartFolderLists = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
-//                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
-//                                                                               options:nil];
-//    
-//    PHAssetCollection *smartFolderAssetCollection = (PHAssetCollection *)[smartFolderLists firstObject];
-//    //
-//    
-//    // 카메라 롤에 있는 사진을 가져온다.
-//    PHFetchResult *assets = [PHAsset fetchAssetsInAssetCollection:smartFolderAssetCollection  options:nil];
-//    
-//    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-//    options.networkAccessAllowed = YES;
-//    options.synchronous = YES;
-//    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-//    PHImageManager *photoManager = [PHImageManager defaultManager];
-//    
-//    
-//    
-//    
-//    for (NSInteger i = 0; i < assets.count; i++) {
-//        [photoManager requestImageForAsset:assets[i] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-//            
-//            self.photoImage = result;
-//            
-//        }];
-//        
-//        NSMutableDictionary *imageDataDictionary = [[NSMutableDictionary alloc] init];
-//        [imageDataDictionary setObject:self.photoImage forKey:@"image"];
-//        [imageDataDictionary setObject:[NSNumber numberWithUnsignedInteger:i] forKey:@"imageNumber"];
-//        
-//        [self.photoArray addObject:imageDataDictionary];
-//        
-//    }
-    
 }
 
 - (void)loadImageInDevicePhotoLibray:(NSUInteger)range{
@@ -202,12 +165,20 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
         self.indicator.hidden = NO;
         [self.indicator startAnimating];
         
+        UIView __block *delayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        delayView.backgroundColor = [UIColor grayColor];
+        delayView.alpha = 0.5;
+        [self.view addSubview:delayView];
+        
         WriteViewController * __weak wself = self;
         
         [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
             
             [wself writeViewReset];
+            [delayView removeFromSuperview];
+            
             [RequestObject requestMainData];
+            
         }];
         
     }

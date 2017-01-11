@@ -34,13 +34,13 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //reuqestUserInfo
-+ (void)requestUserInfo;
++ (void)requestUserInfo:(UpdateFinishDataBlock)updateFinishDataBlock;
 
 //requestLogoutData
-+ (void)requestLogoutData;
++ (void)requestLogoutData:(UpdateFinishDataBlock)updateFinishDataBlock;
 
 //requestDeleteData
-+ (void)requestDeleteData:(NSString *)deletaData pdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
++ (void)requestDeleteData:(NSString *)deletaData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //requestWriteData
 + (void)requestWriteData:(NSString *)title cotent:(NSString *)content imageArray:(NSArray *)imageArray updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;

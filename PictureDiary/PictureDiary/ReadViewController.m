@@ -128,7 +128,7 @@
                                                                                                                             preferredStyle:UIAlertControllerStyleAlert];
                                                               
                                                               UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                                  [RequestObject requestDeleteData:self.postId pdateFinishDataBlock:^{
+                                                                  [RequestObject requestDeleteData:self.postId updateFinishDataBlock:^{
                                                                       [self afterDeleteViewChangeMehtod];
                                                                   }];
                                                               }];
@@ -199,6 +199,7 @@
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
     
 }
+
 
 - (void)afterDeleteViewChangeMehtod {
     
