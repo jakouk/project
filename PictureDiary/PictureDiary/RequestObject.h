@@ -28,7 +28,7 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestAddMain:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //requestReadData
-+ (void)requestReadData:(NSString *)PostId;
++ (void)requestReadData:(NSString *)PostId updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //requestSearch
 + (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;

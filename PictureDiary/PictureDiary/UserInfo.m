@@ -11,6 +11,7 @@
 
 @implementation UserInfo
 
+//singleTone
 + (instancetype)sharedUserInfo {
     
     static UserInfo *info = nil;

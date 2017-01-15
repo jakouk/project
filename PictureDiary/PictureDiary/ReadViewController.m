@@ -33,13 +33,6 @@
     
     self.contentText.editable = NO;
     
-    [RequestObject requestReadData:self.postId];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(requestReadViewChange:)
-                                                 name:ReadNotification
-                                               object:nil];
-    
     [self.navigationController.navigationBar setHidden:NO];
     
     UIBarButtonItem *modifiedButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
@@ -57,6 +50,8 @@
     // 스크롤이 경계에 도달하면 바운싱효과를 적용
     self.imageScrollView.alwaysBounceVertical = NO;
     self.imageScrollView.alwaysBounceHorizontal = NO;
+    
+    self.imageScrollView.bounces = NO;
     
     //페이징 가능 여부 YES
     self.imageScrollView.pagingEnabled = YES;
@@ -98,6 +93,48 @@
 // 스크롤바를 보였다가 사라지게 함
 - (void)viewDidAppear:(BOOL)animated
 {
+    [RequestObject requestReadData:self.postId updateFinishDataBlock:^{
+        
+        NSDictionary *wordDictionary = [UserInfo sharedUserInfo].readData;
+        self.titleLabel.text = [wordDictionary objectForKey:@"title"];
+        self.contentText.text = [wordDictionary objectForKey:@"content"];
+        
+        self.imageList = [wordDictionary objectForKey:@"photos"];
+        NSInteger imageCount = self.imageList.count;
+        
+        //photosArray
+        
+        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
+        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
+        
+        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount,
+                                                        +  imagePointHeight)];
+        
+        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
+            
+            NSDictionary *photos  = [self.imageList objectAtIndex:i];
+            NSDictionary *image = [photos objectForKey:@"image"];
+            NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
+            
+            UIImageView *fullSizeImage = [[UIImageView alloc] init];
+            [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            
+            [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
+                                               imagePointWidth, imagePointHeight)];
+            
+            [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+            [self.imageScrollView addSubview:fullSizeImage];
+            
+        }
+        
+        //페이지 갯수
+        self.pageControl.numberOfPages = self.imageList.count;
+        
+        //페이지 컨트롤 값변경시 이벤트 처리 등록
+        [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+        
+    }];
+    
     [self.imageScrollView flashScrollIndicators];
 }
 
@@ -213,14 +250,5 @@
     
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

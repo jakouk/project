@@ -190,7 +190,7 @@
 
 //readViewUpdate
 - (void)readViewUpdateMethod {
-    [RequestObject requestReadData:self.postId];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

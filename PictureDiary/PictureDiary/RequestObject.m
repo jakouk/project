@@ -304,7 +304,7 @@ static NSString *JSONSuccessValue = @"success";
 
 
 //requestRead ( GET )
-+ (void)requestReadData:(NSString *)PostId {
++ (void)requestReadData:(NSString *)PostId updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
     NSURL * url = [self requestURL:RequestTypeReadData
                              param:nil
@@ -317,21 +317,11 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSString *notificationName = ReadNotification;
-        
-        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
-        wordDic = responseObject;
-        
-        NSLog(@"\n\n response : %@ \n\n",response);
-        [UserInfo sharedUserInfo].readData = responseObject;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if ( error == NULL) {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:nil userInfo:wordDic];
-        });
-        
+            [UserInfo sharedUserInfo].readData = responseObject;
+            UpdateFinishDataBlock();
+        }
     }];
     [dataTask resume];
 
