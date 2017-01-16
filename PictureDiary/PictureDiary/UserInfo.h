@@ -17,6 +17,9 @@
 ***/
 @property NSString *userToken;
 
+//first MainData
+@property NSDictionary *firstMainData;
+
 /***
  mainData is Maxmum 10
  downScroll mod 7 is zero addReadData;

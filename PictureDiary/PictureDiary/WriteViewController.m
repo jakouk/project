@@ -177,8 +177,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             [wself writeViewReset];
             [delayView removeFromSuperview];
             
-            [RequestObject requestMainData];
-            
         }];
         
     }

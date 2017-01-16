@@ -22,7 +22,7 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
 
 //requestMainData
-+ (void)requestMainData;
++ (void)requestMainDataUpdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //requestAddMainCell
 + (void)requestAddMain:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;

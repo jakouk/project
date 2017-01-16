@@ -244,7 +244,6 @@
     
     if ([firstViewController class] == [MainViewController class] ) {
         
-        [RequestObject requestMainData];
         [self.navigationController popViewControllerAnimated:YES];
     }
     

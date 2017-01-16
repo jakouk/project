@@ -32,20 +32,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //xib 지정
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
-    [RequestObject requestMainData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(homeviewCollectionReload:)
-                                                 name:MainNotification
-                                               object:nil];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
+    
+    [RequestObject requestMainDataUpdateFinishDataBlock:^{
+        [self homeviewCollectionReload];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:YES];
+    
 }
 
 #pragma mark - cell setting
@@ -161,9 +163,9 @@
 
 //homeviewCollectionReload
 //네트워크에서 사진 불러오기
-- (void)homeviewCollectionReload:(NSNotification *)noti
+- (void)homeviewCollectionReload
 {
-    NSDictionary *wordDic = noti.userInfo;
+    NSDictionary *wordDic = [UserInfo sharedUserInfo].firstMainData;
     
     if ([wordDic objectForKey:@"results"] != nil ) {
         

@@ -247,7 +247,7 @@ static NSString *JSONSuccessValue = @"success";
 
 #pragma mark - requestMain
 //requestMain ( GET )
-+ (void)requestMainData {
++ (void)requestMainDataUpdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock; {
     
     NSURL * url = [self requestURL:RequestTypeMainData
                              param:nil
@@ -260,18 +260,12 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSString *notificationName = MainNotification;
-        
-        NSMutableDictionary *wordDic = [[NSMutableDictionary alloc] init];
-        wordDic = responseObject;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if ( error == NULL ) {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:nil userInfo:wordDic];
+            [UserInfo sharedUserInfo].firstMainData = responseObject;
+            UpdateFinishDataBlock();
             
-        });
+        }
         
     }];
     
