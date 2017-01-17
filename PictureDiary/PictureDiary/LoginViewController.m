@@ -40,12 +40,6 @@
     [self createLayoutSubview];
     [self registerForKeyboardNotifications];
     
-    // 로그인시 네트워크와의 통신 가능 여부 확인하는 노티피케이션
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userLogin:)
-                                                 name:LoginNotification
-                                               object:nil];
-    
     // 페이스북 로그인 버튼 클릭시 액션
     [self.fbLoginButton addTarget:self
                            action:@selector(onTouchupInsideFbLoginButton:)
@@ -226,18 +220,21 @@
         
     } else {
         
-        [RequestObject requestLoginData:email userPass:password];
+        NSLog(@" \n\n hello \n\n" );
+        [RequestObject requestLoginData:email userPass:password updateFinishDataBlock:^{
+            [self userLogin];
+        }];
     }
     
 }
 
 
 // 로그인시 네트워크 구현
-- (void)userLogin:(NSNotification *)noti {
+- (void)userLogin {
     
     UIAlertController *alert;
     UIAlertAction *action;
-    NSDictionary *dic = noti.userInfo;
+    NSDictionary *dic = [UserInfo sharedUserInfo].loginData;
     
     if (dic == nil) {
         
@@ -264,7 +261,7 @@
         action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-    }
+    };
     
 }
 

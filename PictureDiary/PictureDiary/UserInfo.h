@@ -11,33 +11,32 @@
 @interface UserInfo : NSObject
 
 
-/***
- Outh 2.0 Token number Save
- Token use X-Authorization
-***/
+//LoginData
+@property NSDictionary *loginData;
+
+//Outh 2.0 Token number Save
 @property NSString *userToken;
 
-//first MainData
+
+//First Main Data ( 10 data )
 @property NSDictionary *firstMainData;
 
-/***
- mainData is Maxmum 10
- downScroll mod 7 is zero addReadData;
- ***/
+//if userData > 10 , mainDataURL
 @property NSString *mainNextUrl;
 
 //Main wordDic
 @property NSDictionary *wordDic;
 
 
-//Search search Data
+//First search Data
 @property NSDictionary *searchData;
 
-//Search searchNextUrl
+//if searchData > 10, searchNextURL
 @property NSString *searchNextUrl;
 
-//ReadData
+//Certain UserData ( only 1 data )
 @property NSDictionary *readData;
+
 
 
 //userInfomation

@@ -169,7 +169,6 @@
     
     if ([wordDic objectForKey:@"results"] != nil ) {
         
-        NSLog(@"MainViewController homeviewCollectionReload");
         [self.userWord removeAllObjects];
         [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
         [UserInfo sharedUserInfo].mainNextUrl = [wordDic objectForKey:@"next"];

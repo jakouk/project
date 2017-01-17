@@ -15,11 +15,13 @@ typedef void(^UpdateFinishDataBlock)(void);
 //test just User
 + (void)requestUserData;
 
+
 //requestJoinData
 + (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
 
 //requestLoginData
-+ (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass;
++ (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
 
 //requestMainData
 + (void)requestMainDataUpdateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
@@ -27,11 +29,16 @@ typedef void(^UpdateFinishDataBlock)(void);
 //requestAddMainCell
 + (void)requestAddMain:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
+
 //requestReadData
 + (void)requestReadData:(NSString *)PostId updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
+
 //requestSearch
 + (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
+//requestSearchAddData
++(void)reqeustAddSearch:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 //reuqestUserInfo
 + (void)requestUserInfo:(UpdateFinishDataBlock)updateFinishDataBlock;

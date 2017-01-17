@@ -209,7 +209,7 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestLogin ( POST )
-+(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass {
++(void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
     NSString *requestURL = [[self requestURL:RequestTypeLogin
                                        param:nil
@@ -228,16 +228,10 @@ static NSString *JSONSuccessValue = @"success";
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        NSDictionary *dic = responseObject;
-        NSString *notificationName = LoginNotification;
-        
-        //main deque
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:nil userInfo:dic];
-            
-        });
+        if ( error == NULL ) {
+            [UserInfo sharedUserInfo].loginData = responseObject;
+            UpdateFinishDataBlock();
+        }
         
     }];
     
@@ -466,6 +460,29 @@ static NSString *JSONSuccessValue = @"success";
         if (error) {
             
         } else {
+            
+            [UserInfo sharedUserInfo].searchData = responseObject;
+            UpdateFinishDataBlock();
+        }
+        
+    }];
+    
+    [dataTask resume];
+    
+}
+
++(void)reqeustAddSearch:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
+    
+    NSURL * url = [NSURL URLWithString:nextUrl];
+    NSMutableURLRequest *urlRequest = [self requestURL:url httpMethod:@"GET"];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        
+        if ( error == NULL ) {
             
             [UserInfo sharedUserInfo].searchData = responseObject;
             UpdateFinishDataBlock();

@@ -39,9 +39,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:YES];
+    
 }
 
 //cell numbers
@@ -52,6 +54,24 @@
 
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ( indexPath.row %10 == 7 ) {
+        
+        if ( self.searchArray.count == indexPath.row + 3 ) {
+            
+            if ( [UserInfo sharedUserInfo].mainNextUrl != nil ) {
+                
+                SearchViewController * __weak wself = self;
+                
+                [RequestObject reqeustAddSearch:[UserInfo sharedUserInfo].searchNextUrl updateFinishDataBlock:^{
+                    [wself addCellMethod];
+                }];
+                
+            }
+            
+        }
+        
+    }
     
     CustomCell *cell = (CustomCell *)[self.mainCollection dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
@@ -83,7 +103,7 @@
             
         }
     }
-
+    
     return cell;
 }
 
@@ -139,6 +159,7 @@
 //selected cell
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     //선택시 구동
     UICollectionViewCell *cell = [self.mainCollection cellForItemAtIndexPath:indexPath];
     
@@ -156,6 +177,15 @@
     NSLog(@"Read setPost Id");
     [readScreen setPostId:postId];
     [self.navigationController pushViewController:readScreen animated:YES];
+    
+}
+
+- (void)addCellMethod{
+    
+    NSDictionary *wordDic = [UserInfo sharedUserInfo].searchData;
+    [self.searchArray addObjectsFromArray:[wordDic objectForKey:@"results"]];
+    [UserInfo sharedUserInfo].searchNextUrl = [wordDic objectForKey:@"next"];
+    [self.mainCollection reloadData];
     
 }
 

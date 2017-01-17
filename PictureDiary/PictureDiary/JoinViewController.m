@@ -456,15 +456,22 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     if (textField == self.userNameField) {
+        
         [textField endEditing:YES];
         [self.emailField becomeFirstResponder];
+        
     } else if (textField == self.emailField) {
+        
         [textField endEditing:YES];
         [self.passwordField becomeFirstResponder];
+        
     } else if (textField == self.passwordField) {
+        
         [textField endEditing:YES];
         [self.rePasswordField becomeFirstResponder];
+        
     } else if (textField == self.rePasswordField) {
+        
         [textField endEditing:YES];
         [self onTouchupInsideJoinButton:self.joinButton];
         [self.scrollView setContentOffset:CGPointZero animated:YES];
