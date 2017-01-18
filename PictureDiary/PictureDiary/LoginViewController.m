@@ -219,8 +219,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     } else {
-        
-        NSLog(@" \n\n hello \n\n" );
+
         [RequestObject requestLoginData:email userPass:password updateFinishDataBlock:^{
             [self userLogin];
         }];
@@ -320,6 +319,10 @@
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     JoinViewController *joinViewController = [storyBoard instantiateViewControllerWithIdentifier:@"JoinViewController"];
+    
+    self.emailTextField.text = @"";
+    self.passwordTextField.text = @"";
+    
     [self presentViewController:joinViewController animated:YES completion:nil];
     
 }

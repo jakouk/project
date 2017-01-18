@@ -290,7 +290,7 @@
         
     } else {
        
-        [RequestObject requestJoinData:email userPass:password userName:userName];
+        [RequestObject requestJoinData:email userPass:password userName:userName userProfile:[UIImage imageNamed:@"Nameicon"]];
         
     }
 }
@@ -313,27 +313,7 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
 
-    } else if ([dic objectForKey:@"username"] != nil && [dic objectForKey:@"password"] == nil) {
-        
-        // 이름 가입 여부 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이름이 이미 등록되어 있습니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    } else if ([dic objectForKey:@"email"] != nil && [dic objectForKey:@"password"] == nil) {
-        
-        // 이메일 가입 여부 체크
-        alert = [UIAlertController alertControllerWithTitle:@"알림"
-                                                    message:@"이메일이 이미 등록되어 있습니다."
-                                             preferredStyle:UIAlertControllerStyleAlert];
-        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    } else if ([dic objectForKey:@"password"] != nil) {
+    }else if ([dic objectForKey:@"date_joined"] != nil) {
         
         // 회원 정보 서버 저장 메소드
         UIAlertController *alert =
@@ -343,9 +323,23 @@
         UIAlertAction *action =
         [UIAlertAction actionWithTitle:@"확인"
                                  style:UIAlertActionStyleDefault
-                               handler:nil];
+                               handler:^(UIAlertAction * _Nonnull action) {
+                                   [self dismissViewControllerAnimated:YES completion:nil];
+                               }];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    } else if ([dic objectForKey:@"email"] != nil) {
+        
+        // 이메일 가입 여부 체크
+        alert = [UIAlertController alertControllerWithTitle:@"알림"
+                                                    message:@"이메일이 이미 등록되어 있습니다."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        action = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     }
 }
 

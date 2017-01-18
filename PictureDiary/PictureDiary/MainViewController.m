@@ -15,6 +15,7 @@
 @interface MainViewController ()
 
 @property NSMutableArray *userWord;
+@property UIRefreshControl *refreshControl;
 
 @end
 
@@ -26,15 +27,23 @@
     
     [super awakeFromNib];
     self.userWord = [[NSMutableArray alloc] init];
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor grayColor];
+    [self.refreshControl addTarget:self action:@selector(refershControlAction) forControlEvents:UIControlEventValueChanged];
+    
+    [self.collectionView addSubview:self.refreshControl];
+    self.collectionView.alwaysBounceVertical = YES;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:YES];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     
@@ -167,7 +176,15 @@
 {
     NSDictionary *wordDic = [UserInfo sharedUserInfo].firstMainData;
     
-    if ([wordDic objectForKey:@"results"] != nil ) {
+    if ([[wordDic objectForKey:@"count"] isEqualToNumber:@0]) {
+        
+        UITextField *firstStory = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - self.view.frame.size.width/4, self.view.frame.size.height/2-self.view.frame.size.height/4, self.view.frame.size.width/2, self.view.frame.size.height/2)];
+        
+        firstStory.text = @" 당신의 이야기를 들려주세요 ";
+        [self.view addSubview:firstStory];
+        
+        
+    } else if ([wordDic objectForKey:@"results"] != nil ) {
         
         [self.userWord removeAllObjects];
         [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
@@ -191,6 +208,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//pull to reFresh
+- (void)refershControlAction{
+    
+    [RequestObject requestMainDataUpdateFinishDataBlock:^{
+        [self homeviewCollectionReload];
+    }];
+    
+    [self.refreshControl endRefreshing];
+    
+}
+
 
 /*
  #pragma mark - Navigation

@@ -24,7 +24,7 @@
 //if userData > 10 , mainDataURL
 @property NSString *mainNextUrl;
 
-//Main wordDic
+//mainAddData 
 @property NSDictionary *wordDic;
 
 

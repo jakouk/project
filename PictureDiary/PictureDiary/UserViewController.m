@@ -31,15 +31,16 @@
 {
     [super viewDidAppear:animated];
     
-    [self.userTableView setDelegate:self];
-    [self.userTableView setDataSource:self];
+    self.userTableView.delegate = self;
+    self.userTableView.dataSource = self;
+    self.userTableView.scrollEnabled = NO;
     
     [RequestObject requestUserInfo:^{
         
         self.userDataDic = [UserInfo sharedUserInfo].userInfomation;
         NSLog(@"method in username : %@",[self.userDataDic objectForKey:@"username"]);
         NSLog(@"method in email : %@",[self.userDataDic objectForKey:@"email"]);
-        NSLog(@"method in id : %@",[self.userDataDic objectForKey:@"id"]);
+        NSLog(@"method in join : %@",[self.userDataDic objectForKey:@"date_joined"]);
         
         [self.userTableView reloadData];
     }];
@@ -98,10 +99,17 @@
         if (indexPath.row == 2) {
             [cell.imageView setImage:[UIImage imageNamed:@"IDCardicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
-            [cell.textLabel setText:@"ID"];
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"id"]]];
+            [cell.textLabel setText:@"Join"];
+            NSString *date_joined = [self.userDataDic objectForKey:@"date_joined"];
+            NSArray *date = [date_joined componentsSeparatedByString:@"T"];
+            [cell.detailTextLabel setText:date[0]];
         }
     }
+    
+    if ( indexPath.row == 4 ) {
+        self.userTableView.scrollEnabled = YES;
+    }
+    
     return cell;
 }
 

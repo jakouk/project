@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class UIImage;
 
 typedef void(^UpdateFinishDataBlock)(void);
 
@@ -17,7 +18,7 @@ typedef void(^UpdateFinishDataBlock)(void);
 
 
 //requestJoinData
-+ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName;
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile;
 
 //requestLoginData
 + (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;

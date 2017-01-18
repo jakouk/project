@@ -29,8 +29,10 @@ static NSString *const baseURLString = @"http://team1photodiary.ap-northeast-2.e
 static NSString *ParamNameUserIDKey = @"email";
 static NSString *ParamNameUserNameKey = @"username";
 static NSString *ParamNameUserPassWordKey = @"password";
+static NSString *ParamNameUserProfile = @"profile_img";
 static NSString *ParamNamePostTitle = @"title";
 static NSString *ParamNamePostContent = @"content";
+
 
 //URL
 static NSString *const URLNameLogin = @"member/login/";
@@ -166,7 +168,7 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestJoin (POST)
-+ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName  {
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile  {
     
     NSString *requestURL = [[self requestURL:RequestTypeJoin
                                        param:nil
@@ -178,8 +180,14 @@ static NSString *JSONSuccessValue = @"success";
     [bodyParams setObject:userPass forKey:ParamNameUserPassWordKey];
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
-                                                                                              URLString:requestURL
-                                                                                             parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) { } error:nil];
+        URLString:requestURL
+        parameters:bodyParams constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+            NSString *imagefileName = [NSString stringWithFormat:@"%@.jpeg",userName];
+            NSData *imageData = UIImageJPEGRepresentation(userProfile, 0.1);
+            [formData appendPartWithFileData:imageData name:ParamNameUserProfile fileName:imagefileName mimeType:@"image/jpeg"];
+             }
+     error:nil];
     
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -194,6 +202,8 @@ static NSString *JSONSuccessValue = @"success";
                       
                       NSDictionary *dic = responseObject;
                       NSString *notificationName = JoinNotification;
+                      
+                      NSLog(@"JoinViewController = %@",responseObject);
                       
                       //main deque
                       dispatch_async(dispatch_get_main_queue(), ^{
