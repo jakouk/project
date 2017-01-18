@@ -290,18 +290,20 @@
         
     } else {
        
-        [RequestObject requestJoinData:email userPass:password userName:userName userProfile:[UIImage imageNamed:@"Nameicon"]];
+        [RequestObject requestJoinData:email userPass:password userName:userName userProfile:[UIImage imageNamed:@"Nameicon"] updateFinishDataBlock:^{
+            [self userJoinIn];
+        }];
         
     }
 }
 
 
 // 회원가입시 네트워크 구현
-- (void)userJoinIn:(NSNotification *)noti {
+- (void)userJoinIn{
     
     UIAlertController *alert;
     UIAlertAction *action;
-    NSDictionary *dic = noti.userInfo;
+    NSDictionary *dic = [UserInfo sharedUserInfo].joinData;
     
     if (dic == nil) {
         

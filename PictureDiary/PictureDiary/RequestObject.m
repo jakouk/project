@@ -168,7 +168,7 @@ static NSString *JSONSuccessValue = @"success";
 }
 
 //requestJoin (POST)
-+ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile  {
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock {
     
     NSString *requestURL = [[self requestURL:RequestTypeJoin
                                        param:nil
@@ -200,20 +200,11 @@ static NSString *JSONSuccessValue = @"success";
                   }
                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                       
-                      NSDictionary *dic = responseObject;
-                      NSString *notificationName = JoinNotification;
+                    //error 처리는 JoinView에서 함.
+                    [UserInfo sharedUserInfo].joinData = responseObject;
+                    UpdateFinishDataBlock();
                       
-                      NSLog(@"JoinViewController = %@",responseObject);
-                      
-                      //main deque
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                          [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                              object:nil userInfo:dic];
-                          
-                      });
                   }];
-    
     [uploadTask resume];
     
 }

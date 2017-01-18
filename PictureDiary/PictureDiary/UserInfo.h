@@ -14,6 +14,10 @@
 //LoginData
 @property NSDictionary *loginData;
 
+//JoinData
+@property NSDictionary *joinData;
+
+
 //Outh 2.0 Token number Save
 @property NSString *userToken;
 

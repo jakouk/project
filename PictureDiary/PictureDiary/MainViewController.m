@@ -15,7 +15,12 @@
 @interface MainViewController ()
 
 @property NSMutableArray *userWord;
+
+//refreshControl ( NetworkData )
 @property UIRefreshControl *refreshControl;
+
+//
+@property UILabel *zeroData;
 
 @end
 
@@ -32,30 +37,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.tintColor = [UIColor grayColor];
-    [self.refreshControl addTarget:self action:@selector(refershControlAction) forControlEvents:UIControlEventValueChanged];
-    
-    [self.collectionView addSubview:self.refreshControl];
-    self.collectionView.alwaysBounceVertical = YES;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:YES];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
-    
-    [RequestObject requestMainDataUpdateFinishDataBlock:^{
-        [self homeviewCollectionReload];
-    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:YES];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
+    
+    [RequestObject requestMainDataUpdateFinishDataBlock:^{
+        
+        [self homeviewCollectionReload];
+    }];
     
 }
 
@@ -178,18 +178,63 @@
     
     if ([[wordDic objectForKey:@"count"] isEqualToNumber:@0]) {
         
-        UITextField *firstStory = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - self.view.frame.size.width/4, self.view.frame.size.height/2-self.view.frame.size.height/4, self.view.frame.size.width/2, self.view.frame.size.height/2)];
+        CGFloat xPos = (self.view.frame.size.width - (self.view.frame.size.width/2 + 100 ))/2;
         
-        firstStory.text = @" 당신의 이야기를 들려주세요 ";
-        [self.view addSubview:firstStory];
+        self.zeroData = [[UILabel alloc] initWithFrame:CGRectMake(xPos, self.view.frame.size.height/2-self.view.frame.size.height/4, self.view.frame.size.width/2+100, self.view.frame.size.height/2)];
         
+        self.zeroData.textAlignment = NSTextAlignmentCenter;
+        self.zeroData.text = @" 당신의 이야기를 들려주세요 ";
+        
+        [self.view addSubview:self.zeroData];
+        
+        // 데이터가 있다가 모든 데이터가 사라지면
+        if (self.refreshControl != nil) {
+            
+            self.refreshControl = nil;
+            for(UIView *subview in [self.collectionView subviews])
+            {
+                if([subview isKindOfClass:[UIRefreshControl class]])
+                {
+                    [subview removeFromSuperview];
+                }
+            }
+            
+        }
+        
+        [self.userWord removeAllObjects];
+        [self.collectionView reloadData];
         
     } else if ([wordDic objectForKey:@"results"] != nil ) {
         
+        //zeroData가 nil인 경우는 실행 안하고 nil이 아닌경우는 제거함
+        if (self.zeroData != nil) {
+            
+            //UIView의 자식중 UILabel 삭제
+            for(UIView *subview in [self.view subviews])
+            {
+                if([subview isKindOfClass:[UILabel class]])
+                {
+                    [subview removeFromSuperview];
+                }
+            }
+        }
+        
+        //refreshControl은 1개만 추가되도록 하기 위한 구문 
+        if (self.refreshControl == nil) {
+            
+            self.refreshControl = [[UIRefreshControl alloc] init];
+            self.refreshControl.tintColor = [UIColor grayColor];
+            [self.refreshControl addTarget:self action:@selector(refershControlAction) forControlEvents:UIControlEventValueChanged];
+            
+            [self.collectionView addSubview:self.refreshControl];
+            self.collectionView.alwaysBounceVertical = YES;
+        }
+
         [self.userWord removeAllObjects];
         [self.userWord addObjectsFromArray:[wordDic objectForKey:@"results"]];
         [UserInfo sharedUserInfo].mainNextUrl = [wordDic objectForKey:@"next"];
         [self.collectionView reloadData];
+
     }
 }
 

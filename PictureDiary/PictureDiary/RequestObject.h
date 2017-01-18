@@ -17,11 +17,15 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestUserData;
 
 
+
 //requestJoinData
-+ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile;
++ (void)requestJoinData:(NSString *)userId userPass:(NSString *)userPass userName:(NSString *)userName userProfile:(UIImage *)userProfile updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
+
 
 //requestLoginData
 + (void)requestLoginData:(NSString *)userId userPass:(NSString *)userPass updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
 
 
 //requestMainData
@@ -31,21 +35,9 @@ typedef void(^UpdateFinishDataBlock)(void);
 + (void)requestAddMain:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
 
 
+
 //requestReadData
 + (void)requestReadData:(NSString *)PostId updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
-
-
-//requestSearch
-+ (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
-
-//requestSearchAddData
-+(void)reqeustAddSearch:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
-
-//reuqestUserInfo
-+ (void)requestUserInfo:(UpdateFinishDataBlock)updateFinishDataBlock;
-
-//requestLogoutData
-+ (void)requestLogoutData:(UpdateFinishDataBlock)updateFinishDataBlock;
 
 //requestDeleteData
 + (void)requestDeleteData:(NSString *)deletaData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
@@ -55,5 +47,26 @@ typedef void(^UpdateFinishDataBlock)(void);
 
 //requestModifyData
 + (void)requestModifyData:(NSString *)title content:(NSString *)content postId:(NSString *)postId updateFinishDataBlok:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
+
+
+//requestSearch
++ (void)requestSearch:(NSString *)searchData updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
+//requestSearchAddData
++(void)reqeustAddSearch:(NSString *)nextUrl updateFinishDataBlock:(UpdateFinishDataBlock)UpdateFinishDataBlock;
+
+
+
+//reuqestUserInfo
++ (void)requestUserInfo:(UpdateFinishDataBlock)updateFinishDataBlock;
+
+
+
+//requestLogoutData
++ (void)requestLogoutData:(UpdateFinishDataBlock)updateFinishDataBlock;
+
+
+
 
 @end
