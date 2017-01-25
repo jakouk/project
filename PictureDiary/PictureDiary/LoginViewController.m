@@ -51,7 +51,6 @@
     
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LoginNotification object:nil];
 }
 
 
@@ -220,7 +219,7 @@
         
     } else {
 
-        [RequestObject requestLoginData:email userPass:password updateFinishDataBlock:^{
+        [PDLoginManager requestLoginData:email userPass:password updateFinishDataBlock:^{
             [self userLogin];
         }];
     }

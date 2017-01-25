@@ -27,6 +27,7 @@
 @property NSString *postId;
 
 @property NSMutableArray *modifiedImageList;
+
 @end
 
 @implementation ModifyViewController
@@ -183,7 +184,7 @@
 //checkBtn Click
 - (IBAction)touchupInsideEditingFinishButton:(UIButton *)sender {
     
-    [RequestObject requestModifyData:self.titleTextField.text content:self.contentTextView.text postId:self.postId updateFinishDataBlok:^{
+    [PDPageManager requestModifyData:self.titleTextField.text content:self.contentTextView.text postId:self.postId updateFinishDataBlok:^{
         [self readViewUpdateMethod];
     }];
 }

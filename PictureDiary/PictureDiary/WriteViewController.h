@@ -10,7 +10,4 @@
 
 @interface WriteViewController : UIViewController <UINavigationControllerDelegate, UIScrollViewDelegate>
 
-//seletedImages ( Dictionary )
-@property NSMutableArray *seletedImages;
-
 @end

@@ -35,7 +35,7 @@
     self.userTableView.dataSource = self;
     self.userTableView.scrollEnabled = NO;
     
-    [RequestObject requestUserInfo:^{
+    [PDUserManager requestUserInfo:^{
         
         self.userDataDic = [UserInfo sharedUserInfo].userInfomation;
         NSLog(@"method in username : %@",[self.userDataDic objectForKey:@"username"]);
@@ -145,13 +145,15 @@
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction * _Nonnull action) {
                                                    NSLog(@"로그아웃 허가");
-                                                   [RequestObject requestUserInfo:^{
+                                                   [PDLoginManager requestLogoutData:^{
                                                        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                                        LoginViewController *LoginView = [storyBoard instantiateInitialViewController];
                                                        UIApplication *application = [UIApplication sharedApplication];
                                                        UIWindow *window = [application.delegate window];
                                                        window.rootViewController = LoginView;
                                                        [window makeKeyAndVisible];
+                                                       
+                                                        [UserInfo sharedUserInfo].userToken = nil;
                                                    }];
                                                    
                                                }];

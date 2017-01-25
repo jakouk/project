@@ -93,7 +93,7 @@
 // 스크롤바를 보였다가 사라지게 함
 - (void)viewDidAppear:(BOOL)animated
 {
-    [RequestObject requestReadData:self.postId updateFinishDataBlock:^{
+    [PDPageManager requestReadData:self.postId updateFinishDataBlock:^{
         
         NSDictionary *wordDictionary = [UserInfo sharedUserInfo].readData;
         self.titleLabel.text = [wordDictionary objectForKey:@"title"];
@@ -165,7 +165,7 @@
                                                                                                                             preferredStyle:UIAlertControllerStyleAlert];
                                                               
                                                               UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"글 삭제" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                                  [RequestObject requestDeleteData:self.postId updateFinishDataBlock:^{
+                                                                  [PDPageManager requestDeleteData:self.postId updateFinishDataBlock:^{
                                                                       [self afterDeleteViewChangeMehtod];
                                                                   }];
                                                               }];

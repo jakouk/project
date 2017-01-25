@@ -63,7 +63,7 @@
                 
                 SearchViewController * __weak wself = self;
                 
-                [RequestObject reqeustAddSearch:[UserInfo sharedUserInfo].searchNextUrl updateFinishDataBlock:^{
+                [PDSearchManager reqeustAddSearch:[UserInfo sharedUserInfo].searchNextUrl updateFinishDataBlock:^{
                     [wself addCellMethod];
                 }];
                 
@@ -131,7 +131,7 @@
     [self.searchData resignFirstResponder];
     NSString *searchData = self.searchData.text;
     SearchViewController * __weak wself = self;
-    [RequestObject requestSearch:searchData updateFinishDataBlock:^{
+    [PDSearchManager requestSearch:searchData updateFinishDataBlock:^{
         [wself searchCollectionViewReload];
     }];
 }

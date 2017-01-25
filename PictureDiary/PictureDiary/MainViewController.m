@@ -14,13 +14,13 @@
 
 @interface MainViewController ()
 
-@property NSMutableArray *userWord;
+@property (nonatomic) NSMutableArray *userWord;
 
 //refreshControl ( NetworkData )
-@property UIRefreshControl *refreshControl;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
-//
-@property UILabel *zeroData;
+//zeroData Distinction
+@property (nonatomic) UILabel *zeroData;
 
 @end
 
@@ -52,7 +52,7 @@
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     
-    [RequestObject requestMainDataUpdateFinishDataBlock:^{
+    [PDMainManager requestMainDataUpdateFinishDataBlock:^{
         
         [self homeviewCollectionReload];
     }];
@@ -88,7 +88,7 @@
                 
                 MainViewController * __weak wself = self;
                 
-                [RequestObject requestAddMain:[UserInfo sharedUserInfo].mainNextUrl updateFinishDataBlock:^{
+                [PDMainManager requestAddMain:[UserInfo sharedUserInfo].mainNextUrl updateFinishDataBlock:^{
                     
                     [wself addCellMethod];
                 }];
@@ -257,7 +257,7 @@
 //pull to reFresh
 - (void)refershControlAction{
     
-    [RequestObject requestMainDataUpdateFinishDataBlock:^{
+    [PDMainManager requestMainDataUpdateFinishDataBlock:^{
         [self homeviewCollectionReload];
     }];
     

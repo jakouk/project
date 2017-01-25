@@ -35,17 +35,11 @@
     // 키보드의 움직임 확인하는 노티피케이션
     [self registerForKeyboardNotifications];
     
-    // 회원가입시 네트워크와의 통신 가능 여부 확인하는 노티피케이션
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userJoinIn:)
-                                                 name:JoinNotification
-                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
     [self unregisterForKeyboardNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:JoinNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -290,7 +284,7 @@
         
     } else {
        
-        [RequestObject requestJoinData:email userPass:password userName:userName userProfile:[UIImage imageNamed:@"Nameicon"] updateFinishDataBlock:^{
+        [PDLoginManager requestJoinData:email userPass:password userName:userName userProfile:[UIImage imageNamed:@"Nameicon"] updateFinishDataBlock:^{
             [self userJoinIn];
         }];
         

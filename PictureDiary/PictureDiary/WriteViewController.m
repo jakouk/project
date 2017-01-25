@@ -18,34 +18,37 @@
 UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 //PHPhoto
-@property (nonatomic, strong)PHPhotoLibrary *specialLibrays;
-@property (nonatomic, strong)PHAssetChangeRequest *chageRequest;
-@property (nonatomic,strong)PHObjectPlaceholder *assetPlaceholder;
+@property (nonatomic, weak)PHPhotoLibrary *specialLibrays;
+@property (nonatomic, weak)PHAssetChangeRequest *chageRequest;
+@property (nonatomic, weak)PHObjectPlaceholder *assetPlaceholder;
 
-@property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
+@property (nonatomic, weak) IBOutlet UITextField *subjectTextfiled;
+@property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
 
-@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
+//keyBoard Down Tap
+@property (nonatomic, weak) IBOutlet UITapGestureRecognizer *tapGesture;
 
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+
+//seletedImages ( Dictionary )
+@property NSMutableArray *seletedImages;
 
 
 //deleteImage
 @property UIButton *deleteButton;
 
-
 //collectionView Image
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionViewImage;
 
 //photoArray
-@property (strong, nonatomic) NSMutableArray *photoArray;
-@property (weak, nonatomic) UIImage *photoImage;
+@property (nonatomic, strong) NSMutableArray *photoArray;
+@property (nonatomic, weak) UIImage *photoImage;
 
 //photoInteger
 @property NSInteger photoCount;
 @property NSInteger photoEnd;
 
 //indicatior
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 @end
 
@@ -172,7 +175,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
         
         WriteViewController * __weak wself = self;
         
-        [RequestObject requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
+        [PDPageManager requestWriteData:self.subjectTextfiled.text cotent:self.bodyTextView.text imageArray:sendArray updateFinishDataBlock:^{
             
             [wself writeViewReset];
             [delayView removeFromSuperview];
@@ -320,6 +323,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     }
 }
 
+//scrolldragg 시작시점
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     
     CGFloat offsetY = scrollView.contentOffset.y;

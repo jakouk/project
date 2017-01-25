@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		735385171E387E5B00B1F00A /* PDLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 735385161E387E5B00B1F00A /* PDLoginManager.m */; };
+		7353851A1E387E6D00B1F00A /* PDMainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 735385191E387E6D00B1F00A /* PDMainManager.m */; };
+		735385201E387EC700B1F00A /* PDSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7353851F1E387EC700B1F00A /* PDSearchManager.m */; };
+		735385231E387EF200B1F00A /* PDUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 735385221E387EF200B1F00A /* PDUserManager.m */; };
+		735385261E389E7300B1F00A /* PDPageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 735385251E389E7300B1F00A /* PDPageManager.m */; };
 		73C6E97A1DEBE68400CDF36D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E9791DEBE68400CDF36D /* main.m */; };
 		73C6E97D1DEBE68400CDF36D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E97C1DEBE68400CDF36D /* AppDelegate.m */; };
 		73C6E9801DEBE68400CDF36D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C6E97F1DEBE68400CDF36D /* ViewController.m */; };
@@ -41,7 +46,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		73BB32EE1DEE9AB800426911 /* ELCImagePickerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerHeader.h; sourceTree = "<group>"; };
+		735385151E387E5B00B1F00A /* PDLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDLoginManager.h; sourceTree = "<group>"; };
+		735385161E387E5B00B1F00A /* PDLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDLoginManager.m; sourceTree = "<group>"; };
+		735385181E387E6D00B1F00A /* PDMainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDMainManager.h; sourceTree = "<group>"; };
+		735385191E387E6D00B1F00A /* PDMainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDMainManager.m; sourceTree = "<group>"; };
+		7353851E1E387EC700B1F00A /* PDSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDSearchManager.h; sourceTree = "<group>"; };
+		7353851F1E387EC700B1F00A /* PDSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDSearchManager.m; sourceTree = "<group>"; };
+		735385211E387EF200B1F00A /* PDUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDUserManager.h; sourceTree = "<group>"; };
+		735385221E387EF200B1F00A /* PDUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDUserManager.m; sourceTree = "<group>"; };
+		735385241E389E7200B1F00A /* PDPageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDPageManager.h; sourceTree = "<group>"; };
+		735385251E389E7300B1F00A /* PDPageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDPageManager.m; sourceTree = "<group>"; };
 		73C6E9751DEBE68400CDF36D /* PictureDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C6E9791DEBE68400CDF36D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		73C6E97B1DEBE68400CDF36D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -158,7 +172,7 @@
 				73C6E9BB1DEC409500CDF36D /* User.storyboard */,
 				73C6E9841DEBE68400CDF36D /* Assets.xcassets */,
 				73C6E9B11DEBF96700CDF36D /* UserInfo */,
-				73C6E9B21DEBF97B00CDF36D /* NetWork */,
+				73C6E9B21DEBF97B00CDF36D /* Network */,
 				73C6E9A71DEBF48600CDF36D /* Login */,
 				73C6E9A81DEBF4A900CDF36D /* ETC */,
 				73C6E9A91DEBF4CE00CDF36D /* Diary */,
@@ -174,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				73C6E9791DEBE68400CDF36D /* main.m */,
-				73BB32EE1DEE9AB800426911 /* ELCImagePickerHeader.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -224,13 +237,23 @@
 			name = UserInfo;
 			sourceTree = "<group>";
 		};
-		73C6E9B21DEBF97B00CDF36D /* NetWork */ = {
+		73C6E9B21DEBF97B00CDF36D /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				73D621F51DF1C474005AAF2A /* RequestObject.h */,
 				73D621F61DF1C474005AAF2A /* RequestObject.m */,
+				735385151E387E5B00B1F00A /* PDLoginManager.h */,
+				735385161E387E5B00B1F00A /* PDLoginManager.m */,
+				735385181E387E6D00B1F00A /* PDMainManager.h */,
+				735385191E387E6D00B1F00A /* PDMainManager.m */,
+				735385241E389E7200B1F00A /* PDPageManager.h */,
+				735385251E389E7300B1F00A /* PDPageManager.m */,
+				7353851E1E387EC700B1F00A /* PDSearchManager.h */,
+				7353851F1E387EC700B1F00A /* PDSearchManager.m */,
+				735385211E387EF200B1F00A /* PDUserManager.h */,
+				735385221E387EF200B1F00A /* PDUserManager.m */,
 			);
-			name = NetWork;
+			name = Network;
 			sourceTree = "<group>";
 		};
 		BB7310631DF5DA4900B4BF0C /* main */ = {
@@ -404,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				735385261E389E7300B1F00A /* PDPageManager.m in Sources */,
 				73C6E9AF1DEBF95700CDF36D /* UserInfo.m in Sources */,
 				73C6E9A31DEBF39100CDF36D /* ReadViewController.m in Sources */,
 				73F0C54E1E028C03004F125C /* CustomCell.m in Sources */,
@@ -415,8 +439,12 @@
 				73C6E9801DEBE68400CDF36D /* ViewController.m in Sources */,
 				73C6E9941DEBEF8B00CDF36D /* JoinViewController.m in Sources */,
 				73C6E9A01DEBEFE600CDF36D /* SearchViewController.m in Sources */,
+				735385201E387EC700B1F00A /* PDSearchManager.m in Sources */,
 				73C6E97D1DEBE68400CDF36D /* AppDelegate.m in Sources */,
+				7353851A1E387E6D00B1F00A /* PDMainManager.m in Sources */,
 				73D621F71DF1C474005AAF2A /* RequestObject.m in Sources */,
+				735385231E387EF200B1F00A /* PDUserManager.m in Sources */,
+				735385171E387E5B00B1F00A /* PDLoginManager.m in Sources */,
 				73C6E9C11DEC434000CDF36D /* MainTabBarController.m in Sources */,
 				73C6E99D1DEBEFDB00CDF36D /* UserViewController.m in Sources */,
 				73C6E99A1DEBEFAD00CDF36D /* WriteViewController.m in Sources */,

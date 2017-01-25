@@ -10,17 +10,37 @@
 #define PrefixHeader_pch
 
 #import "UserInfo.h"
+#import <AFNetworking.h>
+
 #import "RequestObject.h"
+#import "PDLoginManager.h"
+#import "PDMainManager.h"
+#import "PDPageManager.h"
+#import "PDSearchManager.h"
+#import "PDUserManager.h"
+
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
-static NSString *const JoinNotification = @"JoinNoti";
-static NSString *const LoginNotification = @"LoginNoti";
-static NSString *const MainNotification = @"MainNoti";
-static NSString *const ReadNotification = @"ReadNoti";
-static NSString *const UserInfoNotification = @"UserNoti";
-static NSString *const LogoutNotification = @"LogoutNoti";
-static NSString *const DeleteNotfication = @"DeleteNoti";
 
+//baseURL
+static NSString *const baseURLString = @"http://team1photodiary.ap-northeast-2.elasticbeanstalk.com/";
+
+//Parameter
+static NSString *ParamNameUserIDKey = @"email";
+static NSString *ParamNameUserNameKey = @"username";
+static NSString *ParamNameUserPassWordKey = @"password";
+static NSString *ParamNameUserProfile = @"profile_img";
+static NSString *ParamNamePostTitle = @"title";
+static NSString *ParamNamePostContent = @"content";
+
+
+//URL
+static NSString *const URLNameLogin = @"member/login/";
+static NSString *const URLNameJoin = @"member/create/";
+static NSString *const URLNameMain = @"post/";
+static NSString *const URLNameSearch = @"post/search";
+static NSString *const URLNameLogout = @"member/logout/";
+static NSString *const URLNameUserInfo = @"member/detail/";
 #endif /* PrefixHeader_pch */
