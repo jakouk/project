@@ -8,13 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomCollectionCell : UICollectionViewCell {
-    
-    UIImageView *imageView;
-    
-}
+@interface CustomCollectionCell : UICollectionViewCell
 
-@property (nonatomic, retain) UIImageView *imageView; //this imageview is the only thing we need right now.
+@property (nonatomic, strong) UIImageView *imageView; //this imageview is the only thing we need right now.
 
 
 @end

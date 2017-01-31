@@ -12,16 +12,16 @@
 @interface ModifyViewController ()
 <UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
-//imageCollectionView
+///imageCollectionView
 @property (weak, nonatomic) IBOutlet UICollectionView *imageCollection;
 
-//title
+///title
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 
-//content
+///content
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 
-//keyboardUpdown Check
+///keyboardUpdown Check
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyBoardView;
 
 @property NSString *postId;
@@ -210,7 +210,6 @@
     {
         self.keyBoardView.constant = 0;
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {

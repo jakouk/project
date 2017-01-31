@@ -28,20 +28,9 @@
 
 @synthesize collectionView, item;
 
-- (void)awakeFromNib {
-    
-    [super awakeFromNib];
-    self.userWord = [[NSMutableArray alloc] init];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [super viewDidAppear:YES];
+    self.userWord = [[NSMutableArray alloc] init];
     
 }
 

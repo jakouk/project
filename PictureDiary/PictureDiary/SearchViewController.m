@@ -12,7 +12,7 @@
 #import "CustomCell.h"
 #import "ReadViewController.h"
 
-@interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface SearchViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
@@ -32,6 +32,8 @@
     self.mainCollection.delegate = self;
     self.mainCollection.dataSource = self;
     self.searchArray = [[NSMutableArray alloc] init];
+    self.searchData.delegate = self;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,6 +130,21 @@
 //searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     
+    [self searchDataUpdate];
+   
+}
+
+//returnButton
+- (bool)textFieldShouldReturn:(UITextField *)textField {
+    
+    [self.searchData resignFirstResponder];
+    [self searchDataUpdate];
+    return YES;
+}
+
+//searchDataUpdateMethod
+- (void)searchDataUpdate {
+    
     [self.searchData resignFirstResponder];
     NSString *searchData = self.searchData.text;
     SearchViewController * __weak wself = self;
@@ -135,6 +152,7 @@
         [wself searchCollectionViewReload];
     }];
 }
+
 
 - (void)searchCollectionViewReload {
 
@@ -145,10 +163,8 @@
     
     if ([searchData objectForKey:@"results"] != nil ) {
         
-        NSLog(@"SearchViewController searchCollectionViewReload");
         [self.searchArray removeAllObjects];
         [self.searchArray addObjectsFromArray:[searchData objectForKey:@"results"]];
-        NSLog(@"SearchViewController self.searchArray.count = %ld",self.searchArray.count);
         
         [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
         [self.mainCollection reloadData];
@@ -174,7 +190,6 @@
     NSNumber *post = [wordDic objectForKey:@"id"];
     NSString *postId =  [post stringValue];
     
-    NSLog(@"Read setPost Id");
     [readScreen setPostId:postId];
     [self.navigationController pushViewController:readScreen animated:YES];
     
@@ -188,6 +203,8 @@
     [self.mainCollection reloadData];
     
 }
+
+
 
 /*
 #pragma mark - Navigation

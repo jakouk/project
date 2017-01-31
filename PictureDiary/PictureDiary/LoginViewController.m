@@ -8,9 +8,9 @@
 
 #import "LoginViewController.h"
 #import "JoinViewController.h"
-#import "MainTabBarController.h"
 #import "UserInfo.h"
 #import "RequestObject.h"
+#import "mainTabBarController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
@@ -268,7 +268,7 @@
 - (void)proceedToMain:(BOOL)animated {
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    MainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+    mainTabBarController *mainTabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
     
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     window.rootViewController = mainTabBarController;

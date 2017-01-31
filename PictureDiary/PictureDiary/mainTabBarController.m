@@ -1,18 +1,18 @@
 //
-//  WordNavigationController.m
+//  mainTabBarController.m
 //  PictureDiary
 //
-//  Created by geon hui kim on 2016. 11. 28..
-//  Copyright © 2016년 jakouk. All rights reserved.
+//  Created by jakouk on 2017. 1. 25..
+//  Copyright © 2017년 jakouk. All rights reserved.
 //
 
-#import "WordNavigationController.h"
+#import "mainTabBarController.h"
 
-@interface WordNavigationController ()
+@interface mainTabBarController ()
 
 @end
 
-@implementation WordNavigationController
+@implementation mainTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
