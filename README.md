@@ -16,4 +16,8 @@
 - 3명이서 같이 앱을 개발 ( git을 사용하여 )
 - 장고를 이용하여 서버를 구성 ( 서버는 다른 분과 협업 )
 
-<img src="https://raw.githubusercontent.com/jakouk/project/master/PictureDiary/introImage/image.tiff">
+<br/>
+이미지 클릭시 구동영상으로 이동됩니다.
+<br/>
+
+[<img src="https://raw.githubusercontent.com/jakouk/project/master/PictureDiary/introImage/image.tiff">](https://www.youtube.com/watch?v=4AmlarZCVtg&feature=youtu.be)
