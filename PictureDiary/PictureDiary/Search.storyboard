@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rrs-P6-WWu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rrs-P6-WWu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ema-FS-5s6">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="제목을 입력하세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ema-FS-5s6">
                                 <rect key="frame" x="16" y="84" width="287" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="Rzq-Gl-igH"/>
@@ -65,6 +65,7 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="USr-Ja-NL9" firstAttribute="top" secondItem="yDN-uh-To4" secondAttribute="bottom" id="5xr-rq-tk1"/>
                             <constraint firstAttribute="trailing" secondItem="yDN-uh-To4" secondAttribute="trailing" constant="10" id="6bW-LQ-btv"/>
@@ -76,16 +77,25 @@
                             <constraint firstItem="yDN-uh-To4" firstAttribute="leading" secondItem="Dpl-Ne-7nT" secondAttribute="leading" constant="10" id="t9W-di-TkQ"/>
                             <constraint firstItem="yDN-uh-To4" firstAttribute="top" secondItem="ema-FS-5s6" secondAttribute="bottom" constant="20" id="xG8-kM-OrF"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="vdT-Tz-dWP" appends="YES" id="mmu-Wm-4gO"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Yd5-bc-sGL"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mainCollection" destination="yDN-uh-To4" id="bou-eP-niu"/>
                         <outlet property="searchData" destination="ema-FS-5s6" id="2TI-dm-Sxk"/>
+                        <outlet property="tapGesture" destination="vdT-Tz-dWP" id="BYf-Al-JIb"/>
                         <segue destination="Eyr-VR-L83" kind="push" id="pYH-GK-Wgq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zmu-Cr-xaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vdT-Tz-dWP">
+                    <connections>
+                        <action selector="touchupInsideTapGesture:" destination="kIa-ME-ilH" id="1YZ-x8-1bK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1100" y="173.16341829085459"/>
         </scene>

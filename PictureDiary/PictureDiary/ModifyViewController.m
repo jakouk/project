@@ -37,6 +37,7 @@
     
     self.imageCollection.dataSource = self;
     self.imageCollection.delegate = self;
+    
     [self.imageCollection setShowsHorizontalScrollIndicator:NO];
     
     // imageList
@@ -50,7 +51,12 @@
     NSLog(@"self.modifiedImageList.count = %ld",self.modifiedImageList.count);
     
     self.titleTextField.text = [[UserInfo sharedUserInfo].readData objectForKey:@"title"];
+    [self.titleTextField setFont:[UIFont systemFontOfSize:20]];
+    self.titleTextField.textAlignment = NSTextAlignmentCenter;
+    
+    
     self.contentTextView.text = [[UserInfo sharedUserInfo].readData objectForKey:@"content"];
+    [self.contentTextView setFont:[UIFont systemFontOfSize:20]];
     
     NSNumber *postNumber = [[NSNumber alloc] init];
     postNumber = [[UserInfo sharedUserInfo].readData objectForKey:@"id"];
@@ -223,6 +229,13 @@
     [self.contentTextView resignFirstResponder];
     
 }
+
+- (IBAction)touchupInsideBackButton:(UIBarButtonItem *)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 
 /*
 #pragma mark - Navigation

@@ -19,6 +19,8 @@
 
 @property NSMutableArray *searchArray;
 
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+
 @end
 
 @implementation SearchViewController
@@ -33,6 +35,8 @@
     self.mainCollection.dataSource = self;
     self.searchArray = [[NSMutableArray alloc] init];
     self.searchData.delegate = self;
+    
+    self.tapGesture.cancelsTouchesInView = NO;
     
 }
 
@@ -53,16 +57,15 @@
     
     return self.searchArray.count;
 }
-
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    // 7, 17, 27..개 마다 MainNextUrl이 존재하면 데이터를 부른다.
     if ( indexPath.row %10 == 7 ) {
         
         if ( self.searchArray.count == indexPath.row + 3 ) {
             
-            if ( [UserInfo sharedUserInfo].mainNextUrl != nil ) {
-                
+            if ( ![[UserInfo sharedUserInfo].searchNextUrl isKindOfClass:[NSNull class]]) {
                 SearchViewController * __weak wself = self;
                 
                 [PDSearchManager reqeustAddSearch:[UserInfo sharedUserInfo].searchNextUrl updateFinishDataBlock:^{
@@ -96,7 +99,7 @@
             NSDictionary *imageSize = [imageArray objectAtIndex:0];
             NSDictionary *imageURL = [imageSize objectForKey:@"image"];
             NSURL *url = [NSURL URLWithString:[imageURL objectForKey:@"medium_square_crop"]];
-            [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
+            [cell.imageView sd_setImageWithURL:url placeholderImage:nil];
             
             
         } else {
@@ -159,8 +162,6 @@
     NSDictionary *searchData = [[NSDictionary alloc] init];
     searchData = [UserInfo sharedUserInfo].searchData;
     
-    NSLog(@" SearchViewController = %@",searchData);
-    
     if ([searchData objectForKey:@"results"] != nil ) {
         
         [self.searchArray removeAllObjects];
@@ -195,25 +196,26 @@
     
 }
 
+#pragma addCellMethod
+// addCellMethod
 - (void)addCellMethod{
-    
     NSDictionary *wordDic = [UserInfo sharedUserInfo].searchData;
-    [self.searchArray addObjectsFromArray:[wordDic objectForKey:@"results"]];
-    [UserInfo sharedUserInfo].searchNextUrl = [wordDic objectForKey:@"next"];
-    [self.mainCollection reloadData];
     
+    if (wordDic != nil) {
+        
+        [self.searchArray addObjectsFromArray:[wordDic objectForKey:@"results"]];
+        [UserInfo sharedUserInfo].searchNextUrl = [wordDic objectForKey:@"next"];
+        [self.mainCollection reloadData];
+    }
+
+}
+
+- (IBAction)touchupInsideTapGesture:(UITapGestureRecognizer *)sender {
+    
+    [self.searchData resignFirstResponder];
 }
 
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

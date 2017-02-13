@@ -26,7 +26,6 @@
 }
 
 
-//뷰가 화면에 나타난 후에 테이블뷰 델리게이트 실행
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -58,19 +57,16 @@
     
 }
 
-//session
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-//row
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
-//cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -79,7 +75,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        //사용자 이름
+        // 사용자 이름
         if (indexPath.row == 0) {
             [cell.imageView setImage:[UIImage imageNamed:@"Nameicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
@@ -87,7 +83,7 @@
             [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"username"]]];
         }
         
-        //사다리 계정
+        // 사다리 계정
         if (indexPath.row == 1) {
             [cell.imageView setImage:[UIImage imageNamed:@"Emailicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
@@ -95,7 +91,7 @@
             [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@",[self.userDataDic objectForKey:@"email"]]];
         }
         
-        //id
+        // Join Day
         if (indexPath.row == 2) {
             [cell.imageView setImage:[UIImage imageNamed:@"IDCardicon"]];
             [cell.imageView setContentMode:UIViewContentModeScaleToFill];
@@ -113,20 +109,17 @@
     return cell;
 }
 
-//cell height
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
 
-//header
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *headerString = [NSString stringWithFormat:@"프로필"];
     return headerString;
 }
 
-//header height
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
@@ -173,14 +166,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

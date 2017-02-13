@@ -11,9 +11,9 @@
 #import "UserInfo.h"
 #import "RequestObject.h"
 #import "mainTabBarController.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKShareKit/FBSDKShareKit.h>
 
 
 @interface LoginViewController () <UITextFieldDelegate, UIScrollViewDelegate>
@@ -41,9 +41,9 @@
     [self registerForKeyboardNotifications];
     
     // 페이스북 로그인 버튼 클릭시 액션
-    [self.fbLoginButton addTarget:self
-                           action:@selector(onTouchupInsideFbLoginButton:)
-                 forControlEvents:UIControlEventTouchUpInside];
+//    [self.fbLoginButton addTarget:self
+//                           action:@selector(onTouchupInsideFbLoginButton:)
+//                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 
@@ -276,8 +276,9 @@
     
 }
 
-
+/*
 - (void)onTouchupInsideFbLoginButton:(UIButton *)sender {
+    
     
     if ([FBSDKAccessToken currentAccessToken] == nil) {
         
@@ -312,7 +313,7 @@
     }
     
 }
-
+*/
 
 - (void)onTouchupInsideJoinButton:(UIButton *)sender {
     

@@ -16,9 +16,13 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 
-//제목라벨, 내용
+// 제목라벨
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextView *contentText;
+
+// 네비게이션바
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+
 
 @property NSMutableArray *imageList;
 @property NSDictionary *wordDic;
@@ -32,8 +36,14 @@
     [super viewDidLoad];
     
     self.contentText.editable = NO;
+    [self.navigationController.navigationBar setHidden:YES];
+
     
-    [self.navigationController.navigationBar setHidden:NO];
+    // navigationBar BottomLine hidde
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
+                                      forBarPosition:UIBarPositionAny
+                                          barMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
     UIBarButtonItem *modifiedButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                                                                     target:self action:@selector(touchinsideModifiedButton)];
@@ -51,7 +61,9 @@
     self.imageScrollView.alwaysBounceVertical = NO;
     self.imageScrollView.alwaysBounceHorizontal = NO;
     
+    // 스크롤 바운딩 효과 비 적용
     self.imageScrollView.bounces = NO;
+
     
     //페이징 가능 여부 YES
     self.imageScrollView.pagingEnabled = YES;
@@ -68,6 +80,11 @@
     
     //페이지 컨트롤 값변경시 이벤트 처리 등록
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
+    // contentText FontSize 20
+    [self.contentText setFont:[UIFont systemFontOfSize:20]];
+    
+    
 }
 
 
@@ -77,26 +94,20 @@
     self.wordDic = [[NSDictionary alloc] init];
 }
 
-//스크롤이 변경될때 page의 currentPage 설정
-- (void)scrollViewDidScroll:(UIScrollView *)sender
-{
-    self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
-}
 
-//페이지 컨트롤 값이 변경될때, 스크롤뷰 위치 설정
-- (void) pageChangeValue:(id)sender
-{
-    UIPageControl *pControl = (UIPageControl *) sender;
-    [self.imageScrollView setContentOffset:CGPointMake(pControl.currentPage * 320, 0) animated:YES];
-}
-
-// 스크롤바를 보였다가 사라지게 함
+// 화면이 불릴때 마다 실행
 - (void)viewDidAppear:(BOOL)animated
 {
+    for (UIView *v in self.imageScrollView.subviews) {
+        if ([v isKindOfClass:[UIImageView class]]) {
+            [v removeFromSuperview];
+        }
+    }
+    
     [PDPageManager requestReadData:self.postId updateFinishDataBlock:^{
         
         NSDictionary *wordDictionary = [UserInfo sharedUserInfo].readData;
-        self.titleLabel.text = [wordDictionary objectForKey:@"title"];
+        self.navigationBar.topItem.title = [wordDictionary objectForKey:@"title"];
         self.contentText.text = [wordDictionary objectForKey:@"content"];
         
         self.imageList = [wordDictionary objectForKey:@"photos"];
@@ -117,12 +128,11 @@
             NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
             
             UIImageView *fullSizeImage = [[UIImageView alloc] init];
-            [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-            
             [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
                                                imagePointWidth, imagePointHeight)];
-            
             [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
+            
+            [fullSizeImage sd_setImageWithURL:url placeholderImage:nil];
             [self.imageScrollView addSubview:fullSizeImage];
             
         }
@@ -137,6 +147,21 @@
     
     [self.imageScrollView flashScrollIndicators];
 }
+
+
+//스크롤이 변경될때 page의 currentPage 설정
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
+}
+
+//페이지 컨트롤 값이 변경될때, 스크롤뷰 위치 설정
+- (void) pageChangeValue:(id)sender
+{
+    UIPageControl *pControl = (UIPageControl *) sender;
+    [self.imageScrollView setContentOffset:CGPointMake(pControl.currentPage * 320, 0) animated:YES];
+}
+
 
 #pragma mark - modified button
 //edit button
@@ -195,49 +220,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)requestReadViewChange:(NSNotification *)noti {
-    
-        NSDictionary *wordDictionary = noti.userInfo;
-        self.titleLabel.text = [wordDictionary objectForKey:@"title"];
-        self.contentText.text = [wordDictionary objectForKey:@"content"];
-    
-        self.imageList = [wordDictionary objectForKey:@"photos"];
-        NSInteger imageCount = self.imageList.count;
-    
-        //photosArray
-    
-        CGFloat imagePointWidth = self.imageScrollView.frame.size.width;
-        CGFloat imagePointHeight = self.imageScrollView.frame.size.height;
-    
-        [self.imageScrollView setContentSize:CGSizeMake(imagePointWidth * imageCount,
-                                                    +  imagePointHeight)];
-    
-        for ( NSInteger i = 0; i < imageCount ; i ++ ) {
-        
-                NSDictionary *photos  = [self.imageList objectAtIndex:i];
-                NSDictionary *image = [photos objectForKey:@"image"];
-                NSURL *url = [NSURL URLWithString:[image objectForKey:@"full_size"]];
-        
-                UIImageView *fullSizeImage = [[UIImageView alloc] init];
-                [fullSizeImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home"]];
-        
-                [fullSizeImage setFrame:CGRectMake(imagePointWidth * i, 0,
-                                                imagePointWidth, imagePointHeight)];
-        
-                [fullSizeImage setContentMode:UIViewContentModeScaleToFill];
-                [self.imageScrollView addSubview:fullSizeImage];
-            
-        }
-    
-    //페이지 갯수
-    self.pageControl.numberOfPages = self.imageList.count;
-    
-    //페이지 컨트롤 값변경시 이벤트 처리 등록
-    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
-    
-}
-
-
 - (void)afterDeleteViewChangeMehtod {
     
     UIViewController *firstViewController = self.navigationController.viewControllers.firstObject;
@@ -248,6 +230,20 @@
     }
     
 }
+
+// backButtonClick
+- (IBAction)backButtonTouchUpInside:(UIBarButtonItem *)sender {
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// editButtonClick
+- (IBAction)editButtonTouchUpInside:(UIBarButtonItem *)sender {
+    
+    [self touchinsideModifiedButton];
+    
+}
+
 
 
 @end

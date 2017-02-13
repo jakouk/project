@@ -15,12 +15,16 @@
 #import <Photos/PHImageManager.h>
 
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout, UITextViewDelegate>
+UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 
 //PHPhoto
 @property (nonatomic, weak)PHPhotoLibrary *specialLibrays;
 @property (nonatomic, weak)PHAssetChangeRequest *chageRequest;
 @property (nonatomic, weak)PHObjectPlaceholder *assetPlaceholder;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoCollectionHeight;
+
+
 
 @property (nonatomic, weak) IBOutlet UITextField *subjectTextfiled;
 @property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
@@ -67,6 +71,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     
     self.collectionViewImage.dataSource = self;
     self.collectionViewImage.delegate = self;
+    
+    self.subjectTextfiled.delegate = self;
     self.bodyTextView.delegate = self;
     
     self.seletedImages = [[NSMutableArray alloc] init];
@@ -74,10 +80,24 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     
     NSLog(@"%lf",self.view.frame.size.height);
     
+    [self.subjectTextfiled setFont:[UIFont systemFontOfSize:20]];
+    
+    [self.bodyTextView setFont:[UIFont systemFontOfSize:20]];
     self.bodyTextView.layer.borderWidth = 1.0;
     self.bodyTextView.layer.borderColor = [UIColor blackColor].CGColor;
     
     [self loadImageInDevicePhotoLibray:self.photoCount];
+    
+    // each Product photoCollection Height
+    if (self.view.frame.size.height >= 736) {
+        
+        self.photoCollectionHeight.constant = 250;
+        
+    } else if (self.view.frame.size.height >=667) {
+        
+        self.photoCollectionHeight.constant = 200;
+        
+    }
     
 }
 
@@ -165,6 +185,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
             }];
         }
         
+        
         self.indicator.hidden = NO;
         [self.indicator startAnimating];
         
@@ -197,12 +218,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
     self.indicator.hidden = YES;
     [self.indicator stopAnimating];
     
-}
-
-//keyboard down
-- (IBAction)touchupInsideBackground:(UITapGestureRecognizer *)sender {
+    [self.tabBarController setSelectedIndex:0];
     
-    [self.subjectTextfiled resignFirstResponder];
 }
 
 //make cell number
@@ -340,29 +357,13 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate>
                 } completion:nil];
             }];
         });
-        
     }
-    
 }
 
-//textView range.lenth
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+// returnKey push
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    NSCharacterSet *doneButtonCharacterSet = [NSCharacterSet newlineCharacterSet];
-    NSRange replacementTextRange = [text rangeOfCharacterFromSet:doneButtonCharacterSet];
-    NSUInteger location = replacementTextRange.location;
-    
-    //텍스트가 140자가 넘지 않도록 제한
-    if (textView.text.length + text.length > 140){
-        if (location != NSNotFound){
-            [textView resignFirstResponder];
-        }
-        return NO;
-    }
-    else if (location != NSNotFound){
-        [textView resignFirstResponder];
-        return NO;
-    }
+    [self.bodyTextView becomeFirstResponder];
     
     return YES;
 }
