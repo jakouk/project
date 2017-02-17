@@ -52,12 +52,12 @@
     
 }
 
-//cell numbers
+// cell numbers
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return self.searchArray.count;
 }
-//make cell
+// make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     // 7, 17, 27..개 마다 MainNextUrl이 존재하면 데이터를 부른다.
@@ -84,14 +84,14 @@
     [cellImageView setContentMode:UIViewContentModeScaleAspectFit];
     
     if (self.searchArray.count != 0) {
-        //title
+        // title
         NSDictionary *wordDic = [[NSDictionary alloc] init];
         wordDic = (NSDictionary *)[self.searchArray objectAtIndex:indexPath.row];
         
         NSString *title =  [wordDic objectForKey:@"title"];
         cell.nameLabel.text = title;
         
-        //image
+        // image
         NSArray *imageArray = [wordDic objectForKey:@"photos"];
         
         if (imageArray.count != 0) {
@@ -114,30 +114,30 @@
 
 
 
-//cell size
+// cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake( (self.view.frame.size.width-20)/2- 5, (self.view.frame.size.width-20)/2- 5);
 }
 
-//inside padding
+// inside padding
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
 
-//cell spacing
+// cell spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 10;
 }
 
 
-//searchButton Click
+// searchButton Click
 - (IBAction)touchupInsideSearchButton:(UIButton *)sender {
     
     [self searchDataUpdate];
    
 }
 
-//returnButton
+// returnButton
 - (bool)textFieldShouldReturn:(UITextField *)textField {
     
     [self.searchData resignFirstResponder];
@@ -145,7 +145,7 @@
     return YES;
 }
 
-//searchDataUpdateMethod
+// searchDataUpdateMethod
 - (void)searchDataUpdate {
     
     [self.searchData resignFirstResponder];
@@ -173,11 +173,11 @@
     
 }
 
-//selected cell
+// selected cell
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    //선택시 구동
+    // 선택시 구동
     UICollectionViewCell *cell = [self.mainCollection cellForItemAtIndexPath:indexPath];
     
     cell.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -186,7 +186,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Read" bundle:nil];
     ReadViewController *readScreen = [storyboard instantiateViewControllerWithIdentifier:@"ReadViewController"];
     
-    //post-id
+    // post-id
     NSDictionary *wordDic =  [self.searchArray objectAtIndex:indexPath.row];
     NSNumber *post = [wordDic objectForKey:@"id"];
     NSString *postId =  [post stringValue];
