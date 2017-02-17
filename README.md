@@ -20,4 +20,4 @@
 이미지 클릭시 구동영상으로 이동됩니다.
 <br/>
 
-[<img src="https://raw.githubusercontent.com/jakouk/project/master/PictureDiary/introImage/image.tiff">](https://www.youtube.com/watch?v=4AmlarZCVtg&feature=youtu.be)
+[<img src="https://raw.githubusercontent.com/jakouk/project/master/PictureDiary/introImage/image.tiff">](https://www.youtube.com/watch?v=JKyGPbUjDIQ)
