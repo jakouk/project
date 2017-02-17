@@ -17,42 +17,30 @@
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 
-//PHPhoto
-@property (nonatomic, weak)PHPhotoLibrary *specialLibrays;
-@property (nonatomic, weak)PHAssetChangeRequest *chageRequest;
-@property (nonatomic, weak)PHObjectPlaceholder *assetPlaceholder;
+
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoCollectionHeight;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
+@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+
+//PHPhoto
+@property (weak, nonatomic) PHPhotoLibrary *specialLibrays;
+@property (weak, nonatomic) PHAssetChangeRequest *chageRequest;
+@property (weak, nonatomic) PHObjectPlaceholder *assetPlaceholder;
 
 
-
-@property (nonatomic, weak) IBOutlet UITextField *subjectTextfiled;
-@property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
-
-//keyBoard Down Tap
-@property (nonatomic, weak) IBOutlet UITapGestureRecognizer *tapGesture;
-
-
-//seletedImages ( Dictionary )
 @property NSMutableArray *seletedImages;
-
-
-//deleteImage
 @property UIButton *deleteButton;
+@property (nonatomic) NSMutableArray *photoArray;
+@property (weak, nonatomic) UIImage *photoImage;
 
-//collectionView Image
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionViewImage;
-
-//photoArray
-@property (nonatomic, strong) NSMutableArray *photoArray;
-@property (nonatomic, weak) UIImage *photoImage;
-
-//photoInteger
 @property NSInteger photoCount;
 @property NSInteger photoEnd;
 
-//indicatior
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
+
 
 @end
 
@@ -372,7 +360,6 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
     [self.subjectTextfiled resignFirstResponder];
     [self.bodyTextView resignFirstResponder];
-    
 }
 
 

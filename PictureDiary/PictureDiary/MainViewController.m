@@ -14,19 +14,17 @@
 
 @interface MainViewController ()
 
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+
+@property (nonatomic) NSArray *item;
 @property (nonatomic) NSMutableArray *userWord;
-
-//refreshControl ( NetworkData )
 @property (nonatomic) UIRefreshControl *refreshControl;
-
-//zeroData Distinction
 @property (nonatomic) UILabel *zeroData;
 
 @end
 
 @implementation MainViewController
 
-@synthesize collectionView, item;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

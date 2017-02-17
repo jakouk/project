@@ -11,9 +11,4 @@
 @interface MainViewController : UIViewController
 <UICollectionViewDelegate, UICollectionViewDataSource>
 
-//스토리보드 컬렉션뷰
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-
-@property (nonatomic) NSArray *item;
-
 @end

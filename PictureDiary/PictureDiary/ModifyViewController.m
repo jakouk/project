@@ -12,20 +12,13 @@
 @interface ModifyViewController ()
 <UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
-///imageCollectionView
+
 @property (weak, nonatomic) IBOutlet UICollectionView *imageCollection;
-
-///title
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
-
-///content
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
-
-///keyboardUpdown Check
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyBoardView;
 
 @property NSString *postId;
-
 @property NSMutableArray *modifiedImageList;
 
 @end
@@ -45,10 +38,6 @@
     
     //title, content, image
     [self.modifiedImageList addObjectsFromArray:[[UserInfo sharedUserInfo].readData objectForKey:@"photos"]];
-    
-    NSLog(@"readData photos count = %@",[[UserInfo sharedUserInfo].readData objectForKey:@"photos"]);
-    
-    NSLog(@"self.modifiedImageList.count = %ld",self.modifiedImageList.count);
     
     self.titleTextField.text = [[UserInfo sharedUserInfo].readData objectForKey:@"title"];
     [self.titleTextField setFont:[UIFont systemFontOfSize:20]];

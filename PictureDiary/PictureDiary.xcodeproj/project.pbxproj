@@ -152,15 +152,12 @@
 			children = (
 				73C6E97B1DEBE68400CDF36D /* AppDelegate.h */,
 				73C6E97C1DEBE68400CDF36D /* AppDelegate.m */,
-				73F332071E38D7780052F768 /* mainTabBarController.h */,
-				73F332081E38D7780052F768 /* mainTabBarController.m */,
-				73F332031E38D64D0052F768 /* StoryBoard */,
 				73C6E9841DEBE68400CDF36D /* Assets.xcassets */,
+				73CA4F861E57151400102FBB /* ViewController */,
+				73CA4F851E5714F500102FBB /* Cell */,
+				73F332031E38D64D0052F768 /* StoryBoard */,
 				73C6E9B11DEBF96700CDF36D /* UserInfo */,
 				73C6E9B21DEBF97B00CDF36D /* Network */,
-				73C6E9A71DEBF48600CDF36D /* Login */,
-				73C6E9A81DEBF4A900CDF36D /* ETC */,
-				73C6E9A91DEBF4CE00CDF36D /* Diary */,
 				73C6E9861DEBE68400CDF36D /* LaunchScreen.storyboard */,
 				73C6E9891DEBE68400CDF36D /* Info.plist */,
 				73D1C1D61DF928B800A47969 /* PrefixHeader.pch */,
@@ -175,42 +172,6 @@
 				73C6E9791DEBE68400CDF36D /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		73C6E9A71DEBF48600CDF36D /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				73C6E98F1DEBEF7100CDF36D /* LoginViewController.h */,
-				73C6E9901DEBEF7100CDF36D /* LoginViewController.m */,
-				73C6E9921DEBEF8B00CDF36D /* JoinViewController.h */,
-				73C6E9931DEBEF8B00CDF36D /* JoinViewController.m */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
-		73C6E9A81DEBF4A900CDF36D /* ETC */ = {
-			isa = PBXGroup;
-			children = (
-				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
-				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
-				73F0C54F1E028CD8004F125C /* CustomCollectionCell.h */,
-				73F0C5501E028CD8004F125C /* CustomCollectionCell.m */,
-				73C6E99B1DEBEFDB00CDF36D /* UserViewController.h */,
-				73C6E99C1DEBEFDB00CDF36D /* UserViewController.m */,
-				73C6E99E1DEBEFE600CDF36D /* SearchViewController.h */,
-				73C6E99F1DEBEFE600CDF36D /* SearchViewController.m */,
-			);
-			name = ETC;
-			sourceTree = "<group>";
-		};
-		73C6E9A91DEBF4CE00CDF36D /* Diary */ = {
-			isa = PBXGroup;
-			children = (
-				BB7310631DF5DA4900B4BF0C /* main */,
-				BB7310641DF5DA5300B4BF0C /* read */,
-				BB7310651DF5DA5A00B4BF0C /* modified */,
-			);
-			name = Diary;
 			sourceTree = "<group>";
 		};
 		73C6E9B11DEBF96700CDF36D /* UserInfo */ = {
@@ -241,6 +202,99 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		73CA4F851E5714F500102FBB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				73F0C54F1E028CD8004F125C /* CustomCollectionCell.h */,
+				73F0C5501E028CD8004F125C /* CustomCollectionCell.m */,
+				73F0C54C1E028C03004F125C /* CustomCell.h */,
+				73F0C54D1E028C03004F125C /* CustomCell.m */,
+				BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		73CA4F861E57151400102FBB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				73F332071E38D7780052F768 /* mainTabBarController.h */,
+				73F332081E38D7780052F768 /* mainTabBarController.m */,
+				73CA4F8D1E571BE300102FBB /* WriteVC */,
+				73CA4F891E571BAC00102FBB /* UserVC */,
+				73CA4F8C1E571BDA00102FBB /* SearchVC */,
+				73CA4F871E571B7600102FBB /* LoginJoinVC */,
+				73CA4F881E571B8C00102FBB /* MainVC */,
+				73CA4F8A1E571BC500102FBB /* ReadVC */,
+				73CA4F8B1E571BCC00102FBB /* ModifyVC */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		73CA4F871E571B7600102FBB /* LoginJoinVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E98F1DEBEF7100CDF36D /* LoginViewController.h */,
+				73C6E9901DEBEF7100CDF36D /* LoginViewController.m */,
+				73C6E9921DEBEF8B00CDF36D /* JoinViewController.h */,
+				73C6E9931DEBEF8B00CDF36D /* JoinViewController.m */,
+			);
+			name = LoginJoinVC;
+			sourceTree = "<group>";
+		};
+		73CA4F881E571B8C00102FBB /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
+				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
+			);
+			name = MainVC;
+			sourceTree = "<group>";
+		};
+		73CA4F891E571BAC00102FBB /* UserVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E99B1DEBEFDB00CDF36D /* UserViewController.h */,
+				73C6E99C1DEBEFDB00CDF36D /* UserViewController.m */,
+			);
+			name = UserVC;
+			sourceTree = "<group>";
+		};
+		73CA4F8A1E571BC500102FBB /* ReadVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
+				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
+			);
+			name = ReadVC;
+			sourceTree = "<group>";
+		};
+		73CA4F8B1E571BCC00102FBB /* ModifyVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
+				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
+			);
+			name = ModifyVC;
+			sourceTree = "<group>";
+		};
+		73CA4F8C1E571BDA00102FBB /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E99E1DEBEFE600CDF36D /* SearchViewController.h */,
+				73C6E99F1DEBEFE600CDF36D /* SearchViewController.m */,
+			);
+			name = SearchVC;
+			sourceTree = "<group>";
+		};
+		73CA4F8D1E571BE300102FBB /* WriteVC */ = {
+			isa = PBXGroup;
+			children = (
+				73C6E9981DEBEFAD00CDF36D /* WriteViewController.h */,
+				73C6E9991DEBEFAD00CDF36D /* WriteViewController.m */,
+			);
+			name = WriteVC;
+			sourceTree = "<group>";
+		};
 		73F332031E38D64D0052F768 /* StoryBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,36 +306,6 @@
 				73C6E9BB1DEC409500CDF36D /* User.storyboard */,
 			);
 			name = StoryBoard;
-			sourceTree = "<group>";
-		};
-		BB7310631DF5DA4900B4BF0C /* main */ = {
-			isa = PBXGroup;
-			children = (
-				73C6E9951DEBEF9800CDF36D /* MainViewController.h */,
-				73C6E9961DEBEF9800CDF36D /* MainViewController.m */,
-				73F0C54C1E028C03004F125C /* CustomCell.h */,
-				73F0C54D1E028C03004F125C /* CustomCell.m */,
-				BB73106C1DF5DAE100B4BF0C /* CellStyle.xib */,
-			);
-			name = main;
-			sourceTree = "<group>";
-		};
-		BB7310641DF5DA5300B4BF0C /* read */ = {
-			isa = PBXGroup;
-			children = (
-				73C6E9A11DEBF39100CDF36D /* ReadViewController.h */,
-				73C6E9A21DEBF39100CDF36D /* ReadViewController.m */,
-			);
-			name = read;
-			sourceTree = "<group>";
-		};
-		BB7310651DF5DA5A00B4BF0C /* modified */ = {
-			isa = PBXGroup;
-			children = (
-				73C6E9A41DEBF46000CDF36D /* ModifyViewController.h */,
-				73C6E9A51DEBF46000CDF36D /* ModifyViewController.m */,
-			);
-			name = modified;
 			sourceTree = "<group>";
 		};
 		D83FF282BD27D2370D0FDB4F /* Frameworks */ = {

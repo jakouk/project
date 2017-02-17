@@ -13,16 +13,11 @@
 @interface ReadViewController ()
 <UIScrollViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
-@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
-
-// 제목라벨
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UITextView *contentText;
-
-// 네비게이션바
+@property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *contentText;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-
 
 @property NSMutableArray *imageList;
 @property NSDictionary *wordDic;

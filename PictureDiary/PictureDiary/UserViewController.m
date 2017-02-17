@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *userTableView;
 
 @property NSDictionary *userDataDic;
+
 @end
 
 @implementation UserViewController

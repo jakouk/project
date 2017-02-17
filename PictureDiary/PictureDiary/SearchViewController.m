@@ -16,10 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *mainCollection;
 @property (weak, nonatomic) IBOutlet UITextField *searchData;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 
 @property NSMutableArray *searchArray;
-
-@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 
 @end
 
