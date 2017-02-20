@@ -10,8 +10,7 @@
 #import <UIImageView+WebCache.h>
 #import "MainViewController.h"
 
-@interface ReadViewController ()
-<UIScrollViewDelegate>
+@interface ReadViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
@@ -93,6 +92,8 @@
 // 화면이 불릴때 마다 실행
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:YES];
+    
     for (UIView *v in self.imageScrollView.subviews) {
         if ([v isKindOfClass:[UIImageView class]]) {
             [v removeFromSuperview];
@@ -149,6 +150,7 @@
 {
     self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
 }
+
 
 //페이지 컨트롤 값이 변경될때, 스크롤뷰 위치 설정
 - (void) pageChangeValue:(id)sender
@@ -210,10 +212,12 @@
     [self presentViewController:manuAlert animated:YES completion:nil];
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (void)afterDeleteViewChangeMehtod {
     
@@ -226,11 +230,13 @@
     
 }
 
+
 // backButtonClick
 - (IBAction)backButtonTouchUpInside:(UIBarButtonItem *)sender {
 
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 // editButtonClick
 - (IBAction)editButtonTouchUpInside:(UIBarButtonItem *)sender {

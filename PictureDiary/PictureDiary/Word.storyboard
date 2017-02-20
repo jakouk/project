@@ -131,12 +131,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="word" id="JkO-U6-PZh"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="objectTextfiled" destination="jSE-OA-5sp" id="kpH-2t-UEY"/>
-                        <outlet property="scrollView" destination="kP8-g4-oKA" id="fKQ-mf-C1X"/>
-                        <outlet property="scrollViewHeight" destination="C2y-2v-X2R" id="JHR-kL-aeT"/>
-                        <outlet property="subjectTextfiled" destination="1dg-JW-WcT" id="4KE-mD-FTJ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1s-g3-sMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="Gk4-2A-ZGy">

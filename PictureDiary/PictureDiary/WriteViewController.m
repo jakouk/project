@@ -17,8 +17,6 @@
 @interface WriteViewController () <UICollectionViewDelegate, UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 
-
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photoCollectionHeight;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewImage;
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextfiled;
@@ -40,13 +38,10 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 @property NSInteger photoCount;
 @property NSInteger photoEnd;
 
-
-
 @end
 
 @implementation WriteViewController
 
-//Using generated synthesizers
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,6 +84,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
 }
 
+
 - (void)loadImageInDevicePhotoLibray:(NSUInteger)range{
     
     self.photoCount +=40;
@@ -123,6 +119,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     }
     
 }
+
 
 //CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
@@ -194,6 +191,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     }
 }
 
+
 //After write
 - (void)writeViewReset {
     
@@ -210,11 +208,13 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
 }
 
+
 //make cell number
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return self.photoArray.count;
 }
+
 
 //make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,10 +252,12 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
 }
 
+
 //cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake((self.view.frame.size.width - 55) /4, (self.view.frame.size.width - 55 )/4);
 }
+
 
 //in Spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -266,6 +268,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 5;
 }
+
 
 //cell selected
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -328,6 +331,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     }
 }
 
+
 //scrolldragg 시작시점
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     
@@ -348,6 +352,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     }
 }
 
+
 // returnKey push
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
@@ -355,6 +360,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
     return YES;
 }
+
 
 - (IBAction)tapGestureMethod:(UITapGestureRecognizer *)sender {
     

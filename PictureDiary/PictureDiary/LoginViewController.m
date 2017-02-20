@@ -219,8 +219,10 @@
         
     } else {
 
+        __block LoginViewController *__weak wself = self;
+        
         [PDLoginManager requestLoginData:email userPass:password updateFinishDataBlock:^{
-            [self userLogin];
+            [wself userLogin];
         }];
     }
     

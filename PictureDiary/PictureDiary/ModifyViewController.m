@@ -47,8 +47,7 @@
     self.contentTextView.text = [[UserInfo sharedUserInfo].readData objectForKey:@"content"];
     [self.contentTextView setFont:[UIFont systemFontOfSize:20]];
     
-    NSNumber *postNumber = [[NSNumber alloc] init];
-    postNumber = [[UserInfo sharedUserInfo].readData objectForKey:@"id"];
+    NSNumber *postNumber = postNumber = [[UserInfo sharedUserInfo].readData objectForKey:@"id"];
     self.postId = [[NSString alloc] initWithString:[postNumber stringValue]];
     
     //collectionView reload
@@ -67,9 +66,11 @@
 
 }
 
+
 - (void)collectionViewReload {
     [self.imageCollection reloadData];
 }
+
 
 #pragma mark - collection count
 //컬렉션뷰 세션 갯수
@@ -77,6 +78,7 @@
 {
     return 1;
 }
+
 
 //collectionView cell number
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -105,16 +107,19 @@
     return cell;
 }
 
+
 //셀 크기
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(self.imageCollection.frame.size.height, self.imageCollection.frame.size.height);
 }
 
+
 //컬렉션과 컬렉션 width 간격, 내부여백
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
+
 
 //셀간의 최소간격
 //위아래 간격 hight

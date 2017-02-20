@@ -87,7 +87,7 @@
                         <outlet property="mainCollection" destination="yDN-uh-To4" id="bou-eP-niu"/>
                         <outlet property="searchData" destination="ema-FS-5s6" id="2TI-dm-Sxk"/>
                         <outlet property="tapGesture" destination="vdT-Tz-dWP" id="BYf-Al-JIb"/>
-                        <segue destination="Eyr-VR-L83" kind="push" id="pYH-GK-Wgq"/>
+                        <segue destination="Eyr-VR-L83" kind="push" identifier="toReadViewController" id="pYH-GK-Wgq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zmu-Cr-xaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,7 +107,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63Y-4T-x3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1789.5999999999999" y="168.21589205397302"/>
+            <point key="canvasLocation" x="1788" y="173"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fai-UL-aw7">

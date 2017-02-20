@@ -20,6 +20,7 @@
 
 @implementation UserViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,6 +48,7 @@
     
 }
 
+
 #pragma mark - tableview setting
 //frame size
 - (void)tableviewFrameSize
@@ -58,15 +60,18 @@
     
 }
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -110,10 +115,12 @@
     return cell;
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
+
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -121,10 +128,12 @@
     return headerString;
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
 }
+
 
 #pragma mark - logout button
 - (IBAction)logoutButtonAction:(id)sender
@@ -161,6 +170,7 @@
     
     [self presentViewController:logoutAlert animated:YES completion:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

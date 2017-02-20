@@ -39,10 +39,12 @@
     
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -51,11 +53,14 @@
     
 }
 
+
 // cell numbers
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return self.searchArray.count;
 }
+
+
 // make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -84,8 +89,7 @@
     
     if (self.searchArray.count != 0) {
         // title
-        NSDictionary *wordDic = [[NSDictionary alloc] init];
-        wordDic = (NSDictionary *)[self.searchArray objectAtIndex:indexPath.row];
+        NSDictionary *wordDic = (NSDictionary *)[self.searchArray objectAtIndex:indexPath.row];
         
         NSString *title =  [wordDic objectForKey:@"title"];
         cell.nameLabel.text = title;
@@ -118,10 +122,12 @@
     return CGSizeMake( (self.view.frame.size.width-20)/2- 5, (self.view.frame.size.width-20)/2- 5);
 }
 
+
 // inside padding
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
+
 
 // cell spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -136,6 +142,7 @@
    
 }
 
+
 // returnButton
 - (bool)textFieldShouldReturn:(UITextField *)textField {
     
@@ -143,6 +150,7 @@
     [self searchDataUpdate];
     return YES;
 }
+
 
 // searchDataUpdateMethod
 - (void)searchDataUpdate {
@@ -158,8 +166,7 @@
 
 - (void)searchCollectionViewReload {
 
-    NSDictionary *searchData = [[NSDictionary alloc] init];
-    searchData = [UserInfo sharedUserInfo].searchData;
+    NSDictionary *searchData = [UserInfo sharedUserInfo].searchData;
     
     if ([searchData objectForKey:@"results"] != nil ) {
         
@@ -171,6 +178,7 @@
     }
     
 }
+
 
 // selected cell
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -195,6 +203,7 @@
     
 }
 
+
 #pragma addCellMethod
 // addCellMethod
 - (void)addCellMethod{
@@ -208,6 +217,7 @@
     }
 
 }
+
 
 - (IBAction)touchupInsideTapGesture:(UITapGestureRecognizer *)sender {
     
