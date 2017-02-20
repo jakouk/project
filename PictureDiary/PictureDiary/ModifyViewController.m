@@ -49,10 +49,7 @@
     
     NSNumber *postNumber = postNumber = [[UserInfo sharedUserInfo].readData objectForKey:@"id"];
     self.postId = [[NSString alloc] initWithString:[postNumber stringValue]];
-    
-    //collectionView reload
-    //[self collectionViewReload];
-    
+
     //keyboard
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillAnimate:)
@@ -67,12 +64,7 @@
 }
 
 
-- (void)collectionViewReload {
-    [self.imageCollection reloadData];
-}
-
-
-#pragma mark - collection count
+#pragma mark - collection Method
 //컬렉션뷰 세션 갯수
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -87,7 +79,6 @@
     return self.modifiedImageList.count;
 }
 
-#pragma mark - cell setting
 //셀 셋팅
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -127,7 +118,7 @@
     return 5;
 }
 
-#pragma mark - text field
+#pragma mark - textfield Delegate
 //텍스트필드를 처음눌렀을 경우에 동작하는 메서드
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {   //메인스크롤이 위로 올라감
@@ -147,7 +138,7 @@
     return YES;
 }
 
-#pragma mark - text view
+#pragma mark - textview Delegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     return YES;
@@ -181,6 +172,7 @@
     return YES;
 }
 
+#pragma mark - checkButton ( UpdateData )
 //checkBtn Click
 - (IBAction)touchupInsideEditingFinishButton:(UIButton *)sender {
     
@@ -189,6 +181,7 @@
     }];
 }
 
+
 //readViewUpdate
 - (void)readViewUpdateMethod {
     
@@ -196,7 +189,15 @@
 }
 
 
-//keyboard up
+#pragma mark - backButton
+- (IBAction)touchupInsideBackButton:(UIBarButtonItem *)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+#pragma mark - etc( keyboard Notification, tapGesture )
+// keyboard up
 - (void)keyboardWillAnimate:(NSNotification *)notification {
     
     CGRect keyboardBounds;
@@ -212,10 +213,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (IBAction)tapGestureMethod:(UITapGestureRecognizer *)sender {
     
@@ -224,11 +221,7 @@
     
 }
 
-- (IBAction)touchupInsideBackButton:(UIBarButtonItem *)sender {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
+
 
 
 /*

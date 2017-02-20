@@ -84,7 +84,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
 }
 
-
+# pragma mark - PHphoto method
 - (void)loadImageInDevicePhotoLibray:(NSUInteger)range{
     
     self.photoCount +=40;
@@ -120,8 +120,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
     
 }
 
-
-//CheckButton
+# pragma mark - checkButton
+// CheckButton
 - (IBAction)touchupInsideCheckButton:(UIButton *)sender {
     
     if ( self.seletedImages.count == 0 ) {
@@ -192,7 +192,7 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 }
 
 
-//After write
+// After write
 - (void)writeViewReset {
     
     self.subjectTextfiled.text = @"";
@@ -209,14 +209,16 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 }
 
 
-//make cell number
+#pragma mark - cell Method
+
+// make cell number
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     return self.photoArray.count;
 }
 
 
-//make cell
+// make cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     __block CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
@@ -253,18 +255,18 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 }
 
 
-//cell size
+// cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake((self.view.frame.size.width - 55) /4, (self.view.frame.size.width - 55 )/4);
 }
 
 
-//in Spacing
+// in Spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
 
-//cell Spacing
+// cell Spacing
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 5;
 }
@@ -332,7 +334,8 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 }
 
 
-//scrolldragg 시작시점
+#pragma mark - scrollDelegate
+// scrolldragg 시작시점
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     
     CGFloat offsetY = scrollView.contentOffset.y;
@@ -353,11 +356,12 @@ UICollectionViewDelegateFlowLayout, UITextViewDelegate, UITextFieldDelegate>
 }
 
 
+#pragma mark - etc Method ( keyboard, gesture )
+
 // returnKey push
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [self.bodyTextView becomeFirstResponder];
-    
     return YES;
 }
 

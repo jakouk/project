@@ -28,6 +28,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
+    [self.navigationController.navigationBar setHidden:YES];
     
     [self.mainCollection registerNib:[UINib nibWithNibName:@"CellStyle" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     self.mainCollection.delegate = self;
@@ -40,19 +41,7 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    [self.navigationController.navigationBar setHidden:YES];
-    
-}
-
+#pragma mark - collection Method
 
 // cell numbers
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -116,16 +105,9 @@
 }
 
 
-
 // cell size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake( (self.view.frame.size.width-20)/2- 5, (self.view.frame.size.width-20)/2- 5);
-}
-
-
-// inside padding
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
 }
 
 
@@ -135,48 +117,9 @@
 }
 
 
-// searchButton Click
-- (IBAction)touchupInsideSearchButton:(UIButton *)sender {
-    
-    [self searchDataUpdate];
-   
-}
-
-
-// returnButton
-- (bool)textFieldShouldReturn:(UITextField *)textField {
-    
-    [self.searchData resignFirstResponder];
-    [self searchDataUpdate];
-    return YES;
-}
-
-
-// searchDataUpdateMethod
-- (void)searchDataUpdate {
-    
-    [self.searchData resignFirstResponder];
-    NSString *searchData = self.searchData.text;
-    SearchViewController * __weak wself = self;
-    [PDSearchManager requestSearch:searchData updateFinishDataBlock:^{
-        [wself searchCollectionViewReload];
-    }];
-}
-
-
-- (void)searchCollectionViewReload {
-
-    NSDictionary *searchData = [UserInfo sharedUserInfo].searchData;
-    
-    if ([searchData objectForKey:@"results"] != nil ) {
-        
-        [self.searchArray removeAllObjects];
-        [self.searchArray addObjectsFromArray:[searchData objectForKey:@"results"]];
-        
-        [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
-        [self.mainCollection reloadData];
-    }
-    
+// inside padding
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
 }
 
 
@@ -204,7 +147,47 @@
 }
 
 
-#pragma addCellMethod
+#pragma mark searchDataUpdate
+
+// searchButton Click
+- (IBAction)touchupInsideSearchButton:(UIButton *)sender {
+    
+    [self searchDataUpdate];
+   
+}
+
+
+// searchDataUpdateMethod
+- (void)searchDataUpdate {
+    
+    [self.searchData resignFirstResponder];
+    NSString *searchData = self.searchData.text;
+    SearchViewController * __weak wself = self;
+    [PDSearchManager requestSearch:searchData updateFinishDataBlock:^{
+        [wself searchCollectionViewReload];
+    }];
+}
+
+
+// searchCollectionViewReload
+- (void)searchCollectionViewReload {
+
+    NSDictionary *searchData = [UserInfo sharedUserInfo].searchData;
+    
+    if ([searchData objectForKey:@"results"] != nil ) {
+        
+        [self.searchArray removeAllObjects];
+        [self.searchArray addObjectsFromArray:[searchData objectForKey:@"results"]];
+        
+        [UserInfo sharedUserInfo].searchNextUrl = [searchData objectForKey:@"next"];
+        [self.mainCollection reloadData];
+    }
+    
+}
+
+
+#pragma mark - etc ( addCellMethod , TapGesture, ReturnKey )
+
 // addCellMethod
 - (void)addCellMethod{
     NSDictionary *wordDic = [UserInfo sharedUserInfo].searchData;
@@ -217,6 +200,16 @@
     }
 
 }
+
+// returnButton
+- (bool)textFieldShouldReturn:(UITextField *)textField {
+    
+    [self.searchData resignFirstResponder];
+    [self searchDataUpdate];
+    return YES;
+}
+
+
 
 
 - (IBAction)touchupInsideTapGesture:(UITapGestureRecognizer *)sender {

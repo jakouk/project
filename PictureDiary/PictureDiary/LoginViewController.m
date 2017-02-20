@@ -275,7 +275,6 @@
     UIWindow *window = [[UIApplication sharedApplication].delegate window];
     window.rootViewController = mainTabBarController;
     [window makeKeyAndVisible];
-    
 }
 
 /*

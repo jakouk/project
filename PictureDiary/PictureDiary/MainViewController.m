@@ -77,7 +77,7 @@
         
         if ( self.userWord.count == indexPath.row + 3 ) {
             
-            if ( [UserInfo sharedUserInfo].mainNextUrl != nil ) {
+            if ( ![[UserInfo sharedUserInfo].mainNextUrl isKindOfClass: [NSNull class]] ) {
                 
                __block MainViewController * __weak wself = self;
                 
@@ -166,6 +166,7 @@
     
 }
 
+#pragma mark - collectionReload
 
 //homeviewCollectionReload
 //네트워크에서 사진 불러오기
@@ -235,8 +236,9 @@
     }
 }
 
+#pragma mark - etc ( addCell, refreshControl )
 
-//add Cell Method
+// add Cell Method
 - (void)addCellMethod {
     
     NSDictionary *wordDic = [UserInfo sharedUserInfo].wordDic;
@@ -246,15 +248,7 @@
     
 }
 
-
-#pragma mark - memory
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-//pull to reFresh
+// pull to reFresh
 - (void)refershControlAction{
     
     [PDMainManager requestMainDataUpdateFinishDataBlock:^{
@@ -264,6 +258,5 @@
     [self.refreshControl endRefreshing];
     
 }
-
 
 @end

@@ -25,9 +25,12 @@
 
 @implementation ReadViewController
 
+# pragma mark - viewDidLoad
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.wordDic = [[NSDictionary alloc] init];
     
     self.contentText.editable = NO;
     [self.navigationController.navigationBar setHidden:YES];
@@ -81,14 +84,7 @@
     
 }
 
-
-- (void)awakeFromNib {
-    
-    [super awakeFromNib];
-    self.wordDic = [[NSDictionary alloc] init];
-}
-
-
+#pragma mark - viewDidAppear ( UpdateData )
 // 화면이 불릴때 마다 실행
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -145,18 +141,19 @@
 }
 
 
-//스크롤이 변경될때 page의 currentPage 설정
-- (void)scrollViewDidScroll:(UIScrollView *)sender
-{
-    self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
-}
-
-
 //페이지 컨트롤 값이 변경될때, 스크롤뷰 위치 설정
 - (void) pageChangeValue:(id)sender
 {
     UIPageControl *pControl = (UIPageControl *) sender;
     [self.imageScrollView setContentOffset:CGPointMake(pControl.currentPage * 320, 0) animated:YES];
+}
+
+
+#pragma mark - scrollViewDidScroll
+//스크롤이 변경될때 page의 currentPage 설정
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    self.pageControl.currentPage = self.imageScrollView.contentOffset.x / self.imageScrollView.frame.size.width;
 }
 
 
@@ -213,12 +210,7 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
+#pragma mark - DeleteAlert
 - (void)afterDeleteViewChangeMehtod {
     
     UIViewController *firstViewController = self.navigationController.viewControllers.firstObject;
@@ -230,6 +222,8 @@
     
 }
 
+
+#pragma mark - NavigationButton
 
 // backButtonClick
 - (IBAction)backButtonTouchUpInside:(UIBarButtonItem *)sender {

@@ -10,7 +10,7 @@
 
 @interface UserInfo : NSObject
 
-
+#pragma mark - Login, Join
 //LoginData
 @property NSDictionary *loginData;
 
@@ -18,10 +18,12 @@
 @property NSDictionary *joinData;
 
 
+#pragma mark - userToken
 //Outh 2.0 Token number Save
 @property NSString *userToken;
 
 
+#pragma mark - mainData
 //First Main Data ( 10 data )
 @property NSDictionary *firstMainData;
 
@@ -32,6 +34,7 @@
 @property NSDictionary *wordDic;
 
 
+#pragma mark - searchData
 //First search Data
 @property NSDictionary *searchData;
 
@@ -42,7 +45,7 @@
 @property NSDictionary *readData;
 
 
-
+#pragma mark - userInformation
 //userInfomation
 @property NSDictionary *userInfomation;
 
